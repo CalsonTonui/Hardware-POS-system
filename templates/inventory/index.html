@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-boxes"></i> Inventory
+    </h2>
+
+    <a href="#" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i>
+        Stock In
+    </a>
+</div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">
+            Current Stock
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Barcode</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for item in inventory %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ item.product.name }}</td>
+
+                <td>{{ item.product.barcode }}</td>
+
+                <td>{{ item.quantity }}</td>
+
+                <td>
+
+                    {% if item.quantity > 20 %}
+                        <span class="badge bg-success">
+                            In Stock
+                        </span>
+
+                    {% elif item.quantity > 0 %}
+                        <span class="badge bg-warning text-dark">
+                            Low Stock
+                        </span>
+
+                    {% else %}
+                        <span class="badge bg-danger">
+                            Out of Stock
+                        </span>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    No inventory available.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+            <div class="card shadow-sm mb-3">
+
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query }}"
+                    class="form-control"
+                    placeholder="Search product or barcode">
+
+                <button class="btn btn-primary">
+
+                    <i class="bi bi-search"></i>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+        </table>
+        <nav class="mt-4">
+
+<ul class="pagination justify-content-center">
+
+{% if inventory.has_previous %}
+<li class="page-item">
+<a class="page-link"
+href="?page={{ inventory.previous_page_number }}">
+Previous
+</a>
+</li>
+{% endif %}
+
+<li class="page-item active">
+<span class="page-link">
+{{ inventory.number }}
+</span>
+</li>
+
+{% if inventory.has_next %}
+<li class="page-item">
+<a class="page-link"
+href="?page={{ inventory.next_page_number }}">
+Next
+</a>
+</li>
+{% endif %}
+
+</ul>
+
+</nav>
+
+    </div>
+
+</div>
+
+{% endblock %}

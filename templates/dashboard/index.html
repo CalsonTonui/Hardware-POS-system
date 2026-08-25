@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-body text-center">
+                <h6>Total Products</h6>
+                <h2>{{ product_count }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-body text-center">
+                <h6>Customers</h6>
+                <h2>{{ customer_count }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-body text-center">
+                <h6>Today's Sales</h6>
+                <h2>KSh 18,500</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow border-0">
+            <div class="card-body text-center">
+                <h6>Low Stock</h6>
+                <h2>{{ inventory_count }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        Recent Sales
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>Invoice</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>INV001</td>
+                    <td>John</td>
+                    <td>KSh 2,500</td>
+                    <td><span class="badge bg-success">Paid</span></td>
+                </tr>
+
+                <tr>
+                    <td>INV002</td>
+                    <td>Mary</td>
+                    <td>KSh 4,200</td>
+                    <td><span class="badge bg-success">Paid</span></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

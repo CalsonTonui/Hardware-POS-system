@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Purchases{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h5>New Purchase</h5>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button class="btn btn-success w-100">
+                        Save Purchase
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-8">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white">
+                <h5>Purchase History</h5>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Supplier</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Buying Price</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for purchase in purchases %}
+
+                    <tr>
+
+                        <td>{{ purchase.purchase_date|date:"d M Y" }}</td>
+
+                        <td>{{ purchase.supplier }}</td>
+
+                        <td>{{ purchase.product }}</td>
+
+                        <td>{{ purchase.quantity }}</td>
+
+                        <td>Ksh {{ purchase.buying_price }}</td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center">
+
+                            No purchases found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

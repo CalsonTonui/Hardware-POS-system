@@ -1,0 +1,56 @@
+body{
+    background:#f5f7fa;
+}
+
+.list-group-item{
+    transition:.3s;
+}
+
+.list-group-item:hover{
+    background:#0d6efd !important;
+    color:white !important;
+}
+
+.card{
+    border-radius:15px;
+}
+
+.card-header{
+    font-weight:bold;
+}
+
+table{
+    font-size:15px;
+}
+
+.navbar{
+    height:65px;
+}
+
+footer{
+    display:none;
+}
+.card{
+    border-radius:12px;
+}
+
+.table{
+    vertical-align:middle;
+}
+
+.table thead{
+    background:#f8f9fa;
+}
+
+.badge{
+    font-size:13px;
+    padding:7px 10px;
+}
+
+.btn{
+    border-radius:8px;
+}
+
+.card-header{
+    font-weight:600;
+}
