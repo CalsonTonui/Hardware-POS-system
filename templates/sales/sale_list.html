@@ -1,10 +1,279 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Sales - Hardware POS{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row g-4">
+
+        <!-- New Sale -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-cart-check"></i>
+                        New Sale
+                    </h4>
+                </div>
+
+                <div class="card-body">
+
+                  <div class="mb-3">
+
+    <label class="form-label fw-semibold">
+        Product
+    </label>
+
+    {{ form.product }}
+
+    {% if form.product.errors %}
+        <div class="text-danger small">
+            {{ form.product.errors }}
+        </div>
+    {% endif %}
+
+</div>
+
+
+<div class="mb-3">
+
+    <label class="form-label fw-semibold">
+        Quantity
+    </label>
+
+    {{ form.quantity }}
+
+    {% if form.quantity.errors %}
+        <div class="text-danger small">
+            {{ form.quantity.errors }}
+        </div>
+    {% endif %}
+
+</div>
+
+
+<div class="mb-3">
+
+    <label class="form-label fw-semibold">
+        Payment Method
+    </label>
+
+    {{ form.payment_method }}
+
+    {% if form.payment_method.errors %}
+        <div class="text-danger small">
+            {{ form.payment_method.errors }}
+        </div>
+    {% endif %}
+
+</div>
+
+                        <!-- Complete Sale -->
+                        <button type="submit"
+                                class="btn btn-success w-100">
+
+                            <i class="bi bi-check-circle"></i>
+                            Complete Sale
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Sales History -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-dark text-white">
+
+                    <h4 class="mb-0">
+                        <i class="bi bi-clock-history"></i>
+                        Sales History
+                    </h4>
+
+                </div>
+
+
+               <div class="pos-table-wrapper">
+
+    <div class="table-responsive">
+
+        <table class="table pos-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Product</th>
+
+                    <th class="text-center">Qty</th>
+
+                    <th class="text-end">Selling Price</th>
+
+                    <th class="text-end">Total</th>
+
+                    <th class="text-center">Payment</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for sale in sales %}
+
+                <tr>
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{ sale.sale_date|date:"d M Y" }}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            {{ sale.sale_date|date:"H:i" }}
+
+                        </small>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="product-name">
+
+                            {{ sale.product.name }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-center">
+
+                        <span class="fw-semibold">
+
+                            {{ sale.quantity }}
+
+                        </span>
+
+                        <small class="text-muted">
+
+                            {{ sale.product.unit }}
+
+                        </small>
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="price">
+
+                            KSh
+                            {{ sale.selling_price|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="total">
+
+                            KSh
+                            {{ sale.total_amount|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-center">
+
+                        {% if sale.payment_method == "Cash" %}
+
+                            <span class="pos-badge pos-badge-cash">
+
+                                <i class="bi bi-cash me-1"></i>
+                                Cash
+
+                            </span>
+
+                        {% elif sale.payment_method == "M-Pesa" %}
+
+                            <span class="pos-badge pos-badge-mpesa">
+
+                                <i class="bi bi-phone me-1"></i>
+                                M-Pesa
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="pos-badge pos-badge-category">
+
+                                {{ sale.payment_method }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="pos-empty">
+
+                        <div class="pos-empty-icon">
+
+                            <i class="bi bi-receipt"></i>
+
+                        </div>
+
+                        <h5>No Sales Found</h5>
+
+                        <p class="mb-0">
+
+                            Completed sales will appear here.
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

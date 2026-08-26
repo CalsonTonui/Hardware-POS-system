@@ -3,7 +3,11 @@ from products.models import Product
 
 
 class Inventory(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='inventory'
+    )
     quantity = models.PositiveIntegerField(default=0)
     reorder_level = models.PositiveIntegerField(default=5)
     last_updated = models.DateTimeField(auto_now=True)

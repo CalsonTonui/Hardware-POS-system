@@ -1,53 +1,333 @@
 {% extends 'base.html' %}
 
-{% block title %}Products{% endblock %}
+{% block title %}Products - Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Products</h2>
+<div class="container-fluid">
 
-    <a href="{% url 'product_add' %}" class="btn btn-primary">
-        Add Product
-    </a>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-box-seam"></i>
+                Products
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage hardware, timber, metals, furniture and other products.
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'product_add' %}"
+           class="btn btn-primary">
+
+            <i class="bi bi-plus-circle"></i>
+            Add Product
+
+        </a>
+
+    </div>
+
+
+    <!-- Search -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <form method="GET">
+
+                <div class="row g-2">
+
+                    <div class="col-md-10">
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                <i class="bi bi-search"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ search }}"
+                                class="form-control"
+                                placeholder="Search by product name, category or barcode..."
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Products Table -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-dark text-white">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-list-ul"></i>
+                    Product List
+
+                </h5>
+
+                <span class="badge bg-light text-dark">
+                    {{ products|length }} product{{ products|length|pluralize }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+       <div class="pos-table-wrapper">
+
+    <div class="table-responsive">
+
+        <table class="table pos-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="table-index">#</th>
+
+                    <th>Product</th>
+
+                    <th>Category</th>
+
+                    <th>Unit</th>
+
+                    <th>Barcode</th>
+
+                    <th class="text-end">Buying Price</th>
+
+                    <th class="text-end">Selling Price</th>
+
+                    <th class="text-center">Stock</th>
+
+                    <th class="text-center">Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for product in products %}
+
+                <tr>
+
+                    <td class="table-index">
+                        {{ forloop.counter }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="product-name">
+                            {{ product.name }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="pos-badge pos-badge-category">
+
+                            {{ product.category }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ product.unit }}
+                    </td>
+
+
+                    <td>
+
+                        {% if product.barcode %}
+
+                            <span class="font-monospace">
+                                {{ product.barcode }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="text-muted">
+                                —
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="price">
+
+                            KSh
+                            {{ product.buying_price|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="price">
+
+                            KSh
+                            {{ product.selling_price|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-center">
+
+                        {% with stock=product.inventory.first %}
+
+                            {% if stock %}
+
+                                {% if stock.quantity == 0 %}
+
+                                    <span class="pos-badge pos-badge-out">
+
+                                        Out of Stock
+
+                                    </span>
+
+                                {% elif stock.quantity <= stock.reorder_level %}
+
+                                    <span class="pos-badge pos-badge-low">
+
+                                        {{ stock.quantity }}
+                                        {{ product.unit }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="pos-badge pos-badge-stock">
+
+                                        {{ stock.quantity }}
+                                        {{ product.unit }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <span class="pos-badge pos-badge-out">
+
+                                    Out of Stock
+
+                                </span>
+
+                            {% endif %}
+
+                        {% endwith %}
+
+                    </td>
+
+
+                    <td class="text-center">
+
+                        <a href="{% url 'product_edit' product.id %}"
+                           class="btn btn-warning btn-sm pos-action-btn"
+                           title="Edit Product">
+
+                            <i class="bi bi-pencil"></i>
+
+                        </a>
+
+
+                        <a href="{% url 'product_delete' product.id %}"
+                           class="btn btn-danger btn-sm pos-action-btn"
+                           title="Delete Product">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="9" class="pos-empty">
+
+                        <div class="pos-empty-icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+
+                        <h5>No Products Found</h5>
+
+                        <p class="mb-3">
+                            There are currently no products in the system.
+                        </p>
+
+                        <a href="{% url 'product_add' %}"
+                           class="btn btn-primary">
+
+                            <i class="bi bi-plus-circle"></i>
+                            Add Product
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
-
-<table class="table table-bordered table-hover">
-
-    <thead class="table-dark">
-        <tr>
-            <th>Name</th>
-            <th>Barcode</th>
-            <th>Buying Price</th>
-            <th>Selling Price</th>
-            <th>Quantity</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-    {% for product in products %}
-
-    <tr>
-        <td>{{ product.name }}</td>
-        <td>{{ product.barcode }}</td>
-        <td>{{ product.buying_price }}</td>
-        <td>{{ product.selling_price }}</td>
-        <td>{{ product.quantity }}</td>
-    </tr>
-
-    {% empty %}
-
-    <tr>
-        <td colspan="5" class="text-center">
-            No products available.
-        </td>
-    </tr>
-
-    {% endfor %}
-
-    </tbody>
-
-</table>
 
 {% endblock %}

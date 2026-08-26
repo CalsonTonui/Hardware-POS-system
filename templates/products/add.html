@@ -1,11 +1,208 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Product{% endblock %}
+{% block title %}Add Product - Hardware POS{% endblock %}
 
 {% block content %}
 
-<h2>Add Product</h2>
+<div class="container-fluid">
 
-<p>The product form will be added in the next step.</p>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-box-seam"></i>
+                Add Product
+            </h2>
+
+            <p class="text-muted mb-0">
+                Add a new product to your inventory
+            </p>
+        </div>
+
+        <a href="{% url 'products' %}"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Products
+
+        </a>
+
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                Product Information
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+
+                <div class="row">
+
+                    <!-- Product Name -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Product Name
+                        </label>
+
+                        {{ form.name }}
+
+                        {% if form.name.errors %}
+                            <div class="text-danger small">
+                                {{ form.name.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Category
+                        </label>
+
+                        {{ form.category }}
+
+                        {% if form.category.errors %}
+                            <div class="text-danger small">
+                                {{ form.category.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Unit -->
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Unit
+                        </label>
+
+                        {{ form.unit }}
+
+                        {% if form.unit.errors %}
+                            <div class="text-danger small">
+                                {{ form.unit.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Barcode -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Barcode
+                            <span class="text-muted fw-normal">
+                                (Optional)
+                            </span>
+                        </label>
+
+                        {{ form.barcode }}
+
+                        <div class="form-text">
+                            Leave blank for products without barcodes,
+                            such as timber, metals and furniture.
+                        </div>
+
+                        {% if form.barcode.errors %}
+                            <div class="text-danger small">
+                                {{ form.barcode.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Buying Price -->
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Buying Price
+                        </label>
+
+                        {{ form.buying_price }}
+
+                        {% if form.buying_price.errors %}
+                            <div class="text-danger small">
+                                {{ form.buying_price.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Selling Price -->
+                    <div class="col-md-3 mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Selling Price
+                        </label>
+
+                        {{ form.selling_price }}
+
+                        {% if form.selling_price.errors %}
+                            <div class="text-danger small">
+                                {{ form.selling_price.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <div class="mt-3">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-save"></i>
+                        Save Product
+
+                    </button>
+
+
+                    <a href="{% url 'products' %}"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

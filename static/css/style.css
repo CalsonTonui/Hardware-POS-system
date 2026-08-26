@@ -54,3 +54,167 @@ footer{
 .card-header{
     font-weight:600;
 }
+/* =====================================================
+   PROFESSIONAL POS TABLES
+   ===================================================== */
+
+.pos-table-wrapper {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.pos-table {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.pos-table thead th {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 14px 16px;
+    border-bottom: 2px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.pos-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eeeeee;
+    color: #343a40;
+}
+
+.pos-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pos-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.pos-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.pos-table .product-name {
+    font-weight: 600;
+    color: #212529;
+}
+
+.pos-table .price {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pos-table .total {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pos-table .table-index {
+    color: #6c757d;
+    font-size: 0.85rem;
+    width: 50px;
+}
+
+
+/* =====================================================
+   POS BADGES
+   ===================================================== */
+
+.pos-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pos-badge-category {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.pos-badge-stock {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.pos-badge-low {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.pos-badge-out {
+    background: #f8d7da;
+    color: #842029;
+}
+
+.pos-badge-cash {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.pos-badge-mpesa {
+    background: #cff4fc;
+    color: #055160;
+}
+
+
+/* =====================================================
+   ACTION BUTTONS
+   ===================================================== */
+
+.pos-action-btn {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    margin: 0 2px;
+}
+
+
+/* =====================================================
+   EMPTY TABLE
+   ===================================================== */
+
+.pos-empty {
+    padding: 50px 20px !important;
+    text-align: center;
+    color: #6c757d;
+}
+
+.pos-empty-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+
+/* =====================================================
+   RESPONSIVE TABLES
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .pos-table thead th,
+    .pos-table tbody td {
+        padding: 11px 12px;
+    }
+
+    .pos-table {
+        font-size: 0.9rem;
+    }
+
+}

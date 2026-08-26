@@ -1,44 +1,95 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Hardware POS{% endblock %}</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Hardware POS{% endblock %}
+    </title>
+
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
 
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+        rel="stylesheet">
+
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}">
+
+
+    <!-- Page-specific CSS -->
+    {% block extra_css %}
+    {% endblock %}
+
 </head>
+
 
 <body>
 
+
+    <!-- Navigation Bar -->
     {% include 'navbar.html' %}
 
+
     <div class="container-fluid">
+
         <div class="row">
 
+
+            <!-- Sidebar -->
             {% include 'sidebar.html' %}
 
+
+            <!-- Main Content -->
             <main class="col-md-10 ms-sm-auto px-4 py-4">
 
+                <!-- Django Messages -->
                 {% include 'messages.html' %}
 
+
+                <!-- Page Content -->
                 {% block content %}
                 {% endblock %}
 
             </main>
 
+
         </div>
+
     </div>
 
+
+    <!-- Footer -->
     {% include 'footer.html' %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- Page-specific JavaScript -->
+    {% block extra_js %}
+    {% endblock %}
+
+
 </body>
+
 </html>

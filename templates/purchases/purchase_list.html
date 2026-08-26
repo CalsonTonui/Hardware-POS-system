@@ -1,104 +1,341 @@
 {% extends 'base.html' %}
 
-{% block title %}Purchases{% endblock %}
+{% block title %}Purchases - Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="row">
+<div class="container-fluid">
 
-    <div class="col-lg-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div class="card shadow">
+        <div>
 
-            <div class="card-header bg-primary text-white">
-                <h5>New Purchase</h5>
-            </div>
+            <h2 class="fw-bold mb-1">
 
-            <div class="card-body">
+                <i class="bi bi-box-arrow-in-down"></i>
+                Purchases
 
-                <form method="POST">
-                    {% csrf_token %}
+            </h2>
 
-                    {{ form.as_p }}
+            <p class="text-muted mb-0">
 
-                    <button class="btn btn-success w-100">
-                        Save Purchase
-                    </button>
+                Record stock received from suppliers.
 
-                </form>
-
-            </div>
+            </p>
 
         </div>
 
     </div>
 
 
-    <div class="col-lg-8">
+    <div class="row g-4">
 
-        <div class="card shadow">
 
-            <div class="card-header bg-dark text-white">
-                <h5>Purchase History</h5>
-            </div>
+        <!-- New Purchase -->
+        <div class="col-lg-4">
 
-            <div class="card-body">
+            <div class="card shadow-sm">
 
-                <table class="table table-hover">
+                <div class="card-header bg-primary text-white">
 
-                    <thead>
+                    <h5 class="mb-0">
 
-                        <tr>
-                            <th>Date</th>
-                            <th>Supplier</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Buying Price</th>
-                        </tr>
+                        <i class="bi bi-plus-circle"></i>
+                        New Purchase
 
-                    </thead>
+                    </h5>
 
-                    <tbody>
+                </div>
 
-                    {% for purchase in purchases %}
 
-                    <tr>
+                <div class="card-body">
 
-                        <td>{{ purchase.purchase_date|date:"d M Y" }}</td>
+                    <form method="POST">
 
-                        <td>{{ purchase.supplier }}</td>
+                        {% csrf_token %}
 
-                        <td>{{ purchase.product }}</td>
 
-                        <td>{{ purchase.quantity }}</td>
+                        <!-- Supplier -->
+                        <div class="mb-3">
 
-                        <td>Ksh {{ purchase.buying_price }}</td>
+                            <label class="form-label fw-semibold">
 
-                    </tr>
+                                Supplier
 
-                    {% empty %}
+                            </label>
 
-                    <tr>
+                            {{ form.supplier }}
 
-                        <td colspan="5" class="text-center">
+                            {% if form.supplier.errors %}
 
-                            No purchases found.
+                                <div class="text-danger small">
 
-                        </td>
+                                    {{ form.supplier.errors }}
 
-                    </tr>
+                                </div>
 
-                    {% endfor %}
+                            {% endif %}
 
-                    </tbody>
+                        </div>
 
-                </table>
+
+                        <!-- Product -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Product
+
+                            </label>
+
+                            {{ form.product }}
+
+                            {% if form.product.errors %}
+
+                                <div class="text-danger small">
+
+                                    {{ form.product.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Quantity -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Quantity
+
+                            </label>
+
+                            {{ form.quantity }}
+
+                            {% if form.quantity.errors %}
+
+                                <div class="text-danger small">
+
+                                    {{ form.quantity.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Buying Price -->
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Buying Price
+
+                            </label>
+
+                            {{ form.buying_price }}
+
+                            {% if form.buying_price.errors %}
+
+                                <div class="text-danger small">
+
+                                    {{ form.buying_price.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success w-100">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            Save Purchase
+
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
         </div>
 
+
+        <!-- Purchase History -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-dark text-white">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-clock-history"></i>
+
+                        Purchase History
+
+                    </h5>
+
+                </div>
+
+
+              <div class="pos-table-wrapper">
+
+    <div class="table-responsive">
+
+        <table class="table pos-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Supplier</th>
+
+                    <th>Product</th>
+
+                    <th class="text-center">Quantity</th>
+
+                    <th class="text-end">Buying Price</th>
+
+                    <th class="text-end">Total</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for purchase in purchases %}
+
+                <tr>
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            {{ purchase.purchase_date|date:"d M Y" }}
+
+                        </div>
+
+                        <small class="text-muted">
+
+                            {{ purchase.purchase_date|date:"H:i" }}
+
+                        </small>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="fw-semibold">
+
+                            {{ purchase.supplier }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="product-name">
+
+                            {{ purchase.product.name }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-center">
+
+                        <span class="fw-semibold">
+
+                            {{ purchase.quantity }}
+
+                        </span>
+
+                        <small class="text-muted">
+
+                            {{ purchase.product.unit }}
+
+                        </small>
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="price">
+
+                            KSh
+                            {{ purchase.buying_price|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td class="text-end">
+
+                        <span class="total">
+
+                            KSh
+                            {{ purchase.total_amount|floatformat:2 }}
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="pos-empty">
+
+                        <div class="pos-empty-icon">
+
+                            <i class="bi bi-box-arrow-in-down"></i>
+
+                        </div>
+
+                        <h5>No Purchases Found</h5>
+
+                        <p class="mb-0">
+
+                            Recorded purchases will appear here.
+
+                        </p>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
     </div>
+
 
 </div>
 
