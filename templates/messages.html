@@ -1,7 +1,56 @@
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
+
+<div class="pos-alert-container">
+
+```
+{% for message in messages %}
+
+    <div class="pos-alert
+        {% if message.tags == 'error' %}
+            pos-alert-error
+        {% elif message.tags == 'success' %}
+            pos-alert-success
+        {% elif message.tags == 'warning' %}
+            pos-alert-warning
+        {% else %}
+            pos-alert-info
+        {% endif %}">
+
+        <div class="pos-alert-icon">
+
+            {% if message.tags == 'error' %}
+                <i class="bi bi-x-circle-fill"></i>
+
+            {% elif message.tags == 'success' %}
+                <i class="bi bi-check-circle-fill"></i>
+
+            {% elif message.tags == 'warning' %}
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+            {% else %}
+                <i class="bi bi-info-circle-fill"></i>
+            {% endif %}
+
+        </div>
+
+        <div class="pos-alert-content">
             {{ message }}
         </div>
-    {% endfor %}
+
+        <button
+            type="button"
+            class="pos-alert-close"
+            onclick="closePosAlert(this)"
+            aria-label="Close">
+
+            <i class="bi bi-x"></i>
+
+        </button>
+
+    </div>
+
+{% endfor %}
+```
+
+</div>
 {% endif %}

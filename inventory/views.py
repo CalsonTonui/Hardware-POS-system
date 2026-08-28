@@ -1,27 +1,38 @@
 from django.shortcuts import render
-from .models import Inventory
 from django.db.models import Q
 from django.core.paginator import Paginator
 
-def inventory_list(request):
-    query = request.GET.get('q')
+from .models import Inventory
 
-    inventory = Inventory.objects.select_related('product')
+
+def inventory_list(request):
+
+    query = request.GET.get('q', '').strip()
+
+    inventory = Inventory.objects.select_related(
+        'product'
+    ).order_by('product__name')
 
     if query:
         inventory = inventory.filter(
             Q(product__name__icontains=query) |
-            Q(product__barcode__icontains=query)
+            Q(product__barcode__icontains=query) |
+            Q(product__category__icontains=query)
         )
+
     paginator = Paginator(inventory, 10)
 
     page_number = request.GET.get('page')
 
-    inventory = paginator.get_page(page_number)
+    inventory_page = paginator.get_page(page_number)
 
     context = {
-        'inventory': inventory,
+        'inventory': inventory_page,
         'query': query,
     }
 
-    return render(request, 'inventory/index.html', context)
+    return render(
+        request,
+        'inventory/index.html',
+        context
+    )

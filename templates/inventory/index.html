@@ -1,150 +1,381 @@
 {% extends 'base.html' %}
 
-{% block title %}Inventory{% endblock %}
+{% block title %}Inventory - Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>
-        <i class="bi bi-boxes"></i> Inventory
-    </h2>
+<div class="container-fluid">
 
-    <a href="#" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i>
-        Stock In
-    </a>
-</div>
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-<div class="card shadow-sm border-0">
+        <div>
+            <h2 class="fw-bold mb-1 inventory-title">
+                <i class="bi bi-boxes"></i>
+                Inventory
+            </h2>
 
-    <div class="card-header bg-dark text-white">
-        <h5 class="mb-0">
-            Current Stock
-        </h5>
+            <p class="text-muted mb-0">
+                Monitor current stock levels and availability
+            </p>
+        </div>
+
+        <a href="{% url 'purchase_list' %}"
+           class="btn btn-success inventory-stock-btn">
+
+            <i class="bi bi-box-arrow-in-down"></i>
+            Stock In
+
+        </a>
+
     </div>
 
-    <div class="card-body">
 
-        <table class="table table-hover align-middle">
+    <!-- Search Card -->
+    <div class="card inventory-search-card mb-4">
 
-            <thead class="table-light">
-                <tr>
-                    <th>#</th>
-                    <th>Product</th>
-                    <th>Barcode</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
+        <div class="card-body">
 
-            <tbody>
+            <form method="GET">
 
-            {% for item in inventory %}
+                <div class="row g-2">
 
-            <tr>
+                    <div class="col-md-10">
 
-                <td>{{ forloop.counter }}</td>
+                        <div class="input-group">
 
-                <td>{{ item.product.name }}</td>
+                            <span class="input-group-text inventory-search-icon">
+                                <i class="bi bi-search"></i>
+                            </span>
 
-                <td>{{ item.product.barcode }}</td>
+                            <input
+                                type="text"
+                                name="q"
+                                value="{{ query }}"
+                                class="form-control inventory-search-input"
+                                placeholder="Search product, category or barcode">
 
-                <td>{{ item.quantity }}</td>
+                        </div>
 
-                <td>
+                    </div>
 
-                    {% if item.quantity > 20 %}
-                        <span class="badge bg-success">
-                            In Stock
-                        </span>
+                    <div class="col-md-2">
 
-                    {% elif item.quantity > 0 %}
-                        <span class="badge bg-warning text-dark">
-                            Low Stock
-                        </span>
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 inventory-search-btn">
 
-                    {% else %}
-                        <span class="badge bg-danger">
-                            Out of Stock
-                        </span>
-                    {% endif %}
+                            <i class="bi bi-search"></i>
+                            Search
 
-                </td>
+                        </button>
 
-            </tr>
+                    </div>
 
-            {% empty %}
+                </div>
 
-            <tr>
-                <td colspan="5" class="text-center text-muted">
-                    No inventory available.
-                </td>
-            </tr>
+            </form>
 
-            {% endfor %}
+        </div>
 
-            </tbody>
-            <div class="card shadow-sm mb-3">
+    </div>
 
-    <div class="card-body">
 
-        <form method="GET">
+    <!-- Inventory Table Card -->
+    <div class="card inventory-card">
 
-            <div class="input-group">
+        <div class="card-header inventory-header">
 
-                <input
-                    type="text"
-                    name="q"
-                    value="{{ query }}"
-                    class="form-control"
-                    placeholder="Search product or barcode">
+            <div class="d-flex justify-content-between align-items-center">
 
-                <button class="btn btn-primary">
+                <h5 class="mb-0">
+                    <i class="bi bi-clipboard-data me-2"></i>
+                    Current Stock
+                </h5>
 
-                    <i class="bi bi-search"></i>
+                {% if query %}
 
-                </button>
+                    <span class="inventory-search-result">
+                        Results for "{{ query }}"
+                    </span>
+
+                {% endif %}
 
             </div>
 
-        </form>
+        </div>
 
-    </div>
 
-</div>
+        <div class="card-body p-0">
 
-        </table>
-        <nav class="mt-4">
+            <div class="table-responsive">
 
-<ul class="pagination justify-content-center">
+                <table class="table inventory-table mb-0">
 
-{% if inventory.has_previous %}
-<li class="page-item">
-<a class="page-link"
-href="?page={{ inventory.previous_page_number }}">
-Previous
-</a>
-</li>
-{% endif %}
+                    <thead>
 
-<li class="page-item active">
-<span class="page-link">
-{{ inventory.number }}
-</span>
-</li>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Unit</th>
+                            <th>Barcode</th>
+                            <th class="text-center">Stock</th>
+                            <th class="text-center">Reorder Level</th>
+                            <th class="text-center">Status</th>
+                        </tr>
 
-{% if inventory.has_next %}
-<li class="page-item">
-<a class="page-link"
-href="?page={{ inventory.next_page_number }}">
-Next
-</a>
-</li>
-{% endif %}
+                    </thead>
 
-</ul>
 
-</nav>
+                    <tbody>
+
+                    {% for item in inventory %}
+
+                        <tr>
+
+                            <!-- Number -->
+                            <td class="text-center inventory-number">
+
+                                {{ forloop.counter0|add:inventory.start_index }}
+
+                            </td>
+
+
+                            <!-- Product -->
+                            <td>
+
+                                <div class="inventory-product">
+
+                                    <div class="inventory-product-icon">
+                                        <i class="bi bi-box-seam"></i>
+                                    </div>
+
+                                    <span>
+                                        {{ item.product.name }}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- Category -->
+                            <td>
+
+                                {% if item.product.category %}
+
+                                    <span class="inventory-category">
+                                        {{ item.product.category }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        —
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Unit -->
+                            <td>
+
+                                <span class="inventory-unit">
+                                    {{ item.product.unit|default:"—" }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- Barcode -->
+                            <td>
+
+                                {% if item.product.barcode %}
+
+                                    <span class="inventory-barcode">
+                                        {{ item.product.barcode }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="no-barcode">
+                                        No barcode
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Current Stock -->
+                            <td class="text-center">
+
+                                <span class="inventory-quantity
+                                    {% if item.quantity == 0 %}
+                                        quantity-out
+                                    {% elif item.quantity <= item.reorder_level %}
+                                        quantity-low
+                                    {% else %}
+                                        quantity-good
+                                    {% endif %}">
+
+                                    {{ item.quantity }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- Reorder Level -->
+                            <td class="text-center">
+
+                                <span class="reorder-value">
+                                    {{ item.reorder_level }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- Status -->
+                            <td class="text-center">
+
+                                {% if item.quantity == 0 %}
+
+                                    <span class="inventory-status status-out">
+
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        Out of Stock
+
+                                    </span>
+
+                                {% elif item.quantity <= item.reorder_level %}
+
+                                    <span class="inventory-status status-low">
+
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        Low Stock
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="inventory-status status-good">
+
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        In Stock
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="8">
+
+                                <div class="inventory-empty">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                    <h5>No Inventory Found</h5>
+
+                                    <p>
+
+                                        {% if query %}
+                                            No products matched your search.
+                                        {% else %}
+                                            There are currently no inventory records.
+                                        {% endif %}
+
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Pagination -->
+            {% if inventory.paginator.num_pages > 1 %}
+
+                <div class="inventory-pagination">
+
+                    <nav>
+
+                        <ul class="pagination justify-content-center mb-0">
+
+                            {% if inventory.has_previous %}
+
+                                <li class="page-item">
+
+                                    <a class="page-link"
+                                       href="?q={{ query }}&page={{ inventory.previous_page_number }}">
+
+                                        <i class="bi bi-chevron-left"></i>
+                                        Previous
+
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+
+                            <li class="page-item active">
+
+                                <span class="page-link">
+
+                                    Page {{ inventory.number }}
+                                    of {{ inventory.paginator.num_pages }}
+
+                                </span>
+
+                            </li>
+
+
+                            {% if inventory.has_next %}
+
+                                <li class="page-item">
+
+                                    <a class="page-link"
+                                       href="?q={{ query }}&page={{ inventory.next_page_number }}">
+
+                                        Next
+                                        <i class="bi bi-chevron-right"></i>
+
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
 

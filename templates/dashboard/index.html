@@ -1,91 +1,644 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Dashboard - Hardware POS{% endblock %}
 
 {% block content %}
 
-<h2 class="mb-4">Dashboard</h2>
+<div class="dashboard-page">
 
-<div class="row">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
 
-    <div class="col-md-3 mb-4">
-        <div class="card shadow border-0">
-            <div class="card-body text-center">
-                <h6>Total Products</h6>
-                <h2>{{ product_count }}</h2>
-            </div>
+    <div class="dashboard-top">
+
+        <div>
+            <h2>
+                <i class="bi bi-speedometer2"></i>
+                Dashboard
+            </h2>
+
+            <p>
+                Overview of your hardware shop operations
+            </p>
         </div>
-    </div>
 
-    <div class="col-md-3 mb-4">
-        <div class="card shadow border-0">
-            <div class="card-body text-center">
-                <h6>Customers</h6>
-                <h2>{{ customer_count }}</h2>
+        <!-- DATE -->
+        <div class="dashboard-date">
+
+            <div class="dashboard-date-title">
+                <i class="bi bi-calendar3"></i>
             </div>
-        </div>
-    </div>
 
-    <div class="col-md-3 mb-4">
-        <div class="card shadow border-0">
-            <div class="card-body text-center">
-                <h6>Today's Sales</h6>
-                <h2>KSh 18,500</h2>
+            <div class="dashboard-date-value">
+                {% now "d M Y" %}
             </div>
+
         </div>
+
     </div>
 
-    <div class="col-md-3 mb-4">
-        <div class="card shadow border-0">
-            <div class="card-body text-center">
-                <h6>Low Stock</h6>
-                <h2>{{ inventory_count }}</h2>
+
+    <!-- =====================================================
+         SUMMARY CARDS
+         ===================================================== -->
+
+    <div class="dashboard-summary">
+
+        <!-- PRODUCTS -->
+        <div class="summary-card">
+
+            <div class="summary-icon products-icon">
+                <i class="bi bi-box-seam"></i>
             </div>
+
+            <div class="summary-content">
+
+                <span>Products</span>
+
+                <strong>
+                    {{ product_count }}
+                </strong>
+
+                <small>
+                    Registered products
+                </small>
+
+            </div>
+
         </div>
+
+
+        <!-- STOCK -->
+        <div class="summary-card">
+
+            <div class="summary-icon stock-icon">
+                <i class="bi bi-boxes"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <span>Stock Units</span>
+
+                <strong>
+                    {{ total_stock }}
+                </strong>
+
+                <small>
+                    Available in store
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- SALES -->
+        <div class="summary-card">
+
+            <div class="summary-icon sales-icon">
+                <i class="bi bi-cart-check"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <span>Today's Sales</span>
+
+                <strong>
+                    KSh {{ today_sales_total|floatformat:2 }}
+                </strong>
+
+                <small>
+                    Total sales today
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- PURCHASES -->
+        <div class="summary-card">
+
+            <div class="summary-icon purchase-icon">
+                <i class="bi bi-truck"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <span>Today's Purchases</span>
+
+                <strong>
+                    KSh {{ today_purchase_total|floatformat:2 }}
+                </strong>
+
+                <small>
+                    Stock purchased today
+                </small>
+
+            </div>
+
+        </div>
+
     </div>
 
-</div>
 
-<div class="card shadow">
+    <!-- =====================================================
+         STOCK STATUS
+         ===================================================== -->
 
-    <div class="card-header bg-primary text-white">
-        Recent Sales
+    <div class="stock-status-row">
+
+        <!-- LOW STOCK -->
+        <div class="stock-status low-stock">
+
+            <div class="status-icon">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+
+            <div>
+                <span>Low Stock</span>
+                <strong>{{ low_stock_count }}</strong>
+            </div>
+
+            <a href="{% url 'inventory_list' %}">
+                View
+            </a>
+
+        </div>
+
+
+        <!-- OUT OF STOCK -->
+        <div class="stock-status out-stock">
+
+            <div class="status-icon">
+                <i class="bi bi-x-circle-fill"></i>
+            </div>
+
+            <div>
+                <span>Out of Stock</span>
+                <strong>{{ out_of_stock_count }}</strong>
+            </div>
+
+            <a href="{% url 'inventory_list' %}">
+                View
+            </a>
+
+        </div>
+
     </div>
 
-    <div class="card-body">
 
-        <table class="table table-striped">
+    <!-- =====================================================
+         SALES + PAYMENT
+         ===================================================== -->
 
-            <thead>
-                <tr>
-                    <th>Invoice</th>
-                    <th>Customer</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
+    <div class="dashboard-grid sales-grid">
 
-            <tbody>
+        <!-- TODAY'S SALES -->
+        <div class="dashboard-panel sales-panel">
 
-                <tr>
-                    <td>INV001</td>
-                    <td>John</td>
-                    <td>KSh 2,500</td>
-                    <td><span class="badge bg-success">Paid</span></td>
-                </tr>
+            <div class="panel-header">
 
-                <tr>
-                    <td>INV002</td>
-                    <td>Mary</td>
-                    <td>KSh 4,200</td>
-                    <td><span class="badge bg-success">Paid</span></td>
-                </tr>
+                <div>
 
-            </tbody>
+                    <h5>
+                        <i class="bi bi-receipt"></i>
+                        Today's Sales
+                    </h5>
 
-        </table>
+                    <span>
+                        Latest transactions
+                    </span>
+
+                </div>
+
+                <a href="{% url 'sale_list' %}"
+                   class="panel-link">
+
+                    View All
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Sale</th>
+                            <th>Time</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Payment</th>
+                            <th>Total</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for sale in recent_sales %}
+
+                        <tr>
+
+                            <td>
+                                <span class="sale-number">
+                                    SALE-{{ sale.id }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ sale.sale_date|date:"H:i" }}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ sale.product.name }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ sale.quantity }}
+                            </td>
+
+                            <td>
+
+                                {% if sale.payment_method == 'M-Pesa' %}
+
+                                    <span class="payment mpesa">
+                                        <i class="bi bi-phone"></i>
+                                        M-Pesa
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="payment cash">
+                                        <i class="bi bi-cash-stack"></i>
+                                        Cash
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                <strong>
+                                    KSh {{ sale.total_amount|floatformat:2 }}
+                                </strong>
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="6"
+                                class="empty-table">
+
+                                <i class="bi bi-receipt"></i>
+
+                                <span>
+                                    No sales recorded today
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- PAYMENT SUMMARY -->
+        <div class="dashboard-panel payment-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>
+                        <i class="bi bi-wallet2"></i>
+                        Payment Summary
+                    </h5>
+
+                    <span>
+                        Today's collection
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="payment-content">
+
+                <!-- CASH -->
+                <div class="payment-item">
+
+                    <div class="payment-info">
+
+                        <div class="payment-circle cash-circle">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+
+                        <div>
+                            <strong>Cash</strong>
+                            <small>Cash payments</small>
+                        </div>
+
+                    </div>
+
+                    <strong class="payment-amount">
+                        KSh {{ cash_sales|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="payment-divider"></div>
+
+
+                <!-- M-PESA -->
+                <div class="payment-item">
+
+                    <div class="payment-info">
+
+                        <div class="payment-circle mpesa-circle">
+                            <i class="bi bi-phone"></i>
+                        </div>
+
+                        <div>
+                            <strong>M-Pesa</strong>
+                            <small>Mobile payments</small>
+                        </div>
+
+                    </div>
+
+                    <strong class="payment-amount">
+                        KSh {{ mpesa_sales|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <!-- TOTAL -->
+                <div class="payment-total">
+
+                    <span>
+                        Total Sales
+                    </span>
+
+                    <strong>
+                        KSh {{ today_sales_total|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STOCK ALERTS + RECENT PURCHASES
+         ===================================================== -->
+
+    <div class="dashboard-grid bottom-grid">
+
+
+        <!-- STOCK ALERTS -->
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>
+                        <i class="bi bi-boxes"></i>
+                        Stock Alerts
+                    </h5>
+
+                    <span>
+                        Products requiring attention
+                    </span>
+
+                </div>
+
+                <a href="{% url 'inventory_list' %}"
+                   class="panel-link">
+
+                    Inventory
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Reorder</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for item in stock_alerts %}
+
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ item.product.name }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ item.product.category|default:"—" }}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ item.quantity }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ item.reorder_level }}
+                            </td>
+
+                            <td>
+
+                                {% if item.quantity == 0 %}
+
+                                    <span class="stock-badge out">
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        Out of Stock
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="stock-badge low">
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        Low Stock
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="5"
+                                class="empty-table">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                <span>
+                                    All products have sufficient stock
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECENT PURCHASES -->
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>
+                        <i class="bi bi-truck"></i>
+                        Recent Purchases
+                    </h5>
+
+                    <span>
+                        Latest stock received
+                    </span>
+
+                </div>
+
+                <a href="{% url 'purchase_list' %}"
+                   class="panel-link">
+
+                    Purchases
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Supplier</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for purchase in recent_purchases %}
+
+                        <tr>
+
+                            <td>
+                                {{ purchase.purchase_date|date:"d M" }}
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ purchase.product.name }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ purchase.quantity }}
+                            </td>
+
+                            <td>
+                                {{ purchase.supplier }}
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="4"
+                                class="empty-table">
+
+                                <i class="bi bi-truck"></i>
+
+                                <span>
+                                    No purchases recorded
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 

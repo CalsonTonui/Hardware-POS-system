@@ -10,6 +10,10 @@ urlpatterns = [
     path('inventory/', include('inventory.urls')),
     path('purchases/', include('purchases.urls')),
     path('sales/', include('sales.urls')),
+    path('suppliers/', include('suppliers.urls')),
+    path('reports/', include('reports.urls')),
+    path('expenses/', include('expenses.urls')),
+    path('settings/', include('settings_app.urls')),
 ]
 
 if settings.DEBUG:

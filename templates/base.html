@@ -1,94 +1,140 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>
-        {% block title %}Hardware POS{% endblock %}
-    </title>
+<title>
+    {% block title %}Hardware POS{% endblock %}
+</title>
 
+<!-- Bootstrap CSS -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+    rel="stylesheet">
 
+<!-- Custom CSS -->
+<link
+    rel="stylesheet"
+    href="{% static 'css/style.css' %}">
 
-    <!-- Bootstrap Icons -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-        rel="stylesheet">
-
-
-    <!-- Custom CSS -->
-    <link
-        rel="stylesheet"
-        href="{% static 'css/style.css' %}">
-
-
-    <!-- Page-specific CSS -->
-    {% block extra_css %}
-    {% endblock %}
+<!-- Page-specific CSS -->
+{% block extra_css %}
+{% endblock %}
 
 </head>
 
-
 <body>
 
-
-    <!-- Navigation Bar -->
-    {% include 'navbar.html' %}
-
-
-    <div class="container-fluid">
-
-        <div class="row">
+<!-- Navigation Bar -->
+{% include 'navbar.html' %}
 
 
-            <!-- Sidebar -->
-            {% include 'sidebar.html' %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
 
 
-            <!-- Main Content -->
-            <main class="col-md-10 ms-sm-auto px-4 py-4">
+        <!-- Main Content -->
+        <main class="col-md-10 ms-sm-auto px-4 py-4">
 
-                <!-- Django Messages -->
-                {% include 'messages.html' %}
-
-
-                <!-- Page Content -->
-                {% block content %}
-                {% endblock %}
-
-            </main>
+            <!-- Django Messages -->
+            {% include 'messages.html' %}
 
 
-        </div>
+            <!-- Page Content -->
+            {% block content %}
+            {% endblock %}
+
+        </main>
 
     </div>
 
-
-    <!-- Footer -->
-    {% include 'footer.html' %}
+</div>
 
 
-    <!-- Bootstrap JavaScript -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
-    </script>
+<!-- Footer -->
+{% include 'footer.html' %}
 
 
-    <!-- Page-specific JavaScript -->
-    {% block extra_js %}
-    {% endblock %}
+<!-- Bootstrap JavaScript -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+</script>
 
+
+<!-- POS Alert JavaScript -->
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const alerts = document.querySelectorAll(".pos-alert");
+
+        alerts.forEach(function (alert) {
+
+            setTimeout(function () {
+
+                hidePosAlert(alert);
+
+            }, 3000);
+
+        });
+
+    });
+
+
+    function closePosAlert(button) {
+
+        const alert = button.closest(".pos-alert");
+
+        if (alert) {
+
+            hidePosAlert(alert);
+
+        }
+
+    }
+
+
+    function hidePosAlert(alert) {
+
+        if (alert.classList.contains("pos-alert-hide")) {
+
+            return;
+
+        }
+
+        alert.classList.add("pos-alert-hide");
+
+        setTimeout(function () {
+
+            alert.remove();
+
+        }, 300);
+
+    }
+
+</script>
+
+
+<!-- Page-specific JavaScript -->
+{% block extra_js %}
+{% endblock %}
 
 </body>
 

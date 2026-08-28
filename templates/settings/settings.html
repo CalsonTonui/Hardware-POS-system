@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-top">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-gear"></i>
+            Settings
+        </h2>
+
+        <p>
+            Manage your business and POS system preferences
+        </p>
+
+    </div>
+
+</div>
+
+
+<form method="POST">
+
+    {% csrf_token %}
+
+
+    <!-- =========================================
+         BUSINESS INFORMATION
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-1">
+                <i class="bi bi-shop me-2"></i>
+                Business Information
+            </h5>
+
+            <small class="text-muted">
+                Information displayed throughout the POS system and receipts.
+            </small>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Business Name
+                    </label>
+
+                    {{ form.business_name }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Phone Number
+                    </label>
+
+                    {{ form.business_phone }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Email Address
+                    </label>
+
+                    {{ form.business_email }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Location
+                    </label>
+
+                    {{ form.business_location }}
+
+                </div>
+
+
+                <div class="col-12 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Business Address
+                    </label>
+
+                    {{ form.business_address }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         SALES & TAX
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-1">
+                <i class="bi bi-currency-exchange me-2"></i>
+                Sales & Tax
+            </h5>
+
+            <small class="text-muted">
+                Configure currency and tax settings used by the POS.
+            </small>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Currency
+                    </label>
+
+                    {{ form.currency }}
+
+                    <small class="text-muted">
+                        Example: KSh
+                    </small>
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Tax Rate (%)
+                    </label>
+
+                    {{ form.tax_rate }}
+
+                </div>
+
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label fw-semibold">
+                        Low Stock Threshold
+                    </label>
+
+                    {{ form.low_stock_threshold }}
+
+                    <small class="text-muted">
+                        Quantity at which stock becomes low.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         RECEIPT SETTINGS
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-1">
+                <i class="bi bi-receipt me-2"></i>
+                Receipt Settings
+            </h5>
+
+            <small class="text-muted">
+                Control the information shown on printed sales receipts.
+            </small>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="mb-3">
+
+                <label class="form-label fw-semibold">
+                    Receipt Footer
+                </label>
+
+                {{ form.receipt_footer }}
+
+            </div>
+
+
+            <div class="form-check mb-3">
+
+                {{ form.show_business_phone }}
+
+                <label class="form-check-label">
+                    Show business phone on receipts
+                </label>
+
+            </div>
+
+
+            <div class="form-check">
+
+                {{ form.show_business_address }}
+
+                <label class="form-check-label">
+                    Show business address on receipts
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         NOTIFICATIONS
+    ========================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-1">
+                <i class="bi bi-bell me-2"></i>
+                Notifications
+            </h5>
+
+            <small class="text-muted">
+                Choose which inventory alerts the system should display.
+            </small>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="form-check mb-3">
+
+                {{ form.low_stock_notifications }}
+
+                <label class="form-check-label">
+
+                    <strong>
+                        Low stock alerts
+                    </strong>
+
+                    <br>
+
+                    <small class="text-muted">
+                        Notify when products reach the low-stock threshold.
+                    </small>
+
+                </label>
+
+            </div>
+
+
+            <div class="form-check">
+
+                {{ form.out_of_stock_notifications }}
+
+                <label class="form-check-label">
+
+                    <strong>
+                        Out-of-stock alerts
+                    </strong>
+
+                    <br>
+
+                    <small class="text-muted">
+                        Notify when products have completely run out.
+                    </small>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         SAVE
+    ========================================== -->
+
+    <div class="d-flex justify-content-end mb-5">
+
+        <button
+            type="submit"
+            class="btn btn-primary px-4">
+
+            <i class="bi bi-check-circle me-2"></i>
+            Save Settings
+
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}
