@@ -1,10 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="services-page">
+
+    <!-- Professional Page Header -->
+    <div class="services-page-header">
+        <div class="services-header-left">
+            <div class="services-header-icon">
+                <i class="bi bi-tools"></i>
+            </div>
+
+            <div>
+                <h1>
+                    {% if service %}
+                        Edit Service
+                    {% else %}
+                        Add Service
+                    {% endif %}
+                </h1>
+
+                <p>
+                    {% if service %}
+                        Update the service information and pricing.
+                    {% else %}
+                        Create a new service for your business.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <a href="{% url 'service_list' %}" class="services-back-btn">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to Services</span>
+        </a>
+    </div>
+
+
+    <!-- Form Section -->
+    <div class="service-form-wrapper">
+
+        <div class="service-form-card">
+
+            <!-- Form Header -->
+            <div class="service-form-header">
+                <div>
+                    <h2>
+                        <i class="bi bi-info-circle"></i>
+                        Service Information
+                    </h2>
+
+                    <p>
+                        Enter the details of the service below.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Form Body -->
+            <div class="service-form-body">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="service-form-grid">
+
+                        <!-- Service Name -->
+                        <div class="service-field service-field-large">
+
+                            <label for="name">
+                                Service Name
+                                <span>*</span>
+                            </label>
+
+                            <div class="service-input-wrapper">
+                                <i class="bi bi-tools"></i>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    value="{{ service.name|default:'' }}"
+                                    placeholder="e.g. Wood Smoothing"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <!-- Price -->
+                        <div class="service-field">
+
+                            <label for="price">
+                                Service Price
+                                <span>*</span>
+                            </label>
+
+                            <div class="service-input-wrapper">
+                                <span class="currency-prefix">KSh</span>
+
+                                <input
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    value="{{ service.price|default:'' }}"
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <div class="service-field service-field-full">
+
+                            <label for="description">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="description"
+                                name="description"
+                                placeholder="Briefly describe what this service involves..."
+                                rows="5"
+                            >{{ service.description|default:'' }}</textarea>
+
+                            <small>
+                                Optional — provide additional information about the service.
+                            </small>
+
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="service-field service-field-full">
+
+                            <div class="service-status">
+
+                                <div class="service-status-icon">
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+
+                                <div class="service-status-text">
+                                    <strong>Service Status</strong>
+
+                                    <span>
+                                        Control whether this service is currently available.
+                                    </span>
+                                </div>
+
+                                <label class="service-switch">
+
+                                    <input
+                                        type="checkbox"
+                                        name="is_active"
+                                        {% if service %}
+                                            {% if service.is_active %}checked{% endif %}
+                                        {% else %}
+                                            checked
+                                        {% endif %}
+                                    >
+
+                                    <span class="service-slider"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div class="service-form-footer">
+
+                        <a
+                            href="{% url 'service_list' %}"
+                            class="service-cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="service-save-btn"
+                        >
+                            <i class="bi bi-check-lg"></i>
+
+                            {% if service %}
+                                Update Service
+                            {% else %}
+                                Save Service
+                            {% endif %}
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

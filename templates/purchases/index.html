@@ -1,117 +1,215 @@
+
 {% extends 'base.html' %}
 
-{% block title %}Purchases{% endblock %}
+{% block title %}Purchases - Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="row">
+<div class="container-fluid">
 
-<div class="col-lg-4">
+    <!-- =====================================================
+         PURCHASES PAGE HEADER
+         ===================================================== -->
 
-<div class="card shadow">
+    <div class="page-top">
 
-<div class="card-header bg-primary text-white">
+        <div>
+            <h2>
+                <i class="bi bi-cart-check"></i>
+                Purchases
+            </h2>
 
-<h5>New Purchase</h5>
+            <p>
+                Record purchases, manage stock-in transactions and view purchase history
+            </p>
+        </div>
 
-</div>
 
-<div class="card-body">
+        <div class="page-header-right">
 
-<form method="POST">
+            <!-- Date -->
+            <div class="page-date">
 
-{% csrf_token %}
+                <div class="page-date-title">
+                    <i class="bi bi-calendar-day"></i>
+                </div>
 
-{{ form.as_p }}
+                <div class="page-date-value">
+                    {% now "d M Y" %}
+                </div>
 
-<button class="btn btn-success w-100">
+            </div>
 
-Save Purchase
 
-</button>
+            <!-- New Purchase Button -->
+            <a href="#new-purchase"
+               class="page-header-action">
 
-</form>
+                <i class="bi bi-plus-lg"></i>
+                New Purchase
 
-</div>
+            </a>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<div class="col-lg-8">
 
-<div class="card shadow">
+    <!-- =====================================================
+         PURCHASE CONTENT
+         ===================================================== -->
 
-<div class="card-header bg-dark text-white">
+    <div class="row g-4" id="new-purchase">
 
-<h5>Purchase History</h5>
 
-</div>
+        <!-- =================================================
+             NEW PURCHASE FORM
+             ================================================= -->
 
-<div class="card-body">
+        <div class="col-lg-4">
 
-<table class="table table-hover">
+            <div class="card shadow-sm h-100">
 
-<thead>
+                <div class="card-header bg-primary text-white">
 
-<tr>
+                    <h5 class="mb-0">
+                        <i class="bi bi-cart-plus me-2"></i>
+                        New Purchase
+                    </h5>
 
-<th>Date</th>
+                </div>
 
-<th>Supplier</th>
 
-<th>Product</th>
+                <div class="card-body">
 
-<th>Qty</th>
+                    <form method="POST">
 
-<th>Price</th>
+                        {% csrf_token %}
 
-</tr>
+                        {{ form.as_p }}
 
-</thead>
 
-<tbody>
+                        <button type="submit"
+                                class="btn btn-success w-100">
 
-{% for purchase in purchases %}
+                            <i class="bi bi-check-circle me-1"></i>
+                            Save Purchase
 
-<tr>
+                        </button>
 
-<td>{{ purchase.purchase_date|date:"d M Y" }}</td>
+                    </form>
 
-<td>{{ purchase.supplier }}</td>
+                </div>
 
-<td>{{ purchase.product.name }}</td>
+            </div>
 
-<td>{{ purchase.quantity }}</td>
+        </div>
 
-<td>KSh {{ purchase.buying_price }}</td>
 
-</tr>
+        <!-- =================================================
+             PURCHASE HISTORY
+             ================================================= -->
 
-{% empty %}
+        <div class="col-lg-8">
 
-<tr>
+            <div class="card shadow-sm h-100">
 
-<td colspan="5" class="text-center">
+                <div class="card-header bg-dark text-white">
 
-No purchases found.
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history me-2"></i>
+                        Purchase History
+                    </h5>
 
-</td>
+                </div>
 
-</tr>
 
-{% endfor %}
+                <div class="card-body p-0">
 
-</tbody>
+                    <div class="table-responsive">
 
-</table>
+                        <table class="table table-hover mb-0">
 
-</div>
+                            <thead>
 
-</div>
+                                <tr>
 
-</div>
+                                    <th>Date</th>
+
+                                    <th>Supplier</th>
+
+                                    <th>Product</th>
+
+                                    <th>Qty</th>
+
+                                    <th>Price</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            {% for purchase in purchases %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ purchase.purchase_date|date:"d M Y" }}
+                                    </td>
+
+                                    <td>
+                                        {{ purchase.supplier }}
+                                    </td>
+
+                                    <td>
+                                        {{ purchase.product.name }}
+                                    </td>
+
+                                    <td>
+                                        {{ purchase.quantity }}
+                                    </td>
+
+                                    <td>
+                                        KSh {{ purchase.buying_price }}
+                                    </td>
+
+                                </tr>
+
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td colspan="5"
+                                        class="text-center py-4 text-muted">
+
+                                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+
+                                        No purchases found.
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 {% endblock %}
+

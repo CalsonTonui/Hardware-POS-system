@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'products',
     'inventory',
     'suppliers',
-    'customers',
+    'services',
     'purchases',
     'sales',
     'reports',
@@ -147,7 +147,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'login.css'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login.css/'
 AUTH_USER_MODEL = 'accounts.User'

@@ -1,32 +1,38 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Products - Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="products-list-page">
 
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- PAGE HEADER -->
+    <div class="products-header">
 
-        <div>
+        <div class="products-title">
 
-            <h2 class="fw-bold mb-1">
+            <div class="products-title-icon">
                 <i class="bi bi-box-seam"></i>
-                Products
-            </h2>
+            </div>
 
-            <p class="text-muted mb-0">
-                Manage hardware, timber, metals, furniture and other products.
-            </p>
+            <div class="products-title-content">
+
+                <h2>Products</h2>
+
+                <p>
+                    Manage your hardware shop products, pricing and stock.
+                </p>
+
+            </div>
 
         </div>
 
 
         <a href="{% url 'product_add' %}"
-           class="btn btn-primary">
+           class="btn btn-primary products-add-btn">
 
-            <i class="bi bi-plus-circle"></i>
+            <i class="bi bi-plus-lg"></i>
             Add Product
 
         </a>
@@ -34,72 +40,118 @@
     </div>
 
 
-    <!-- Search -->
-    <div class="card shadow-sm mb-4">
+    <!-- PRODUCT STATISTICS -->
+    <div class="product-stats">
 
-        <div class="card-body">
+        <div class="product-stat-card stat-products">
 
-            <form method="GET">
+            <div class="product-stat-icon">
+                <i class="bi bi-box-seam"></i>
+            </div>
 
-                <div class="row g-2">
+            <div class="product-stat-content">
 
-                    <div class="col-md-10">
+                <span>Total Products</span>
 
-                        <div class="input-group">
+                <strong>
+                    {{ total_products }}
+                </strong>
 
-                            <span class="input-group-text">
-                                <i class="bi bi-search"></i>
-                            </span>
+                <small>
+                    Registered products
+                </small>
 
-                            <input
-                                type="text"
-                                name="search"
-                                value="{{ search }}"
-                                class="form-control"
-                                placeholder="Search by product name, category or barcode..."
-                            >
+            </div>
 
-                        </div>
-
-                    </div>
+        </div>
 
 
-                    <div class="col-md-2">
+        <div class="product-stat-card stat-in-stock">
 
-                        <button type="submit"
-                                class="btn btn-primary w-100">
+            <div class="product-stat-icon">
+                <i class="bi bi-check-circle"></i>
+            </div>
 
-                            Search
+            <div class="product-stat-content">
 
-                        </button>
+                <span>In Stock</span>
 
-                    </div>
+                <strong>
+                    {{ in_stock }}
+                </strong>
 
-                </div>
+                <small>
+                    Products available
+                </small>
 
-            </form>
+            </div>
+
+        </div>
+
+
+        <div class="product-stat-card stat-low-stock">
+
+            <div class="product-stat-icon">
+                <i class="bi bi-exclamation-triangle"></i>
+            </div>
+
+            <div class="product-stat-content">
+
+                <span>Low Stock</span>
+
+                <strong>
+                    {{ low_stock }}
+                </strong>
+
+                <small>
+                    Need restocking
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-stat-card stat-out-stock">
+
+            <div class="product-stat-icon">
+                <i class="bi bi-x-circle"></i>
+            </div>
+
+            <div class="product-stat-content">
+
+                <span>Out of Stock</span>
+
+                <strong>
+                    {{ out_of_stock }}
+                </strong>
+
+                <small>
+                    Currently unavailable
+                </small>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- Products Table -->
-    <div class="card shadow-sm">
+    <!-- SEARCH -->
+    <div class="products-search-panel">
 
-        <div class="card-header bg-dark text-white">
+        <div class="products-search-heading">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="search-heading-icon">
+                <i class="bi bi-search"></i>
+            </div>
 
-                <h5 class="mb-0">
+            <div>
 
-                    <i class="bi bi-list-ul"></i>
-                    Product List
+                <h5>Find a Product</h5>
 
-                </h5>
-
-                <span class="badge bg-light text-dark">
-                    {{ products|length }} product{{ products|length|pluralize }}
+                <span>
+                    Search by product name, category or barcode
                 </span>
 
             </div>
@@ -107,227 +159,418 @@
         </div>
 
 
-       <div class="pos-table-wrapper">
+        <form method="GET" class="products-search-form">
 
-    <div class="table-responsive">
+            <div class="products-search-row">
 
-        <table class="table pos-table">
+                <div class="products-search-input">
 
-            <thead>
+                    <i class="bi bi-search"></i>
 
-                <tr>
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search products..."
+                        autocomplete="off"
+                    >
 
-                    <th class="table-index">#</th>
-
-                    <th>Product</th>
-
-                    <th>Category</th>
-
-                    <th>Unit</th>
-
-                    <th>Barcode</th>
-
-                    <th class="text-end">Buying Price</th>
-
-                    <th class="text-end">Selling Price</th>
-
-                    <th class="text-center">Stock</th>
-
-                    <th class="text-center">Actions</th>
-
-                </tr>
-
-            </thead>
+                </div>
 
 
-            <tbody>
+                <button
+                    type="submit"
+                    class="btn btn-primary products-search-btn"
+                >
+
+                    <i class="bi bi-search"></i>
+                    Search
+
+                </button>
+
+
+                {% if search %}
+
+                    <a
+                        href="{% url 'products' %}"
+                        class="btn btn-outline-secondary products-clear-btn"
+                    >
+
+                        <i class="bi bi-x-lg"></i>
+                        Clear
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- PRODUCT CATALOGUE -->
+    <div class="products-table-card">
+
+        <div class="products-table-header">
+
+            <div class="products-table-title">
+
+                <i class="bi bi-grid-3x3-gap"></i>
+
+                <div>
+
+                    <h5>Product Catalogue</h5>
+
+                    <span>
+                        Browse and manage all products in your hardware store
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="products-count-badge">
+
+                <i class="bi bi-box"></i>
+
+                {{ products|length }}
+                product{{ products|length|pluralize }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="products-table-wrap">
+
+            <table class="products-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>S/NO</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Unit</th>
+                        <th>Barcode</th>
+                        <th class="text-end">Buying Price</th>
+                        <th class="text-end">Selling Price</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-center">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
 
                 {% for product in products %}
 
-                <tr>
+                    <tr>
 
-                    <td class="table-index">
-                        {{ forloop.counter }}
-                    </td>
+                        <!-- NUMBER -->
+                        <td class="product-number">
 
+                            {{ forloop.counter }}
 
-                    <td>
-
-                        <span class="product-name">
-                            {{ product.name }}
-                        </span>
-
-                    </td>
+                        </td>
 
 
-                    <td>
+                        <!-- PRODUCT -->
+                        <td>
 
-                        <span class="pos-badge pos-badge-category">
+                            <div class="product-table-name">
 
-                            {{ product.category }}
+                                <div class="product-mini-icon">
 
-                        </span>
+                                    <i class="bi bi-box-seam"></i>
 
-                    </td>
+                                </div>
 
+                                <strong>
+                                    {{ product.name|capfirst }}
+                                </strong>
 
-                    <td>
-                        {{ product.unit }}
-                    </td>
+                            </div>
 
-
-                    <td>
-
-                        {% if product.barcode %}
-
-                            <span class="font-monospace">
-                                {{ product.barcode }}
-                            </span>
-
-                        {% else %}
-
-                            <span class="text-muted">
-                                —
-                            </span>
-
-                        {% endif %}
-
-                    </td>
+                        </td>
 
 
-                    <td class="text-end">
+                        <!-- CATEGORY -->
+                        <td>
 
-                        <span class="price">
+                            <span class="product-category-badge">
 
-                            KSh
-                            {{ product.buying_price|floatformat:2 }}
+                                {% if product.category == 'Hardware' %}
 
-                        </span>
+                                    <i class="bi bi-tools"></i>
 
-                    </td>
+                                {% elif product.category == 'Timber' %}
 
+                                    <i class="bi bi-tree"></i>
 
-                    <td class="text-end">
+                                {% elif product.category == 'Metals' %}
 
-                        <span class="price">
+                                    <i class="bi bi-wrench-adjustable"></i>
 
-                            KSh
-                            {{ product.selling_price|floatformat:2 }}
+                                {% elif product.category == 'Furniture' %}
 
-                        </span>
+                                    <i class="bi bi-house"></i>
 
-                    </td>
+                                {% elif product.category == 'Electrical' %}
 
+                                    <i class="bi bi-lightning-charge"></i>
 
-                    <td class="text-center">
+                                {% elif product.category == 'Plumbing' %}
 
-                        {% with stock=product.inventory.first %}
+                                    <i class="bi bi-droplet"></i>
 
-                            {% if stock %}
+                                {% elif product.category == 'Paint' %}
 
-                                {% if stock.quantity == 0 %}
-
-                                    <span class="pos-badge pos-badge-out">
-
-                                        Out of Stock
-
-                                    </span>
-
-                                {% elif stock.quantity <= stock.reorder_level %}
-
-                                    <span class="pos-badge pos-badge-low">
-
-                                        {{ stock.quantity }}
-                                        {{ product.unit }}
-
-                                    </span>
+                                    <i class="bi bi-palette"></i>
 
                                 {% else %}
 
-                                    <span class="pos-badge pos-badge-stock">
-
-                                        {{ stock.quantity }}
-                                        {{ product.unit }}
-
-                                    </span>
+                                    <i class="bi bi-grid"></i>
 
                                 {% endif %}
 
+                                {{ product.category }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- UNIT -->
+                        <td>
+
+                            <span class="product-unit">
+                                {{ product.unit }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- BARCODE -->
+                        <td>
+
+                            {% if product.barcode %}
+
+                                <div class="product-barcode">
+
+                                    <i class="bi bi-upc-scan"></i>
+
+                                    {{ product.barcode }}
+
+                                </div>
+
                             {% else %}
 
-                                <span class="pos-badge pos-badge-out">
+                                <span class="barcode-none">
 
-                                    Out of Stock
+                                    <i class="bi bi-dash-circle"></i>
+
+                                    No barcode
 
                                 </span>
 
                             {% endif %}
 
-                        {% endwith %}
-
-                    </td>
+                        </td>
 
 
-                    <td class="text-center">
+                        <!-- BUYING PRICE -->
+                        <td class="text-end">
 
-                        <a href="{% url 'product_edit' product.id %}"
-                           class="btn btn-warning btn-sm pos-action-btn"
-                           title="Edit Product">
+                            <span class="buying-price">
 
-                            <i class="bi bi-pencil"></i>
+                                KSh
+                                {{ product.buying_price|floatformat:2 }}
 
-                        </a>
+                            </span>
+
+                        </td>
 
 
-                        <a href="{% url 'product_delete' product.id %}"
-                           class="btn btn-danger btn-sm pos-action-btn"
-                           title="Delete Product">
+                        <!-- SELLING PRICE -->
+                        <td class="text-end">
 
-                            <i class="bi bi-trash"></i>
+                            <span class="selling-price">
 
-                        </a>
+                                KSh
+                                {{ product.selling_price|floatformat:2 }}
 
-                    </td>
+                            </span>
 
-                </tr>
+                        </td>
+
+
+                        <!-- STOCK -->
+                        <td class="text-center">
+
+                            {% with stock=product.inventory.first %}
+
+                                {% if stock %}
+
+                                    {% if stock.quantity == 0 %}
+
+                                        <span class="stock-badge stock-out">
+
+                                            <i class="bi bi-x-circle-fill"></i>
+
+                                            Out of Stock
+
+                                        </span>
+
+                                    {% elif stock.quantity <= stock.reorder_level %}
+
+                                        <span class="stock-badge stock-low">
+
+                                            <i class="bi bi-exclamation-circle-fill"></i>
+
+                                            {{ stock.quantity }}
+                                            {{ product.unit }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="stock-badge stock-good">
+
+                                            <i class="bi bi-check-circle-fill"></i>
+
+                                            {{ stock.quantity }}
+                                            {{ product.unit }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="stock-badge stock-out">
+
+                                        <i class="bi bi-x-circle-fill"></i>
+
+                                        Out of Stock
+
+                                    </span>
+
+                                {% endif %}
+
+                            {% endwith %}
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td class="text-center">
+
+                            <div class="product-actions">
+
+                                <a
+                                    href="{% url 'product_edit' product.id %}"
+                                    class="product-action edit-action"
+                                    title="Edit Product"
+                                >
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'product_delete' product.id %}"
+                                    class="product-action delete-action"
+                                    title="Delete Product"
+                                >
+
+                                    <i class="bi bi-trash3"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
 
 
                 {% empty %}
 
-                <tr>
+                    <tr>
 
-                    <td colspan="9" class="pos-empty">
+                        <td colspan="9" class="products-empty">
 
-                        <div class="pos-empty-icon">
-                            <i class="bi bi-box-seam"></i>
-                        </div>
+                            <div class="products-empty-icon">
 
-                        <h5>No Products Found</h5>
+                                <i class="bi bi-box-seam"></i>
 
-                        <p class="mb-3">
-                            There are currently no products in the system.
-                        </p>
+                            </div>
 
-                        <a href="{% url 'product_add' %}"
-                           class="btn btn-primary">
+                            <h4>No Products Found</h4>
 
-                            <i class="bi bi-plus-circle"></i>
-                            Add Product
+                            {% if search %}
 
-                        </a>
+                                <p>
 
-                    </td>
+                                    No products matched
+                                    "<strong>{{ search }}</strong>".
 
-                </tr>
+                                </p>
+
+                                <a
+                                    href="{% url 'products' %}"
+                                    class="btn btn-outline-secondary"
+                                >
+
+                                    <i class="bi bi-arrow-left"></i>
+
+                                    Clear Search
+
+                                </a>
+
+                            {% else %}
+
+                                <p>
+                                    Start by adding your first product.
+                                </p>
+
+                                <a
+                                    href="{% url 'product_add' %}"
+                                    class="btn btn-primary"
+                                >
+
+                                    <i class="bi bi-plus-lg"></i>
+
+                                    Add Product
+
+                                </a>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
 
                 {% endfor %}
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
 
     </div>
 
 </div>
 
 {% endblock %}
+

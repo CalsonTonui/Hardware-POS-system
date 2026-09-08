@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Purchases - Hardware POS{% endblock %}
@@ -6,33 +7,59 @@
 
 <div class="container-fluid">
 
-    <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- =====================================================
+         PURCHASES PAGE HEADER
+         ===================================================== -->
+
+    <div class="page-top">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
-
+            <h2>
                 <i class="bi bi-box-arrow-in-down"></i>
                 Purchases
-
             </h2>
 
-            <p class="text-muted mb-0">
-
+            <p>
                 Record stock received from suppliers.
-
             </p>
+
+        </div>
+
+
+        <div class="page-header-right">
+
+
+
+            </div>
+
+
+            <!-- New Purchase -->
+            <a href="#new-purchase"
+               class="page-header-action">
+
+                <i class="bi bi-plus-lg"></i>
+
+                New Purchase
+
+            </a>
 
         </div>
 
     </div>
 
 
-    <div class="row g-4">
+    <!-- =====================================================
+         PURCHASE CONTENT
+         ===================================================== -->
+
+    <div class="row g-4" id="new-purchase">
 
 
-        <!-- New Purchase -->
+        <!-- =================================================
+             NEW PURCHASE
+             ================================================= -->
+
         <div class="col-lg-4">
 
             <div class="card shadow-sm">
@@ -41,7 +68,8 @@
 
                     <h5 class="mb-0">
 
-                        <i class="bi bi-plus-circle"></i>
+                        <i class="bi bi-plus-circle me-1"></i>
+
                         New Purchase
 
                     </h5>
@@ -152,11 +180,12 @@
                         </div>
 
 
+                        <!-- Save -->
                         <button
                             type="submit"
                             class="btn btn-success w-100">
 
-                            <i class="bi bi-check-circle"></i>
+                            <i class="bi bi-check-circle me-1"></i>
 
                             Save Purchase
 
@@ -171,7 +200,10 @@
         </div>
 
 
-        <!-- Purchase History -->
+        <!-- =================================================
+             PURCHASE HISTORY
+             ================================================= -->
+
         <div class="col-lg-8">
 
             <div class="card shadow-sm">
@@ -180,7 +212,7 @@
 
                     <h5 class="mb-0">
 
-                        <i class="bi bi-clock-history"></i>
+                        <i class="bi bi-clock-history me-2"></i>
 
                         Purchase History
 
@@ -189,154 +221,174 @@
                 </div>
 
 
-              <div class="pos-table-wrapper">
+                <div class="pos-table-wrapper">
 
-    <div class="table-responsive">
+                    <div class="table-responsive">
 
-        <table class="table pos-table">
+                        <table class="table pos-table">
 
-            <thead>
+                            <thead>
 
-                <tr>
+                                <tr>
 
-                    <th>Date</th>
+                                    <th>Date</th>
 
-                    <th>Supplier</th>
+                                    <th>Supplier</th>
 
-                    <th>Product</th>
+                                    <th>Product</th>
 
-                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">
+                                        Quantity
+                                    </th>
 
-                    <th class="text-end">Buying Price</th>
+                                    <th class="text-end">
+                                        Buying Price
+                                    </th>
 
-                    <th class="text-end">Total</th>
+                                    <th class="text-end">
+                                        Total
+                                    </th>
 
-                </tr>
+                                </tr>
 
-            </thead>
+                            </thead>
 
 
-            <tbody>
+                            <tbody>
 
-                {% for purchase in purchases %}
+                            {% for purchase in purchases %}
 
-                <tr>
+                                <tr>
 
-                    <td>
+                                    <!-- Date -->
+                                    <td>
 
-                        <div class="fw-semibold">
+                                        <div class="fw-semibold">
 
-                            {{ purchase.purchase_date|date:"d M Y" }}
+                                            {{ purchase.purchase_date|date:"d M Y" }}
 
-                        </div>
+                                        </div>
 
-                        <small class="text-muted">
+                                        <small class="text-muted">
 
-                            {{ purchase.purchase_date|date:"H:i" }}
+                                            {{ purchase.purchase_date|date:"H:i" }}
 
-                        </small>
+                                        </small>
 
-                    </td>
+                                    </td>
 
 
-                    <td>
+                                    <!-- Supplier -->
+                                    <td>
 
-                        <span class="fw-semibold">
+                                        <span class="fw-semibold">
 
-                            {{ purchase.supplier }}
+                                            {{ purchase.supplier }}
 
-                        </span>
+                                        </span>
 
-                    </td>
+                                    </td>
 
 
-                    <td>
+                                    <!-- Product -->
+                                    <td>
 
-                        <span class="product-name">
+                                        <span class="product-name">
 
-                            {{ purchase.product.name }}
+                                            {{ purchase.product.name }}
 
-                        </span>
+                                        </span>
 
-                    </td>
+                                    </td>
 
 
-                    <td class="text-center">
+                                    <!-- Quantity -->
+                                    <td class="text-center">
 
-                        <span class="fw-semibold">
+                                        <span class="fw-semibold">
 
-                            {{ purchase.quantity }}
+                                            {{ purchase.quantity }}
 
-                        </span>
+                                        </span>
 
-                        <small class="text-muted">
+                                        <small class="text-muted">
 
-                            {{ purchase.product.unit }}
+                                            {{ purchase.product.unit }}
 
-                        </small>
+                                        </small>
 
-                    </td>
+                                    </td>
 
 
-                    <td class="text-end">
+                                    <!-- Buying Price -->
+                                    <td class="text-end">
 
-                        <span class="price">
+                                        <span class="price">
 
-                            KSh
-                            {{ purchase.buying_price|floatformat:2 }}
+                                            KSh
+                                            {{ purchase.buying_price|floatformat:2 }}
 
-                        </span>
+                                        </span>
 
-                    </td>
+                                    </td>
 
 
-                    <td class="text-end">
+                                    <!-- Total -->
+                                    <td class="text-end">
 
-                        <span class="total">
+                                        <span class="total">
 
-                            KSh
-                            {{ purchase.total_amount|floatformat:2 }}
+                                            KSh
+                                            {{ purchase.total_amount|floatformat:2 }}
 
-                        </span>
+                                        </span>
 
-                    </td>
+                                    </td>
 
-                </tr>
+                                </tr>
 
 
-                {% empty %}
+                            {% empty %}
 
-                <tr>
+                                <tr>
 
-                    <td colspan="6" class="pos-empty">
+                                    <td colspan="6" class="pos-empty">
 
-                        <div class="pos-empty-icon">
+                                        <div class="pos-empty-icon">
 
-                            <i class="bi bi-box-arrow-in-down"></i>
+                                            <i class="bi bi-box-arrow-in-down"></i>
 
-                        </div>
+                                        </div>
 
-                        <h5>No Purchases Found</h5>
+                                        <h5>No Purchases Found</h5>
 
-                        <p class="mb-0">
+                                        <p class="mb-0">
 
-                            Recorded purchases will appear here.
+                                            Recorded purchases will appear here.
 
-                        </p>
+                                        </p>
 
-                    </td>
+                                    </td>
 
-                </tr>
+                                </tr>
 
-                {% endfor %}
+                            {% endfor %}
 
-            </tbody>
+                            </tbody>
 
-        </table>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
-
 
 </div>
 
 {% endblock %}
+

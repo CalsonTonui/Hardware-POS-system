@@ -234,9 +234,10 @@
                             <th>Sale</th>
                             <th>Time</th>
                             <th>Product</th>
-                            <th>Qty</th>
+                            <th class="text-center">Sold Qty</th>
+                            <th class="text-center">Remaining Qty</th>
                             <th>Payment</th>
-                            <th>Total</th>
+                            <th class="text-end">Total</th>
                         </tr>
 
                     </thead>
@@ -247,26 +248,66 @@
 
                         <tr>
 
+                            <!-- SALE NUMBER -->
                             <td>
                                 <span class="sale-number">
                                     SALE-{{ sale.id }}
                                 </span>
                             </td>
 
+                            <!-- TIME -->
                             <td>
-                                {{ sale.sale_date|date:"H:i" }}
+                                <span class="fw-semibold">
+                                    {{ sale.sale_date|date:"H:i" }}
+                                </span>
                             </td>
 
+                            <!-- PRODUCT -->
                             <td>
                                 <strong>
                                     {{ sale.product.name }}
                                 </strong>
                             </td>
 
-                            <td>
-                                {{ sale.quantity }}
+                            <!-- SOLD QUANTITY -->
+                            <td class="text-center">
+
+                                <span class="badge bg-primary">
+                                    {{ sale.quantity }}
+                                </span>
+
+                                <small class="text-muted">
+                                    {{ sale.product.unit }}
+                                </small>
+
                             </td>
 
+                            <!-- REMAINING QUANTITY -->
+                            <td class="text-center">
+
+                                {% if sale.remaining_quantity == 0 %}
+
+                                    <span class="badge bg-danger">
+                                        0
+                                    </span>
+
+                                {% elif sale.remaining_quantity <= 5 %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        {{ sale.remaining_quantity }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success">
+                                        {{ sale.remaining_quantity }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <!-- PAYMENT -->
                             <td>
 
                                 {% if sale.payment_method == 'M-Pesa' %}
@@ -287,10 +328,13 @@
 
                             </td>
 
-                            <td>
+                            <!-- TOTAL -->
+                            <td class="text-end">
+
                                 <strong>
                                     KSh {{ sale.total_amount|floatformat:2 }}
                                 </strong>
+
                             </td>
 
                         </tr>
@@ -299,8 +343,7 @@
 
                         <tr>
 
-                            <td colspan="6"
-                                class="empty-table">
+                            <td colspan="7" class="empty-table">
 
                                 <i class="bi bi-receipt"></i>
 

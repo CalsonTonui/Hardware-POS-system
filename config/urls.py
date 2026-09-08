@@ -3,6 +3,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +19,7 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     path('expenses/', include('expenses.urls')),
     path('settings/', include('settings_app.urls')),
+    path('services/', include('services.urls')),
 
     # Authentication
     path(

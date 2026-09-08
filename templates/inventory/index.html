@@ -6,28 +6,41 @@
 
 <div class="container-fluid">
 
-    <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+   <!-- =====================================================
+     INVENTORY PAGE HEADER
+     ===================================================== -->
 
-        <div>
-            <h2 class="fw-bold mb-1 inventory-title">
-                <i class="bi bi-boxes"></i>
-                Inventory
-            </h2>
+<div class="page-top">
 
-            <p class="text-muted mb-0">
-                Monitor current stock levels and availability
-            </p>
-        </div>
+    <div>
+        <h2>
+            <i class="bi bi-boxes"></i>
+            Inventory
+        </h2>
 
+        <p>
+            Monitor current stock levels and availability
+        </p>
+    </div>
+
+
+    <div class="page-header-right">
+
+
+
+
+        <!-- Stock In Button -->
         <a href="{% url 'purchase_list' %}"
-           class="btn btn-success inventory-stock-btn">
+           class="page-header-action">
 
             <i class="bi bi-box-arrow-in-down"></i>
             Stock In
 
         </a>
 
+    </div>
+
+</div>
     </div>
 
 

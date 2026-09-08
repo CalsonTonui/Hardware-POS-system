@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Suppliers
+Suppliers | Hardware POS
 {% endblock %}
 
 {% block content %}
 
-<div class="dashboard-page">
+<div class="page-container supplier-page">
 
-    <!-- Page Header -->
-    <div class="dashboard-top">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
+    <div class="page-top">
 
         <div>
             <h2>
@@ -22,80 +25,48 @@ Suppliers
             </p>
         </div>
 
-        <a href="{% url 'supplier_add' %}"
-           class="btn btn-primary">
+        <div class="page-header-right">
 
-            <i class="bi bi-plus-lg"></i>
-            Add Supplier
 
-        </a>
+
+            <a href="{% url 'supplier_add' %}"
+               class="page-header-action">
+
+                <i class="bi bi-plus-lg"></i>
+                Add Supplier
+
+            </a>
+
+        </div>
 
     </div>
 
 
-    <!-- Search and Count -->
-    <div class="card shadow-sm border-0 mb-4">
+    <!-- =====================================================
+         SUPPLIER STAT
+         ===================================================== -->
 
-        <div class="card-body">
+    <div class="supplier-stat-grid">
 
-            <div class="row align-items-center">
+        <div class="supplier-stat-card">
 
-                <div class="col-md-8">
+            <div class="supplier-stat-icon">
+                <i class="bi bi-truck"></i>
+            </div>
 
-                    <form method="GET">
+            <div class="supplier-stat-content">
 
-                        <div class="input-group">
+                <span>
+                    Total Suppliers
+                </span>
 
-                            <span class="input-group-text">
-                                <i class="bi bi-search"></i>
-                            </span>
+                <strong>
+                    {{ supplier_count }}
+                </strong>
 
-                            <input
-                                type="text"
-                                name="search"
-                                value="{{ search }}"
-                                class="form-control"
-                                placeholder="Search supplier by name, phone or address"
-                            >
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary">
-
-                                Search
-
-                            </button>
-
-                            {% if search %}
-
-                                <a
-                                    href="{% url 'supplier_list' %}"
-                                    class="btn btn-outline-secondary">
-
-                                    Clear
-
-                                </a>
-
-                            {% endif %}
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
-
-                    <span class="text-muted">
-                        Total Suppliers:
-                    </span>
-
-                    <strong class="ms-1">
-                        {{ supplier_count }}
-                    </strong>
-
-                </div>
+                <small>
+                    Registered suppliers
+                </small>
 
             </div>
 
@@ -104,21 +75,116 @@ Suppliers
     </div>
 
 
-    <!-- Suppliers Table -->
-    <div class="dashboard-panel">
+    <!-- =====================================================
+         SEARCH
+         ===================================================== -->
 
-        <div class="panel-header">
+    <div class="supplier-search-card">
+
+        <div class="supplier-search-header">
+
+            <div class="supplier-section-icon">
+                <i class="bi bi-search"></i>
+            </div>
 
             <div>
 
                 <h5>
-                    <i class="bi bi-people"></i>
-                    Supplier List
+                    Find Supplier
                 </h5>
 
-                <span>
-                    Registered suppliers
-                </span>
+                <p>
+                    Search by supplier name, phone number or address
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form method="GET"
+              class="supplier-search-form">
+
+            <div class="supplier-search-input">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search suppliers..."
+                >
+
+            </div>
+
+
+            <button type="submit"
+                    class="supplier-search-btn">
+
+                <i class="bi bi-search"></i>
+                Search
+
+            </button>
+
+
+            {% if search %}
+
+                <a href="{% url 'supplier_list' %}"
+                   class="supplier-clear-btn">
+
+                    <i class="bi bi-x-lg"></i>
+                    Clear
+
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUPPLIER TABLE
+         ===================================================== -->
+
+    <div class="supplier-list-card">
+
+        <div class="supplier-list-header">
+
+            <div>
+
+                <div class="supplier-list-title">
+
+                    <div class="supplier-section-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Supplier List
+                        </h5>
+
+                        <span>
+                            All registered suppliers
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="supplier-count-badge">
+
+                <i class="bi bi-people"></i>
+
+                {{ supplier_count }}
+
+                Supplier{{ supplier_count|pluralize }}
 
             </div>
 
@@ -127,7 +193,7 @@ Suppliers
 
         <div class="table-responsive">
 
-            <table class="dashboard-table">
+            <table class="supplier-table">
 
                 <thead>
 
@@ -135,13 +201,15 @@ Suppliers
 
                         <th>#</th>
 
-                        <th>Supplier Name</th>
+                        <th>Supplier</th>
 
                         <th>Phone</th>
 
                         <th>Address</th>
 
-                        <th>Actions</th>
+                        <th class="text-end">
+                            Actions
+                        </th>
 
                     </tr>
 
@@ -154,32 +222,65 @@ Suppliers
 
                     <tr>
 
-                        <td class="sale-number">
-                            {{ forloop.counter }}
-                        </td>
-
+                        <!-- Number -->
 
                         <td>
 
-                            <strong>
-                                {{ supplier.name }}
-                            </strong>
+                            <span class="supplier-number">
+                                {{ forloop.counter }}
+                            </span>
 
                         </td>
 
+
+                        <!-- Supplier -->
+
+                        <td>
+
+                            <div class="supplier-name-cell">
+
+                                <div class="supplier-avatar">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        {{ supplier.name }}
+                                    </strong>
+
+                                    <small>
+                                        Supplier
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Phone -->
 
                         <td>
 
                             {% if supplier.phone %}
 
-                                <span>
-                                    <i class="bi bi-telephone me-1"></i>
-                                    {{ supplier.phone }}
-                                </span>
+                                <div class="supplier-contact">
+
+                                    <span class="supplier-contact-icon">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+
+                                    <span>
+                                        {{ supplier.phone }}
+                                    </span>
+
+                                </div>
 
                             {% else %}
 
-                                <span class="text-muted">
+                                <span class="supplier-not-provided">
                                     Not provided
                                 </span>
 
@@ -187,16 +288,28 @@ Suppliers
 
                         </td>
 
+
+                        <!-- Address -->
 
                         <td>
 
                             {% if supplier.address %}
 
-                                {{ supplier.address }}
+                                <div class="supplier-contact">
+
+                                    <span class="supplier-contact-icon">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </span>
+
+                                    <span>
+                                        {{ supplier.address }}
+                                    </span>
+
+                                </div>
 
                             {% else %}
 
-                                <span class="text-muted">
+                                <span class="supplier-not-provided">
                                     Not provided
                                 </span>
 
@@ -205,44 +318,75 @@ Suppliers
                         </td>
 
 
+                        <!-- Actions -->
+
                         <td>
 
-                            <a
-                                href="{% url 'supplier_edit' supplier.pk %}"
-                                class="btn btn-sm btn-outline-primary"
-                                title="Edit supplier">
+                            <div class="supplier-actions">
 
-                                <i class="bi bi-pencil"></i>
+                                <a
+                                    href="{% url 'supplier_edit' supplier.pk %}"
+                                    class="supplier-action-edit"
+                                    title="Edit supplier">
 
-                            </a>
+                                    <i class="bi bi-pencil"></i>
+                                    <span>Edit</span>
+
+                                </a>
 
 
-                            <a
-                                href="{% url 'supplier_delete' supplier.pk %}"
-                                class="btn btn-sm btn-outline-danger"
-                                title="Delete supplier">
+                                <a
+                                    href="{% url 'supplier_delete' supplier.pk %}"
+                                    class="supplier-action-delete"
+                                    title="Delete supplier">
 
-                                <i class="bi bi-trash"></i>
+                                    <i class="bi bi-trash"></i>
+                                    <span>Delete</span>
 
-                            </a>
+                                </a>
+
+                            </div>
 
                         </td>
 
                     </tr>
 
+
                     {% empty %}
 
                     <tr>
 
-                        <td
-                            colspan="5"
-                            class="empty-table">
+                        <td colspan="5">
 
-                            <i class="bi bi-truck"></i>
+                            <div class="supplier-empty">
 
-                            <span>
-                                No suppliers found.
-                            </span>
+                                <div class="supplier-empty-icon">
+
+                                    <i class="bi bi-truck"></i>
+
+                                </div>
+
+                                <h5>
+                                    No suppliers found
+                                </h5>
+
+                                <p>
+                                    {% if search %}
+                                        No suppliers match your search.
+                                    {% else %}
+                                        Start by adding your first supplier.
+                                    {% endif %}
+                                </p>
+
+                                <a href="{% url 'supplier_add' %}"
+                                   class="page-header-action">
+
+                                    <i class="bi bi-plus-lg"></i>
+                                    Add Supplier
+
+                                </a>
+
+                            </div>
 
                         </td>
 

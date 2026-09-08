@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import (Q, F)
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .models import Product
@@ -20,9 +20,34 @@ def product_list(request):
             Q(category__icontains=search)
         )
 
+    # =====================================================
+    # PRODUCT STATISTICS
+    # =====================================================
+
+    total_products = Product.objects.count()
+
+    in_stock = Inventory.objects.filter(
+        quantity__gt=0
+    ).values('product').distinct().count()
+
+    low_stock = Inventory.objects.filter(
+        quantity__gt=0,
+        quantity__lte=F('reorder_level')
+    ).values('product').distinct().count()
+
+    out_of_stock = Product.objects.filter(
+        inventory__quantity=0
+    ).distinct().count()
+
     context = {
         'products': products,
         'search': search,
+
+        # Statistics
+        'total_products': total_products,
+        'in_stock': in_stock,
+        'low_stock': low_stock,
+        'out_of_stock': out_of_stock,
     }
 
     return render(
@@ -30,8 +55,6 @@ def product_list(request):
         'products/index.html',
         context
     )
-
-
 def product_add(request):
 
     if request.method == 'POST':

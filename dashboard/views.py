@@ -3,7 +3,7 @@ from django.db.models import Sum, F, DecimalField, ExpressionWrapper
 from django.utils import timezone
 
 from products.models import Product
-from customers.models import Customer
+from services.models import Service
 from inventory.models import Inventory
 from purchases.models import Purchase
 from sales.models import Sale
@@ -20,7 +20,7 @@ def dashboard(request):
 
     product_count = Product.objects.count()
 
-    customer_count = Customer.objects.count()
+    services_count = Service.objects.count()
 
     total_stock = Inventory.objects.aggregate(
         total=Sum('quantity')
@@ -35,7 +35,6 @@ def dashboard(request):
         quantity=0
     ).count()
 
-
     # =====================================================
     # TODAY'S SALES
     # =====================================================
@@ -48,24 +47,19 @@ def dashboard(request):
         total=Sum('total_amount')
     )['total'] or 0
 
-
     # Cash sales
-
     cash_sales = today_sales.filter(
         payment_method='Cash'
     ).aggregate(
         total=Sum('total_amount')
     )['total'] or 0
 
-
     # M-Pesa sales
-
     mpesa_sales = today_sales.filter(
         payment_method='M-Pesa'
     ).aggregate(
         total=Sum('total_amount')
     )['total'] or 0
-
 
     # =====================================================
     # TODAY'S PURCHASES
@@ -87,19 +81,59 @@ def dashboard(request):
         total=Sum(purchase_total_expression)
     )['total'] or 0
 
-
     # =====================================================
     # TODAY'S SALES TABLE
     # =====================================================
 
-    recent_sales = Sale.objects.select_related(
-        'product'
-    ).filter(
-        sale_date__date=today
-    ).order_by(
-        '-sale_date'
-    )[:10]
+    recent_sales = list(
+        Sale.objects.select_related(
+            'product'
+        ).filter(
+            sale_date__date=today
+        ).order_by(
+            'sale_date'
+        )[:10]
+    )
 
+    # Calculate remaining stock after each sale
+    sales_running_stock = {}
+
+    for sale in recent_sales:
+
+        product_id = sale.product_id
+
+        # Get current stock
+        inventory = Inventory.objects.filter(
+            product_id=product_id
+        ).first()
+
+        current_stock = inventory.quantity if inventory else 0
+
+        # Start with current stock plus all sales made today
+        if product_id not in sales_running_stock:
+
+            today_product_sales = Sale.objects.filter(
+                product_id=product_id,
+                sale_date__date=today
+            ).aggregate(
+                total=Sum('quantity')
+            )['total'] or 0
+
+            sales_running_stock[product_id] = (
+                current_stock + today_product_sales
+            )
+
+    # Calculate remaining quantity for each sale
+    for sale in recent_sales:
+
+        product_id = sale.product_id
+
+        sales_running_stock[product_id] -= sale.quantity
+
+        sale.remaining_quantity = sales_running_stock[product_id]
+
+    # Display newest sales first
+    recent_sales.reverse()
 
     # =====================================================
     # STOCK ALERTS
@@ -113,7 +147,6 @@ def dashboard(request):
         'quantity'
     )[:10]
 
-
     # =====================================================
     # RECENT PURCHASES
     # =====================================================
@@ -125,7 +158,6 @@ def dashboard(request):
         '-purchase_date'
     )[:5]
 
-
     # =====================================================
     # CONTEXT
     # =====================================================
@@ -134,7 +166,7 @@ def dashboard(request):
 
         # Basic counts
         'product_count': product_count,
-        'customer_count': customer_count,
+        'services_count': services_count,
         'total_stock': total_stock,
 
         # Stock
@@ -154,7 +186,6 @@ def dashboard(request):
         # Stock alerts
         'stock_alerts': stock_alerts,
     }
-
 
     return render(
         request,

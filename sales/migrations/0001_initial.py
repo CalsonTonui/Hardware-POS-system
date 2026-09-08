@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('customers', '0001_initial'),
+        ('services', '0001_initial'),
         ('products', '0002_remove_product_quantity'),
     ]
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.PositiveIntegerField()),
                 ('selling_price', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('sale_date', models.DateTimeField(auto_now_add=True)),
-                ('customer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='customers.customer')),
+                ('customer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='services.customer')),
                 ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product')),
             ],
         ),

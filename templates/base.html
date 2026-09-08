@@ -1,7 +1,5 @@
 {% load static %}
 
-<!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -42,28 +40,24 @@
 {% include 'navbar.html' %}
 
 
-<div class="container-fluid">
+<div class="pos-layout">
 
-    <div class="row">
-
-        <!-- Sidebar -->
-        {% include 'sidebar.html' %}
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
 
 
-        <!-- Main Content -->
-        <main class="col-md-10 ms-sm-auto px-4 py-4">
+    <!-- Main Content -->
+    <main class="pos-main-content">
 
-            <!-- Django Messages -->
-            {% include 'messages.html' %}
+        <!-- Django Messages -->
+        {% include 'messages.html' %}
 
 
-            <!-- Page Content -->
-            {% block content %}
-            {% endblock %}
+        <!-- Page Content -->
+        {% block content %}
+        {% endblock %}
 
-        </main>
-
-    </div>
+    </main>
 
 </div>
 
@@ -130,7 +124,95 @@
     }
 
 </script>
+<!-- Sidebar JavaScript -->
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const sidebarToggle = document.getElementById("sidebarToggle");
+
+    if (!sidebarToggle) {
+        return;
+    }
+
+
+    sidebarToggle.addEventListener("click", function () {
+
+        if (window.innerWidth <= 768) {
+
+            document.body.classList.toggle("sidebar-mobile-open");
+
+        } else {
+
+            document.body.classList.toggle("sidebar-collapsed");
+
+        }
+
+    });
+
+
+    /*
+     * Close mobile sidebar when a navigation link is clicked
+     */
+    const sidebarLinks = document.querySelectorAll(
+        ".sidebar-link[href]"
+    );
+
+
+    sidebarLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            if (window.innerWidth <= 768) {
+
+                document.body.classList.remove(
+                    "sidebar-mobile-open"
+                );
+
+            }
+
+        });
+
+    });
+
+
+    /*
+     * Remember collapsed state
+     */
+    if (
+        window.innerWidth > 768 &&
+        localStorage.getItem("sidebarCollapsed") === "true"
+    ) {
+
+        document.body.classList.add("sidebar-collapsed");
+
+    }
+
+
+    /*
+     * Save collapsed state
+     */
+    sidebarToggle.addEventListener("click", function () {
+
+        if (window.innerWidth > 768) {
+
+            const collapsed =
+                document.body.classList.contains(
+                    "sidebar-collapsed"
+                );
+
+            localStorage.setItem(
+                "sidebarCollapsed",
+                collapsed
+            );
+
+        }
+
+    });
+
+});
+
+</script>
 
 <!-- Page-specific JavaScript -->
 {% block extra_js %}

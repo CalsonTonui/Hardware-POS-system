@@ -1,10 +1,309 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="services-module">
+
+    <!-- =====================================================
+         PAGE HEADER BLOCK
+         ===================================================== -->
+    <div class="services-main-header">
+
+        <div class="services-title-section">
+
+            <div class="services-title-icon">
+                <i class="bi bi-tools"></i>
+            </div>
+
+            <div>
+                <h1>Services</h1>
+                <p>Manage the services offered by your hardware business.</p>
+            </div>
+
+        </div>
+
+        <a href="{% url 'service_create' %}" class="services-add-button">
+            <i class="bi bi-plus-lg"></i>
+            Add Service
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+    <div class="services-stat-grid">
+
+        <div class="services-stat-card">
+            <div class="services-stat-icon services-blue">
+                <i class="bi bi-tools"></i>
+            </div>
+
+            <div>
+                <span>Total Services</span>
+                <strong>{{ service_count }}</strong>
+            </div>
+        </div>
+
+
+        <div class="services-stat-card">
+            <div class="services-stat-icon services-green">
+                <i class="bi bi-check-circle"></i>
+            </div>
+
+            <div>
+                <span>Active Services</span>
+                <strong>{{ active_service_count }}</strong>
+            </div>
+        </div>
+
+
+        <div class="services-stat-card">
+            <div class="services-stat-icon services-gray">
+                <i class="bi bi-pause-circle"></i>
+            </div>
+
+            <div>
+                <span>Inactive Services</span>
+                <strong>{{ inactive_service_count }}</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH BLOCK
+         ===================================================== -->
+    <div class="services-search-card">
+
+        <div class="services-search-title">
+            <div class="services-search-icon">
+                <i class="bi bi-search"></i>
+            </div>
+
+            <div>
+                <strong>Search Services</strong>
+                <span>Find a service by name.</span>
+            </div>
+        </div>
+
+        <form method="GET" class="services-search-form">
+
+            <div class="services-search-input">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search services..."
+                >
+
+            </div>
+
+            <button type="submit">
+                Search
+            </button>
+
+            {% if search %}
+                <a href="{% url 'service_list' %}" class="services-clear-search">
+                    Clear
+                </a>
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         SERVICE CATALOGUE
+         ===================================================== -->
+    <div class="services-catalogue-card">
+
+        <!-- Catalogue Header -->
+        <div class="services-catalogue-header">
+
+            <div class="services-catalogue-title">
+
+                <div class="services-catalogue-icon">
+                    <i class="bi bi-grid-3x3-gap"></i>
+                </div>
+
+                <div>
+                    <h2>Service Catalogue</h2>
+                    <p>Available services and pricing</p>
+                </div>
+
+            </div>
+
+            <div class="services-catalogue-count">
+                {{ services|length }} Services
+            </div>
+
+        </div>
+
+
+        <!-- Table -->
+        <div class="services-table-wrapper">
+
+            <table class="services-table">
+
+                <thead>
+                    <tr>
+                        <th class="services-number-column">S/NO</th>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th class="services-actions-column">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for service in services %}
+
+                    <tr>
+
+                        <td class="services-number">
+                            {{ forloop.counter }}
+                        </td>
+
+
+                        <td>
+
+                            <div class="services-name-cell">
+
+                                <div class="services-row-icon">
+                                    <i class="bi bi-tools"></i>
+                                </div>
+
+                                <strong>
+                                    {{ service.name|capfirst }}
+                                </strong>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if service.description %}
+                                <span class="services-description">
+                                    {{ service.description }}
+                                </span>
+                            {% else %}
+                                <span class="services-no-description">
+                                    No description
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="services-price">
+                                KSh {{ service.price|floatformat:2 }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if service.is_active %}
+
+                                <span class="services-status active">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="services-status inactive">
+                                    <i class="bi bi-pause-circle-fill"></i>
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="services-actions">
+
+                                <a
+                                    href="{% url 'service_edit' service.id %}"
+                                    class="services-action edit"
+                                    title="Edit Service"
+                                >
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <a
+                                    href="{% url 'service_delete' service.id %}"
+                                    class="services-action delete"
+                                    title="Delete Service"
+                                >
+                                    <i class="bi bi-trash"></i>
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="services-empty">
+
+                                <div class="services-empty-icon">
+                                    <i class="bi bi-tools"></i>
+                                </div>
+
+                                <h3>No Services Found</h3>
+
+                                <p>
+                                    You haven't added any services yet.
+                                </p>
+
+                                <a
+                                    href="{% url 'service_create' %}"
+                                    class="services-add-button"
+                                >
+                                    <i class="bi bi-plus-lg"></i>
+                                    Add First Service
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

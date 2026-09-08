@@ -1,93 +1,302 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-Login - Hardware POS
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
 
-<div class="row justify-content-center mt-5">
+    <meta charset="UTF-8">
 
-    <div class="col-md-5 col-lg-4">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-        <div class="card border-0 shadow-sm">
+    <title>Login | Carolivan-Pkemoi Hardware</title>
 
-            <div class="card-body p-4">
 
-                <div class="text-center mb-4">
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-                    <div class="mb-3">
-                        <i class="bi bi-shop fs-1 text-primary"></i>
-                    </div>
 
-                    <h3 class="fw-bold">Hardware POS</h3>
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+        rel="stylesheet">
 
-                    <p class="text-muted">
-                        Sign in to continue
-                    </p>
 
-                </div>
+    <!-- Custom Login CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}">
 
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        Invalid username or password.
-                    </div>
-                {% endif %}
+</head>
+
+
+<body class="login-page">
+
+
+<div class="login-wrapper">
+
+
+    <!-- =====================================================
+         LEFT SIDE - IMAGE
+         ===================================================== -->
+
+    <div class="login-image-section">
+    </div>
+
+
+    <!-- =====================================================
+         RIGHT SIDE - LOGIN
+         ===================================================== -->
+
+    <div class="login-section">
+
+        <div class="login-content">
+
+
+            <!-- =================================================
+                 LOGO
+                 ================================================= -->
+
+            <div class="login-logo">
+
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    alt="Carolivan-Pkemoi Hardware Logo">
+
+            </div>
+
+
+            <!-- =================================================
+                 WELCOME
+                 ================================================= -->
+
+            <h1 class="login-title">
+                Hi, welcome back
+            </h1>
+
+
+            <p class="login-description">
+                Please fill in your details to log in
+            </p>
+
+
+            <!-- =================================================
+                 LOGIN CARD
+                 ================================================= -->
+
+            <div class="login-card">
 
                 <form method="post">
 
                     {% csrf_token %}
 
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
+
+                    <!-- USERNAME -->
+
+                    <div class="login-form-group">
+
+                        <label for="id_username">
                             Username
                         </label>
 
-                        <input
-                            type="text"
-                            name="username"
-                            class="form-control"
-                            placeholder="Enter username"
-                            required
-                            autofocus
-                        >
+                        <div class="login-input-wrapper">
+
+                            <i class="bi bi-person"></i>
+
+                            <input
+                                type="text"
+                                name="username"
+                                id="id_username"
+                                class="login-input"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required>
+
+                        </div>
+
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
+
+                    <!-- PASSWORD -->
+
+                    <div class="login-form-group">
+
+                        <label for="id_password">
                             Password
                         </label>
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Enter password"
-                            required
-                        >
+                        <div class="login-input-wrapper">
+
+                            <i class="bi bi-lock"></i>
+
+                            <input
+                                type="password"
+                                name="password"
+                                id="id_password"
+                                class="login-input"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required>
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show or hide password">
+
+                                <i
+                                    class="bi bi-eye"
+                                    id="passwordIcon">
+                                </i>
+
+                            </button>
+
+                        </div>
+
                     </div>
 
-                    <input
-                        type="hidden"
-                        name="next"
-                        value="{{ next }}"
-                    >
+
+                    <!-- ERROR -->
+
+                    {% if form.errors %}
+
+                        <div class="login-error">
+
+                            <i class="bi bi-exclamation-circle"></i>
+
+                            <span>
+                                Invalid username or password.
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         REMEMBER / FORGOT
+                         ================================================= -->
+
+                    <div class="login-options">
+
+                        <label class="remember-me">
+
+                            <input
+                                type="checkbox"
+                                name="remember_me">
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+
+                        <a
+                            href="#"
+                            class="forgot-password">
+
+                            Forgot Password?
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SIGN IN BUTTON
+                         ================================================= -->
 
                     <button
                         type="submit"
-                        class="btn btn-primary w-100">
-                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        class="login-button">
+
                         Sign In
+
                     </button>
 
                 </form>
 
             </div>
 
+
+            <!-- =================================================
+                 SIGN UP
+                 ================================================= -->
+
+            <div class="signup-text">
+
+                Don't have an account?
+
+                <a href="#">
+                    Sign Up
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER
+                 ================================================= -->
+
+            <div class="login-footer">
+
+                © {% now "Y" %}
+                Carolivan Hardware &amp; General Supplies
+
+            </div>
+
+
         </div>
 
     </div>
 
+
 </div>
 
-{% endblock %}
+
+<!-- =========================================================
+     PASSWORD TOGGLE
+     ========================================================= -->
+
+<script>
+
+function togglePassword() {
+
+    const password =
+        document.getElementById("id_password");
+
+    const icon =
+        document.getElementById("passwordIcon");
+
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        icon.classList.remove("bi-eye");
+
+        icon.classList.add("bi-eye-slash");
+
+    } else {
+
+        password.type = "password";
+
+        icon.classList.remove("bi-eye-slash");
+
+        icon.classList.add("bi-eye");
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

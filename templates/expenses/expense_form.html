@@ -1,61 +1,156 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ title }}
+{{ title }} | Hardware POS
 {% endblock %}
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="page-container expense-form-page">
 
-    <div class="col-lg-7">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
 
-        <div class="d-flex align-items-center mb-4">
+    <div class="page-top">
 
-            <div>
-                <h2 class="mb-1">
-                    <i class="bi bi-cash-stack me-2"></i>
-                    {{ title }}
-                </h2>
+        <div>
 
-                <p class="text-muted mb-0">
-                    Record a business expense
-                </p>
-            </div>
+            <h2>
+                <i class="bi bi-cash-stack"></i>
+                {{ title }}
+            </h2>
+
+            <p>
+                Record and manage business expenses
+            </p>
 
         </div>
 
 
-        <div class="card shadow-sm border-0">
+        <div class="page-header-right">
 
-            <div class="card-header bg-white py-3">
 
-                <h5 class="mb-0">
-                    Expense Information
-                </h5>
+
+
+            <a href="{% url 'expense_list' %}"
+               class="expense-back-btn">
+
+                <i class="bi bi-arrow-left"></i>
+                Back to Expenses
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FORM LAYOUT
+         ===================================================== -->
+
+    <div class="expense-form-layout">
+
+
+        <!-- =================================================
+             MAIN FORM
+             ================================================= -->
+
+        <div class="expense-form-card">
+
+            <div class="expense-form-header">
+
+                <div class="expense-form-header-icon">
+                    <i class="bi bi-receipt"></i>
+                </div>
+
+                <div>
+
+                    <h4>
+                        Expense Information
+                    </h4>
+
+                    <p>
+                        Enter the details of the business expense below.
+                    </p>
+
+                </div>
 
             </div>
 
-            <div class="card-body">
+
+            <div class="expense-form-body">
 
                 <form method="POST">
 
                     {% csrf_token %}
 
+
                     {% for field in form %}
 
-                        <div class="mb-3">
+                        <div class="expense-form-group">
 
-                            <label class="form-label fw-semibold">
+                            <label for="{{ field.id_for_label }}">
+
                                 {{ field.label }}
+
+                                {% if field.field.required %}
+                                    <span>*</span>
+                                {% endif %}
+
                             </label>
 
-                            {{ field }}
+
+                            <div class="expense-input-wrapper">
+
+                                {% if field.name == 'title' %}
+
+                                    <i class="bi bi-receipt"></i>
+
+                                {% elif field.name == 'category' %}
+
+                                    <i class="bi bi-tag"></i>
+
+                                {% elif field.name == 'amount' %}
+
+                                    <i class="bi bi-cash"></i>
+
+                                {% elif field.name == 'expense_date' %}
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                {% elif field.name == 'description' %}
+
+                                    <i class="bi bi-card-text"></i>
+
+                                {% else %}
+
+                                    <i class="bi bi-pencil"></i>
+
+                                {% endif %}
+
+
+                                {{ field }}
+
+                            </div>
+
+
+                            {% if field.help_text %}
+
+                                <small class="expense-help-text">
+                                    {{ field.help_text }}
+                                </small>
+
+                            {% endif %}
+
 
                             {% if field.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="expense-field-error">
+
                                     {{ field.errors }}
+
                                 </div>
 
                             {% endif %}
@@ -65,27 +160,120 @@
                     {% endfor %}
 
 
-                    <div class="d-flex justify-content-between mt-4">
+                    <!-- Form Actions -->
+
+                    <div class="expense-form-actions">
 
                         <a href="{% url 'expense_list' %}"
-                           class="btn btn-secondary">
+                           class="expense-cancel-btn">
 
-                            <i class="bi bi-arrow-left me-1"></i>
+                            <i class="bi bi-x-lg"></i>
                             Cancel
 
                         </a>
 
-                        <button type="submit"
-                                class="btn btn-primary">
 
-                            <i class="bi bi-check-circle me-1"></i>
-                            Save Expense
+                        <button type="submit"
+                                class="expense-save-btn">
+
+                            <i class="bi bi-check-lg"></i>
+
+                            {% if 'Edit' in title %}
+                                Update Expense
+                            {% else %}
+                                Save Expense
+                            {% endif %}
 
                         </button>
 
                     </div>
 
                 </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMATION PANEL
+             ================================================= -->
+
+        <div class="expense-info-card">
+
+            <div class="expense-info-icon">
+
+                <i class="bi bi-info-circle"></i>
+
+            </div>
+
+
+            <h5>
+                Expense Guidelines
+            </h5>
+
+
+            <p>
+                Keep expense records accurate so you can monitor
+                business costs and understand where money is being spent.
+            </p>
+
+
+            <div class="expense-info-list">
+
+                <div>
+
+                    <i class="bi bi-check-circle"></i>
+
+                    <span>
+                        Enter a clear expense title.
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <i class="bi bi-check-circle"></i>
+
+                    <span>
+                        Select the correct expense category.
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <i class="bi bi-check-circle"></i>
+
+                    <span>
+                        Enter the exact amount paid.
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <i class="bi bi-check-circle"></i>
+
+                    <span>
+                        Use the correct expense date.
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <i class="bi bi-check-circle"></i>
+
+                    <span>
+                        Add a description when necessary.
+                    </span>
+
+                </div>
 
             </div>
 

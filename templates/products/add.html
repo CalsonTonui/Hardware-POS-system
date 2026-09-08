@@ -4,69 +4,111 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="product-form-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<!-- PAGE HEADER -->
+<div class="products-page-header">
+
+    <div>
+        <div class="page-title-row">
+            <div class="page-title-icon">
+                <i class="bi bi-box-seam"></i>
+            </div>
+
+            <div>
+                <h2>Add Product</h2>
+
+                <p>
+                    Register a new product in your hardware shop catalogue.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'products' %}" class="btn btn-outline-secondary px-4">
+        <i class="bi bi-arrow-left me-2"></i>
+        Back to Products
+    </a>
+
+</div>
+
+
+<!-- MAIN FORM CARD -->
+<div class="product-form-card">
+
+    <!-- CARD HEADER -->
+    <div class="product-form-header">
 
         <div>
-            <h2 class="fw-bold mb-1">
-                <i class="bi bi-box-seam"></i>
-                Add Product
-            </h2>
+            <h4>
+                <i class="bi bi-plus-circle me-2"></i>
+                Product Information
+            </h4>
 
-            <p class="text-muted mb-0">
-                Add a new product to your inventory
+            <p>
+                Enter the details below to register this product.
             </p>
         </div>
 
-        <a href="{% url 'products' %}"
-           class="btn btn-secondary">
-
-            <i class="bi bi-arrow-left"></i>
-            Back to Products
-
-        </a>
+        <span class="form-required-note">
+            <i class="bi bi-info-circle me-1"></i>
+            All fields are required except barcode
+        </span>
 
     </div>
 
 
-    <div class="card shadow-sm">
+    <div class="product-form-body">
 
-        <div class="card-header bg-primary text-white">
+        {% if form.non_field_errors %}
 
-            <h5 class="mb-0">
-                Product Information
-            </h5>
+            <div class="alert alert-danger form-alert">
 
-        </div>
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
 
 
-        <div class="card-body">
+        <form method="POST">
 
-            <form method="POST">
+            {% csrf_token %}
 
-                {% csrf_token %}
 
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
+            <!-- BASIC INFORMATION -->
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-icon basic-icon">
+                        <i class="bi bi-info-circle"></i>
                     </div>
-                {% endif %}
+
+                    <div>
+                        <h5>Basic Information</h5>
+                        <span>Product identification and classification</span>
+                    </div>
+
+                </div>
 
 
-                <div class="row">
+                <div class="row g-4">
 
-                    <!-- Product Name -->
-                    <div class="col-md-6 mb-3">
+                    <!-- PRODUCT NAME -->
+                    <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label professional-label">
                             Product Name
+                            <span class="required-star">*</span>
                         </label>
 
                         {{ form.name }}
 
                         {% if form.name.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.name.errors }}
                             </div>
                         {% endif %}
@@ -74,17 +116,18 @@
                     </div>
 
 
-                    <!-- Category -->
-                    <div class="col-md-3 mb-3">
+                    <!-- CATEGORY -->
+                    <div class="col-md-3">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label professional-label">
                             Category
+                            <span class="required-star">*</span>
                         </label>
 
                         {{ form.category }}
 
                         {% if form.category.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.category.errors }}
                             </div>
                         {% endif %}
@@ -92,17 +135,18 @@
                     </div>
 
 
-                    <!-- Unit -->
-                    <div class="col-md-3 mb-3">
+                    <!-- UNIT -->
+                    <div class="col-md-3">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label professional-label">
                             Unit
+                            <span class="required-star">*</span>
                         </label>
 
                         {{ form.unit }}
 
                         {% if form.unit.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.unit.errors }}
                             </div>
                         {% endif %}
@@ -110,43 +154,79 @@
                     </div>
 
 
-                    <!-- Barcode -->
-                    <div class="col-md-6 mb-3">
+                    <!-- BARCODE -->
+                    <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label professional-label">
+
                             Barcode
-                            <span class="text-muted fw-normal">
-                                (Optional)
+
+                            <span class="optional-label">
+                                Optional
                             </span>
+
                         </label>
 
                         {{ form.barcode }}
 
-                        <div class="form-text">
-                            Leave blank for products without barcodes,
-                            such as timber, metals and furniture.
+                        <div class="field-help">
+                            <i class="bi bi-upc-scan me-1"></i>
+                            Leave blank for products without barcodes such as
+                            timber, metals and furniture.
                         </div>
 
                         {% if form.barcode.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.barcode.errors }}
                             </div>
                         {% endif %}
 
                     </div>
 
+                </div>
 
-                    <!-- Buying Price -->
-                    <div class="col-md-3 mb-3">
+            </div>
 
-                        <label class="form-label fw-semibold">
+
+            <!-- PRICING -->
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-icon pricing-icon">
+                        <i class="bi bi-currency-exchange"></i>
+                    </div>
+
+                    <div>
+                        <h5>Pricing Information</h5>
+                        <span>Set the buying and selling prices</span>
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <!-- BUYING PRICE -->
+                    <div class="col-md-6">
+
+                        <label class="form-label professional-label">
                             Buying Price
+                            <span class="required-star">*</span>
                         </label>
 
-                        {{ form.buying_price }}
+                        <div class="price-input-wrapper">
+
+                            <span class="price-prefix">
+                                KSh
+                            </span>
+
+                            {{ form.buying_price }}
+
+                        </div>
 
                         {% if form.buying_price.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.buying_price.errors }}
                             </div>
                         {% endif %}
@@ -154,17 +234,26 @@
                     </div>
 
 
-                    <!-- Selling Price -->
-                    <div class="col-md-3 mb-3">
+                    <!-- SELLING PRICE -->
+                    <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label professional-label">
                             Selling Price
+                            <span class="required-star">*</span>
                         </label>
 
-                        {{ form.selling_price }}
+                        <div class="price-input-wrapper">
+
+                            <span class="price-prefix">
+                                KSh
+                            </span>
+
+                            {{ form.selling_price }}
+
+                        </div>
 
                         {% if form.selling_price.errors %}
-                            <div class="text-danger small">
+                            <div class="field-error">
                                 {{ form.selling_price.errors }}
                             </div>
                         {% endif %}
@@ -173,35 +262,59 @@
 
                 </div>
 
-
-                <hr>
-
-
-                <div class="mt-3">
-
-                    <button type="submit"
-                            class="btn btn-primary">
-
-                        <i class="bi bi-save"></i>
-                        Save Product
-
-                    </button>
+            </div>
 
 
-                    <a href="{% url 'products' %}"
-                       class="btn btn-secondary">
+            <!-- INFORMATION NOTICE -->
+            <div class="product-info-notice">
 
-                        Cancel
-
-                    </a>
-
+                <div class="notice-icon">
+                    <i class="bi bi-boxes"></i>
                 </div>
 
-            </form>
+                <div>
+                    <strong>Inventory will be created automatically</strong>
 
-        </div>
+                    <p>
+                        After saving this product, an inventory record will
+                        automatically be created with an initial stock of
+                        <strong>0</strong>. Stock can then be added through
+                        the Purchases module.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FORM ACTIONS -->
+            <div class="product-form-actions">
+
+                <a href="{% url 'products' %}"
+                   class="btn btn-light border px-4">
+
+                    <i class="bi bi-x-circle me-2"></i>
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-primary px-5">
+
+                    <i class="bi bi-check-circle me-2"></i>
+                    Save Product
+
+                </button>
+
+            </div>
+
+
+        </form>
 
     </div>
+
+</div>
+
 
 </div>
 

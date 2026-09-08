@@ -1,9 +1,22 @@
 from django.db import models
 
-class Customer(models.Model):
-    name = models.CharField(max_length=200)
-    phone = models.CharField(max_length=20, blank=True)
-    email = models.EmailField(blank=True)
+
+class Service(models.Model):
+    name = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Service'
+        verbose_name_plural = 'Services'
 
     def __str__(self):
         return self.name

@@ -1,84 +1,224 @@
+<!-- Sidebar -->
+<aside class="pos-sidebar" id="posSidebar">
 
-<div class="col-md-2 bg-dark text-white vh-100 p-0">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header">
 
-    <div class="text-center py-4 border-bottom">
-        <h4 class="fw-bold">
-            <i class="bi bi-shop"></i> Hardware POS
-        </h4>
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">
+                <i class="bi bi-shop"></i>
+            </div>
+
+            <div class="sidebar-brand-text">
+                <span>Hardware</span>
+                <strong>POS</strong>
+            </div>
+        </div>
+
+        <!-- Collapse Button -->
+        <button type="button"
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                aria-label="Toggle sidebar"
+                title="Collapse sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+
     </div>
 
-    <div class="list-group list-group-flush">
+
+    <!-- Navigation -->
+    <nav class="sidebar-navigation">
+
+        <div class="sidebar-section-title">
+            MAIN MENU
+        </div>
+
 
         <!-- Dashboard -->
         <a href="{% url 'dashboard' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+           class="sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+           title="Dashboard">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-speedometer2"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Dashboard
+            </span>
+
         </a>
+
 
         <!-- Products -->
         <a href="{% url 'products' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-box-seam me-2"></i> Products
+           class="sidebar-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}"
+           title="Products">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-box-seam"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Products
+            </span>
+
         </a>
+
 
         <!-- Inventory -->
         <a href="{% url 'inventory_list' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-boxes me-2"></i> Inventory
+           class="sidebar-link {% if request.resolver_match.url_name == 'inventory_list' %}active{% endif %}"
+           title="Inventory">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-boxes"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Inventory
+            </span>
+
         </a>
+
 
         <!-- Purchases -->
         <a href="{% url 'purchase_list' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-cart-plus me-2"></i> Purchases
+           class="sidebar-link {% if request.resolver_match.url_name == 'purchase_list' %}active{% endif %}"
+           title="Purchases">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-cart-plus"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Purchases
+            </span>
+
         </a>
+
 
         <!-- Sales -->
         <a href="{% url 'sale_list' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-cart-check me-2"></i> Sales
+           class="sidebar-link {% if request.resolver_match.url_name == 'sale_list' %}active{% endif %}"
+           title="Sales">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-cart-check"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Sales
+            </span>
+
         </a>
 
-        <!-- Customers -->
-        <a href="#"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-people me-2"></i> Customers
-        </a>
+
+           <!-- Services -->
+    <a href="{% url 'service_list' %}"
+       class="sidebar-link {% if request.resolver_match.url_name == 'service_list' %}active{% endif %}"
+       title="Services">
+
+        <span class="sidebar-link-icon">
+            <i class="bi bi-tools"></i>
+        </span>
+
+        <span class="sidebar-link-text">
+            Services
+        </span>
+
+    </a>
+
 
         <!-- Suppliers -->
         <a href="{% url 'supplier_list' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-truck me-2"></i> Suppliers
+           class="sidebar-link {% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}"
+           title="Suppliers">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-truck"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Suppliers
+            </span>
+
         </a>
 
-                <!-- Reports -->
+
+        <!-- Reports -->
         <a href="{% url 'reports_dashboard' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-file-earmark-bar-graph me-2"></i> Reports
+           class="sidebar-link {% if request.resolver_match.url_name == 'reports_dashboard' %}active{% endif %}"
+           title="Reports">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-file-earmark-bar-graph"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Reports
+            </span>
+
         </a>
 
-                <!-- Expenses -->
+
+        <!-- Expenses -->
         <a href="{% url 'expense_list' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-cash-stack me-2"></i> Expenses
+           class="sidebar-link {% if request.resolver_match.url_name == 'expense_list' %}active{% endif %}"
+           title="Expenses">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-cash-stack"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Expenses
+            </span>
+
         </a>
 
-              <!-- Settings -->
+
+        <!-- Settings -->
         <a href="{% url 'settings' %}"
-           class="list-group-item list-group-item-action bg-dark text-white border-0">
-            <i class="bi bi-gear me-2"></i> Settings
+           class="sidebar-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}"
+           title="Settings">
+
+            <span class="sidebar-link-icon">
+                <i class="bi bi-gear"></i>
+            </span>
+
+            <span class="sidebar-link-text">
+                Settings
+            </span>
+
         </a>
 
-            <!-- Logout -->
-    <form method="post" action="{% url 'logout' %}" class="m-0">
-        {% csrf_token %}
+    </nav>
 
-        <button type="submit"
-                class="list-group-item list-group-item-action bg-dark text-white border-0 w-100 text-start">
-            <i class="bi bi-box-arrow-right me-2"></i> Logout
-        </button>
-    </form>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button type="submit"
+                    class="sidebar-link sidebar-logout"
+                    title="Logout">
+
+                <span class="sidebar-link-icon">
+                    <i class="bi bi-box-arrow-right"></i>
+                </span>
+
+                <span class="sidebar-link-text">
+                    Logout
+                </span>
+
+            </button>
+
+        </form>
+
     </div>
 
-</div>
-
+</aside>
