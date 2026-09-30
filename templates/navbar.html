@@ -7,26 +7,57 @@
             <!-- Kept empty so the business name remains centered -->
         </div>
 
-
         <!-- Center: Business Name -->
         <div class="pos-navbar-brand">
             <span>CAROLIVAN-PKEMOI HARDWARE &amp; GENERAL SUPPLIES</span>
         </div>
 
-
         <!-- Right: Admin -->
-        <div class="pos-navbar-admin">
+        {% if request.user.is_authenticated %}
+            {% if request.user.role == 'admin' %}
 
-            <div class="admin-icon">
-                <i class="bi bi-person-circle"></i>
-            </div>
+                <a href="{% url 'admin_login' %}"
+                   class="pos-navbar-admin admin-link"
+                   title="Administrator Login">
 
-            <div class="admin-details">
-                <span class="admin-name">Admin</span>
-                <span class="admin-role">Administrator</span>
-            </div>
+                    <div class="admin-icon">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
 
-        </div>
+                    <div class="admin-details">
+                        <span class="admin-name">
+                            {{ request.user.get_full_name|default:request.user.username }}
+                        </span>
+
+                        <span class="admin-role">
+                            Administrator
+                        </span>
+                    </div>
+
+                </a>
+
+            {% else %}
+
+                <div class="pos-navbar-admin">
+
+                    <div class="admin-icon">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+
+                    <div class="admin-details">
+                        <span class="admin-name">
+                            {{ request.user.get_full_name|default:request.user.username }}
+                        </span>
+
+                        <span class="admin-role">
+                            {{ request.user.get_role_display }}
+                        </span>
+                    </div>
+
+                </div>
+
+            {% endif %}
+        {% endif %}
 
     </div>
 

@@ -1,0 +1,123 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Hardware POS{% endblock %}
+    </title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <!-- Existing POS CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <!-- EXISTING POS HEADER -->
+    {% include 'navbar.html' %}
+
+
+    <!-- AUTHENTICATION CONTENT -->
+    <main class="auth-main-content">
+
+        <!-- Django Messages -->
+        {% include 'messages.html' %}
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- EXISTING POS FOOTER -->
+    {% include 'footer.html' %}
+
+
+    <!-- Bootstrap JavaScript -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- Existing POS Alert JavaScript -->
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const alerts = document.querySelectorAll(".pos-alert");
+
+            alerts.forEach(function (alert) {
+
+                setTimeout(function () {
+
+                    hidePosAlert(alert);
+
+                }, 3000);
+
+            });
+
+        });
+
+
+        function closePosAlert(button) {
+
+            const alert = button.closest(".pos-alert");
+
+            if (alert) {
+
+                hidePosAlert(alert);
+
+            }
+
+        }
+
+
+        function hidePosAlert(alert) {
+
+            if (alert.classList.contains("pos-alert-hide")) {
+
+                return;
+
+            }
+
+            alert.classList.add("pos-alert-hide");
+
+            setTimeout(function () {
+
+                alert.remove();
+
+            }, 300);
+
+        }
+
+    </script>
+
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+
+</html>

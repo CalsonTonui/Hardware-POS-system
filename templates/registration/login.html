@@ -197,12 +197,12 @@
 
 
                         <a
-                            href="#"
-                            class="forgot-password">
+                href="{% url 'password_reset' %}"
+                class="forgot-password">
 
-                            Forgot Password?
+                Forgot Password?
 
-                        </a>
+            </a>
 
                     </div>
 
@@ -223,6 +223,14 @@
 
             </div>
 
+                <div class="admin-access-link">
+                    <span>Administrator?</span>
+
+                    <a href="{% url 'admin_login' %}">
+                        Admin Login
+                        <i class="bi bi-shield-lock"></i>
+                    </a>
+                </div>
 
             <!-- =================================================
                  SIGN UP

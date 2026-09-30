@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <!-- =====================================================
+         ADMIN PAGE HEADER
+         ===================================================== -->
+
+    <div class="admin-page-header">
+
+        <div class="admin-header-left">
+
+            <div class="admin-header-icon">
+                <i class="bi bi-shield-lock"></i>
+            </div>
+
+            <div>
+                <h1>Administrator Dashboard</h1>
+
+                <p>
+                    Manage your hardware business and system operations.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="admin-user-badge">
+
+            <div class="admin-user-icon">
+                <i class="bi bi-person-fill"></i>
+            </div>
+
+            <div>
+                <strong>
+                    {{ request.user.get_full_name|default:request.user.username }}
+                </strong>
+
+                <span>
+                    Administrator
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMIN WELCOME
+         ===================================================== -->
+
+    <div class="admin-welcome-card">
+
+        <div class="admin-welcome-icon">
+            <i class="bi bi-speedometer2"></i>
+        </div>
+
+        <div>
+
+            <h2>Welcome to Administration</h2>
+
+            <p>
+                From here you can manage users, products, inventory,
+                sales, purchases, expenses, reports and system settings.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMIN MANAGEMENT
+         ===================================================== -->
+
+    <div class="admin-section-header">
+
+        <div>
+            <h2>Management</h2>
+
+            <p>
+                Administrative functions and business controls.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="admin-management-grid">
+
+
+        <!-- USERS -->
+
+        <a href="{% url 'user_list' %}" class="admin-management-card">
+
+            <div class="admin-card-icon admin-blue">
+                <i class="bi bi-people"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Users & Staff</h3>
+
+                <p>
+                    Manage administrators, managers, cashiers and storekeepers.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- PRODUCTS -->
+
+        <a href="{% url 'products' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-purple">
+                <i class="bi bi-box-seam"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Products</h3>
+
+                <p>
+                    Manage products, prices and product information.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- INVENTORY -->
+
+        <a href="{% url 'inventory_list' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-green">
+                <i class="bi bi-boxes"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Inventory</h3>
+
+                <p>
+                    Monitor stock levels and inventory operations.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- PURCHASES -->
+
+        <a href="{% url 'purchase_list' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-orange">
+                <i class="bi bi-cart-check"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Purchases</h3>
+
+                <p>
+                    Manage purchases and stock received from suppliers.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- SUPPLIERS -->
+
+        <a href="{% url 'supplier_list' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-teal">
+                <i class="bi bi-truck"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Suppliers</h3>
+
+                <p>
+                    Manage supplier information and relationships.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- SERVICES -->
+
+        <a href="{% url 'service_list' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-indigo">
+                <i class="bi bi-tools"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Services</h3>
+
+                <p>
+                    Manage services offered and service pricing.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- EXPENSES -->
+
+        <a href="{% url 'expense_list' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-red">
+                <i class="bi bi-wallet2"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Expenses</h3>
+
+                <p>
+                    Record and manage business expenses.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+
+        <!-- REPORTS -->
+
+        <a href="{% url 'reports_dashboard' %}"
+           class="admin-management-card">
+
+            <div class="admin-card-icon admin-dark">
+                <i class="bi bi-bar-chart"></i>
+            </div>
+
+            <div class="admin-card-content">
+
+                <h3>Reports</h3>
+
+                <p>
+                    View business reports and performance information.
+                </p>
+
+            </div>
+
+            <i class="bi bi-chevron-right admin-card-arrow"></i>
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         SYSTEM ADMINISTRATION
+         ===================================================== -->
+
+    <div class="admin-section-header admin-system-header">
+
+        <div>
+            <h2>System Administration</h2>
+
+            <p>
+                System-level configuration and controls.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="admin-system-grid">
+
+        <a href="#" class="admin-system-card">
+
+            <i class="bi bi-person-gear"></i>
+
+            <div>
+                <strong>User Management</strong>
+                <span>Create users and assign roles.</span>
+            </div>
+
+        </a>
+
+
+        <a href="#" class="admin-system-card">
+
+            <i class="bi bi-gear"></i>
+
+            <div>
+                <strong>System Settings</strong>
+                <span>Configure POS system preferences.</span>
+            </div>
+
+        </a>
+
+
+        <a href="#" class="admin-system-card">
+
+            <i class="bi bi-clock-history"></i>
+
+            <div>
+                <strong>Activity Log</strong>
+                <span>Monitor important system activities.</span>
+            </div>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

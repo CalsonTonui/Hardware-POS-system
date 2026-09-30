@@ -147,7 +147,14 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login.css'
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = '/login.css/'
+LOGOUT_REDIRECT_URL = '/login/'
 AUTH_USER_MODEL = 'accounts.User'
+# =========================================================
+# PASSWORD RESET EMAIL - DEVELOPMENT
+# =========================================================
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'CAROLIVAN-PKEMOI HARDWARE <noreply@carolivan-pkemoi.com>'
