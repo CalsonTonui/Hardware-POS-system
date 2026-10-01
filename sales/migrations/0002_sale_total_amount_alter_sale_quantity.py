@@ -13,7 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sale',
             name='total_amount',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=12),
+            field=models.DecimalField(
+                decimal_places=2,
+                default=0,
+                max_digits=12
+            ),
         ),
         migrations.AlterField(
             model_name='sale',

@@ -10,18 +10,25 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='sale',
-            name='customer',
-        ),
         migrations.AddField(
             model_name='sale',
             name='payment_method',
-            field=models.CharField(choices=[('Cash', 'Cash'), ('M-Pesa', 'M-Pesa')], default='Cash', max_length=20),
+            field=models.CharField(
+                choices=[
+                    ('Cash', 'Cash'),
+                    ('M-Pesa', 'M-Pesa')
+                ],
+                default='Cash',
+                max_length=20
+            ),
         ),
         migrations.AlterField(
             model_name='sale',
             name='selling_price',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10),
+            field=models.DecimalField(
+                decimal_places=2,
+                default=0,
+                max_digits=10
+            ),
         ),
     ]
