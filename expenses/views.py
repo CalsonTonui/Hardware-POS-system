@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Sum
-
+from accounts.activity import log_activity
 from .models import Expense
 from .forms import ExpenseForm
 
@@ -39,6 +39,13 @@ def expense_add(request):
             messages.success(
                 request,
                 'Expense added successfully.'
+            )
+            log_activity(
+                request,
+                'expense_added',
+                f'Expense added: {expense.description} (KSh {expense.amount})',
+                target_type='Expense',
+                target_id=expense.id,
             )
 
             return redirect('expense_list')
@@ -79,6 +86,13 @@ def expense_edit(request, pk):
                 request,
                 'Expense updated successfully.'
             )
+            log_activity(
+                request,
+                'expense_edited',
+                f'Expense edited: {expense.description}',
+                target_type='Expense',
+                target_id=expense.id,
+            )
 
             return redirect('expense_list')
 
@@ -112,6 +126,11 @@ def expense_delete(request, pk):
         messages.success(
             request,
             'Expense deleted successfully.'
+        )
+        log_activity(
+            request,
+            'expense_deleted',
+            f'Expense deleted: {expense.description}',
         )
 
         return redirect('expense_list')

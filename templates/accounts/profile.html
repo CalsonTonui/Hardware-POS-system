@@ -1,0 +1,878 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | Carolivan Hardware{% endblock %}
+
+{% block content %}
+
+<div class="admin-page" style="max-width: 1200px;">
+
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon" style="background: #eef4ff; color: #0d6efd;">
+                <i class="bi bi-person-badge"></i>
+            </div>
+            <div>
+                <h1>My Profile</h1>
+                <p>Manage your account information and security</p>
+            </div>
+        </div>
+
+        <div class="admin-user-badge">
+            <div class="admin-user-icon" style="background: #ecfdf3; color: #027a48;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div>
+                <strong>{{ request.user.get_role_display }}</strong>
+                <span>Access Level</span>
+            </div>
+        </div>
+    </div>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    <div class="row g-4">
+
+        <!-- =====================================================
+             LEFT: USER INFO CARD
+             ===================================================== -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm profile-card-left">
+
+                <div class="card-body text-center" style="padding: 32px 24px;">
+
+                    <!-- Big Avatar with initials -->
+                    <div class="profile-avatar-large">
+                        {% if request.user.first_name and request.user.last_name %}
+                            {{ request.user.first_name|first|upper }}{{ request.user.last_name|first|upper }}
+                        {% else %}
+                            {{ request.user.username|first|upper }}
+                        {% endif %}
+                        <div class="profile-avatar-badge">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-4 mb-1" style="font-weight: 800; color: #101828; font-size: 20px;">
+                        {{ request.user.get_full_name|default:request.user.username }}
+                    </h4>
+
+                    <p class="text-muted mb-3" style="font-size: 13px;">
+                        @{{ request.user.username }}
+                    </p>
+
+                    <span class="admin-role-badge
+                        {% if request.user.role == 'admin' %}role-admin
+                        {% elif request.user.role == 'manager' %}role-manager
+                        {% elif request.user.role == 'cashier' %}role-cashier
+                        {% else %}role-storekeeper{% endif %}">
+                        <i class="bi bi-shield-check"></i>
+                        {{ request.user.get_role_display }}
+                    </span>
+
+                    <hr class="my-4">
+
+                    <!-- Info rows with icons -->
+                    <div class="profile-info-row">
+                        <div class="profile-info-label">
+                            <span class="profile-info-icon" style="background: #eef4ff; color: #0d6efd;">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
+                            <span>Full Name</span>
+                        </div>
+                        <span class="profile-info-value">
+                            {{ request.user.get_full_name|default:"—" }}
+                        </span>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-label">
+                            <span class="profile-info-icon" style="background: #f5f3ff; color: #7c3aed;">
+                                <i class="bi bi-envelope-fill"></i>
+                            </span>
+                            <span>Email</span>
+                        </div>
+                        <span class="profile-info-value" title="{{ request.user.email }}">
+                            {% if request.user.email %}
+                                {{ request.user.email }}
+                            {% else %}
+                                <span class="text-muted fst-italic">Not set</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-label">
+                            <span class="profile-info-icon" style="background: #ecfdf3; color: #16a34a;">
+                                <i class="bi bi-telephone-fill"></i>
+                            </span>
+                            <span>Phone</span>
+                        </div>
+                        <span class="profile-info-value">
+                            {% if request.user.phone %}
+                                {{ request.user.phone }}
+                            {% else %}
+                                <span class="text-muted fst-italic">Not set</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-label">
+                            <span class="profile-info-icon" style="background: #fff7ed; color: #ea580c;">
+                                <i class="bi bi-calendar-event-fill"></i>
+                            </span>
+                            <span>Joined</span>
+                        </div>
+                        <span class="profile-info-value">
+                            {{ request.user.date_joined|date:"d M Y" }}
+                        </span>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-label">
+                            <span class="profile-info-icon" style="background: #fef2f2; color: #dc2626;">
+                                <i class="bi bi-clock-history"></i>
+                            </span>
+                            <span>Last Login</span>
+                        </div>
+                        <span class="profile-info-value">
+                            {% if request.user.last_login %}
+                                {{ request.user.last_login|date:"d M Y, H:i" }}
+                            {% else %}
+                                <span class="text-muted fst-italic">First session</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RIGHT: PASSWORD CHANGE
+             ===================================================== -->
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm profile-card-right">
+
+                <div class="card-header bg-white" style="border-bottom: 1px solid #eaecf0; padding: 20px 26px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #eff6ff, #dbeafe); display: flex; align-items: center; justify-content: center; color: #1d4ed8; font-size: 20px;">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0" style="font-weight: 700;">Change Password</h5>
+                            <small class="text-muted" style="font-size: 12px;">Use a strong password to keep your account secure</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding: 28px;">
+
+                    <form method="post" novalidate id="passwordForm">
+
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger d-flex align-items-start gap-2">
+                                <i class="bi bi-exclamation-triangle-fill mt-1"></i>
+                                <div>{{ form.non_field_errors }}</div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Current Password -->
+                        <div class="mb-4">
+                            <label class="profile-form-label">
+                                <i class="bi bi-key-fill"></i>
+                                Current Password
+                            </label>
+                            <div class="profile-input-wrapper">
+                                <span class="profile-input-icon">
+                                    <i class="bi bi-lock-fill"></i>
+                                </span>
+                                <input type="password"
+                                       name="old_password"
+                                       id="id_old_password"
+                                       class="profile-input"
+                                       placeholder="Enter your current password"
+                                       required
+                                       autocomplete="current-password">
+                                <button type="button"
+                                        class="profile-input-toggle"
+                                        onclick="togglePassword('id_old_password', this)"
+                                        tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% if form.old_password.errors %}
+                                <div class="profile-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    {{ form.old_password.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- New Password -->
+                        <div class="mb-3">
+                            <label class="profile-form-label">
+                                <i class="bi bi-shield-lock-fill"></i>
+                                New Password
+                            </label>
+                            <div class="profile-input-wrapper">
+                                <span class="profile-input-icon">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password"
+                                       name="new_password1"
+                                       id="id_new_password1"
+                                       class="profile-input"
+                                       placeholder="Enter a new password"
+                                       required
+                                       autocomplete="new-password"
+                                       oninput="updateStrength(this.value)">
+                                <button type="button"
+                                        class="profile-input-toggle"
+                                        onclick="togglePassword('id_new_password1', this)"
+                                        tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <!-- Strength meter -->
+                            <div class="strength-meter" id="strengthMeter">
+                                <div class="strength-bar" id="strengthBar"></div>
+                            </div>
+                            <div class="strength-label" id="strengthLabel"></div>
+
+                            {% if form.new_password1.errors %}
+                                <div class="profile-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    {{ form.new_password1.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-4">
+                            <label class="profile-form-label">
+                                <i class="bi bi-shield-check"></i>
+                                Confirm New Password
+                            </label>
+                            <div class="profile-input-wrapper">
+                                <span class="profile-input-icon">
+                                    <i class="bi bi-lock-fill"></i>
+                                </span>
+                                <input type="password"
+                                       name="new_password2"
+                                       id="id_new_password2"
+                                       class="profile-input"
+                                       placeholder="Confirm your new password"
+                                       required
+                                       autocomplete="new-password"
+                                       oninput="checkMatch()">
+                                <button type="button"
+                                        class="profile-input-toggle"
+                                        onclick="togglePassword('id_new_password2', this)"
+                                        tabindex="-1">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div class="match-indicator" id="matchIndicator"></div>
+                            {% if form.new_password2.errors %}
+                                <div class="profile-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    {{ form.new_password2.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password requirements -->
+                        <div class="profile-requirements">
+                            <h6><i class="bi bi-shield-check"></i> Password Requirements</h6>
+                            <div class="requirements-grid">
+                                <div class="req-item" id="req-length">
+                                    <i class="bi bi-circle"></i> At least 8 characters
+                                </div>
+                                <div class="req-item" id="req-upper">
+                                    <i class="bi bi-circle"></i> Contains uppercase letter
+                                </div>
+                                <div class="req-item" id="req-number">
+                                    <i class="bi bi-circle"></i> Contains a number
+                                </div>
+                                <div class="req-item" id="req-special">
+                                    <i class="bi bi-circle"></i> Contains a symbol
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end gap-2 pt-3" style="border-top: 1px solid #f2f4f7;">
+                            <button type="reset" class="profile-cancel-btn">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset Form
+                            </button>
+                            <button type="submit" class="profile-submit-btn">
+                                <i class="bi bi-check-circle-fill"></i> Update Password
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   PASSWORD FORM INTERACTIONS
+   ========================================================= */
+
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    const icon = button.querySelector('i');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+
+function updateStrength(password) {
+    const meter = document.getElementById('strengthMeter');
+    const bar = document.getElementById('strengthBar');
+    const label = document.getElementById('strengthLabel');
+
+    let score = 0;
+
+    // Requirements
+    const hasLength = password.length >= 8;
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+    if (hasLength) score++;
+    if (hasUpper) score++;
+    if (hasNumber) score++;
+    if (hasSpecial) score++;
+
+    // Update requirement checkmarks
+    document.getElementById('req-length').classList.toggle('met', hasLength);
+    document.getElementById('req-upper').classList.toggle('met', hasUpper);
+    document.getElementById('req-number').classList.toggle('met', hasNumber);
+    document.getElementById('req-special').classList.toggle('met', hasSpecial);
+
+    // Update bar
+    meter.classList.add('visible');
+    bar.className = 'strength-bar';
+
+    if (password.length === 0) {
+        meter.classList.remove('visible');
+        label.textContent = '';
+        return;
+    }
+
+    if (score <= 1) {
+        bar.classList.add('strength-weak');
+        label.textContent = 'Weak password';
+        label.style.color = '#dc2626';
+    } else if (score === 2) {
+        bar.classList.add('strength-fair');
+        label.textContent = 'Fair password';
+        label.style.color = '#ea580c';
+    } else if (score === 3) {
+        bar.classList.add('strength-good');
+        label.textContent = 'Good password';
+        label.style.color = '#eab308';
+    } else {
+        bar.classList.add('strength-strong');
+        label.textContent = 'Strong password';
+        label.style.color = '#16a34a';
+    }
+}
+
+function checkMatch() {
+    const pw1 = document.getElementById('id_new_password1').value;
+    const pw2 = document.getElementById('id_new_password2').value;
+    const indicator = document.getElementById('matchIndicator');
+
+    if (!pw2) {
+        indicator.textContent = '';
+        return;
+    }
+
+    if (pw1 === pw2) {
+        indicator.innerHTML = '<i class="bi bi-check-circle-fill"></i> Passwords match';
+        indicator.style.color = '#16a34a';
+    } else {
+        indicator.innerHTML = '<i class="bi bi-x-circle-fill"></i> Passwords do not match';
+        indicator.style.color = '#dc2626';
+    }
+}
+</script>
+
+
+<style>
+/* =========================================================
+   PROFILE PAGE
+   ========================================================= */
+
+.profile-card-left,
+.profile-card-right {
+    border-radius: 14px;
+    border: 1px solid #e4e7ec;
+    overflow: hidden;
+}
+
+/* ---------- Avatar ---------- */
+.profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    box-shadow: 0 12px 24px rgba(102, 126, 234, 0.35);
+    text-transform: uppercase;
+    position: relative;
+}
+
+.profile-avatar-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: #16a34a;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Info Rows ---------- */
+.profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f2f4f7;
+    font-size: 13px;
+    text-align: left;
+}
+
+.profile-info-row:last-child {
+    border-bottom: none;
+}
+
+.profile-info-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #667085;
+    font-weight: 600;
+}
+
+.profile-info-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.profile-info-value {
+    color: #101828;
+    font-weight: 600;
+    text-align: right;
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+/* ---------- Form Labels ---------- */
+.profile-form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-form-label i {
+    color: #0d6efd;
+    margin-right: 4px;
+}
+
+/* ---------- Input Wrapper ---------- */
+.profile-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-input-icon {
+    position: absolute;
+    left: 16px;
+    color: #98a2b3;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.profile-input {
+    width: 100%;
+    height: 50px;
+    padding: 0 50px 0 46px;
+    background: #ffffff;
+    border: 1.5px solid #e4e7ec;
+    border-radius: 10px;
+    color: #101828;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.profile-input::placeholder {
+    color: #98a2b3;
+    font-weight: 400;
+}
+
+.profile-input:hover {
+    border-color: #cbd5e1;
+}
+
+.profile-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.12);
+    background: #fafbff;
+}
+
+.profile-input-toggle {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #98a2b3;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.profile-input-toggle:hover {
+    color: #0d6efd;
+    background: #eff6ff;
+}
+
+/* ---------- Error Message ---------- */
+.profile-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ---------- Strength Meter ---------- */
+.strength-meter {
+    height: 6px;
+    background: #f2f4f7;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.strength-meter.visible {
+    opacity: 1;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.strength-bar.strength-weak {
+    width: 25%;
+    background: #dc2626;
+}
+
+.strength-bar.strength-fair {
+    width: 50%;
+    background: #ea580c;
+}
+
+.strength-bar.strength-good {
+    width: 75%;
+    background: #eab308;
+}
+
+.strength-bar.strength-strong {
+    width: 100%;
+    background: #16a34a;
+}
+
+.strength-label {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.match-indicator {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 18px;
+}
+
+/* ---------- Password Requirements ---------- */
+.profile-requirements {
+    background: linear-gradient(135deg, #f0f7ff, #fafbff);
+    border: 1px solid #cfe2ff;
+    border-left: 4px solid #0d6efd;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 22px;
+}
+
+.profile-requirements h6 {
+    margin: 0 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.requirements-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.req-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
+
+.req-item i {
+    font-size: 14px;
+    color: #cbd5e1;
+    transition: color 0.2s ease;
+}
+
+.req-item.met {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.req-item.met i::before {
+    content: "\f26a";  /* bi-check-circle-fill */
+    color: #16a34a;
+}
+
+/* ---------- Buttons ---------- */
+.profile-cancel-btn,
+.profile-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-cancel-btn {
+    background: #ffffff;
+    border-color: #d0d5dd;
+    color: #344054;
+}
+
+.profile-cancel-btn:hover {
+    background: #f9fafb;
+    border-color: #98a2b3;
+}
+
+.profile-submit-btn {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+}
+
+.profile-submit-btn:hover {
+    background: linear-gradient(135deg, #0b5ed7, #084298);
+    box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 576px) {
+    .requirements-grid {
+        grid-template-columns: 1fr;
+    }
+    .profile-info-value {
+        max-width: 45%;
+    }
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark-mode .profile-avatar-large {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+body.dark-mode .profile-avatar-badge {
+    border-color: #1e293b;
+}
+
+body.dark-mode .profile-info-row {
+    border-bottom-color: #334155;
+}
+
+body.dark-mode .profile-info-value {
+    color: #e2e8f0;
+}
+
+body.dark-mode .profile-info-label {
+    color: #94a3b8;
+}
+
+body.dark-mode .profile-form-label {
+    color: #e2e8f0;
+}
+
+body.dark-mode .profile-input {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .profile-input:hover {
+    border-color: #475569;
+}
+
+body.dark-mode .profile-input:focus {
+    background: #0f172a;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+body.dark-mode .profile-input::placeholder {
+    color: #64748b;
+}
+
+body.dark-mode .profile-input-icon,
+body.dark-mode .profile-input-toggle {
+    color: #64748b;
+}
+
+body.dark-mode .profile-input-toggle:hover {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.15);
+}
+
+body.dark-mode .profile-requirements {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    border-left-color: #3b82f6;
+}
+
+body.dark-mode .profile-requirements h6 {
+    color: #93c5fd;
+}
+
+body.dark-mode .req-item {
+    color: #94a3b8;
+}
+
+body.dark-mode .req-item.met {
+    color: #6ee7b7;
+}
+
+body.dark-mode .req-item.met i::before {
+    color: #6ee7b7;
+}
+
+body.dark-mode .profile-cancel-btn {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+body.dark-mode .profile-cancel-btn:hover {
+    background: #1e293b;
+    border-color: #475569;
+}
+
+body.dark-mode .strength-meter {
+    background: #334155;
+}
+</style>
+
+{% endblock %}

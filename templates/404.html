@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found | Hardware POS{% endblock %}
+
+{% block content %}
+
+<div style="min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+
+    <div style="max-width: 500px; text-align: center;">
+
+        <!-- Big 404 -->
+        <div style="font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(135deg, #0d6efd, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px;">
+            404
+        </div>
+
+        <!-- Icon -->
+        <div style="width: 80px; height: 80px; margin: 0 auto 24px; border-radius: 20px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 38px;">
+            <i class="bi bi-compass"></i>
+        </div>
+
+        <!-- Message -->
+        <h1 style="margin: 0 0 12px; font-size: 26px; font-weight: 800; color: #101828;">
+            Page Not Found
+        </h1>
+        <p style="margin: 0 0 32px; color: #667085; font-size: 15px; line-height: 1.6;">
+            The page you're looking for doesn't exist or has been moved.
+            Let's get you back on track.
+        </p>
+
+        <!-- Action buttons -->
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            {% if request.user.is_authenticated %}
+                {% if request.user.role == 'admin' or request.user.role == 'manager' %}
+                    <a href="{% url 'admin_dashboard' %}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none;">
+                        <i class="bi bi-speedometer2"></i> Go to Dashboard
+                    </a>
+                {% else %}
+                    <a href="{% url 'cashier_dashboard' %}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none;">
+                        <i class="bi bi-speedometer2"></i> Go to Dashboard
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none;">
+                    <i class="bi bi-box-arrow-in-right"></i> Go to Login
+                </a>
+            {% endif %}
+
+            <a href="javascript:history.back()" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; background: #ffffff; color: #344054; font-weight: 700; font-size: 14px; text-decoration: none; border: 1.5px solid #d0d5dd;">
+                <i class="bi bi-arrow-left"></i> Go Back
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

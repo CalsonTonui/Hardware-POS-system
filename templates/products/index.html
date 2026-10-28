@@ -286,17 +286,19 @@
                         <td>
 
                             <div class="product-table-name">
-
-                                <div class="product-mini-icon">
-
-                                    <i class="bi bi-box-seam"></i>
-
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}"
+                                         alt="{{ product.name }}"
+                                         class="product-mini-thumb"
+                                         loading="lazy">
+                                {% else %}
+                                    <div class="product-mini-icon">
+                                        <i class="bi bi-box-seam"></i>
+                                    </div>
+                                {% endif %}
+                                <div>
+                                    <strong>{{ product.name }}</strong>
                                 </div>
-
-                                <strong>
-                                    {{ product.name|capfirst }}
-                                </strong>
-
                             </div>
 
                         </td>

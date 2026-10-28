@@ -5,339 +5,356 @@
 <div class="admin-page">
 
     <!-- =====================================================
-         ADMIN PAGE HEADER
+         PAGE HEADER
          ===================================================== -->
 
     <div class="admin-page-header">
-
         <div class="admin-header-left">
-
             <div class="admin-header-icon">
                 <i class="bi bi-shield-lock"></i>
             </div>
-
             <div>
                 <h1>Administrator Dashboard</h1>
-
-                <p>
-                    Manage your hardware business and system operations.
-                </p>
+                <p>Manage your hardware business and system operations.</p>
             </div>
-
         </div>
 
         <div class="admin-user-badge">
-
             <div class="admin-user-icon">
                 <i class="bi bi-person-fill"></i>
             </div>
-
             <div>
-                <strong>
-                    {{ request.user.get_full_name|default:request.user.username }}
-                </strong>
-
-                <span>
-                    Administrator
-                </span>
+                <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+                <span>Administrator</span>
             </div>
+        </div>
+    </div>
 
+    <!-- =====================================================
+         BACKUP REMINDER BANNER
+         ===================================================== -->
+    {% if backup_is_due %}
+    <div class="backup-banner">
+        <div class="backup-banner-left">
+            <div class="backup-banner-icon">
+                <i class="bi bi-shield-exclamation"></i>
+            </div>
+            <div>
+                <h6 class="backup-banner-title">
+                    {% if days_since_backup is None %}
+                        Database Backup Required
+                    {% else %}
+                        Backup Overdue — {{ days_since_backup }} days since last backup
+                    {% endif %}
+                </h6>
+                <p class="backup-banner-text">
+                    {% if days_since_backup is None %}
+                        You've never backed up the database. Protect your sales, inventory, and users by making a backup now.
+                    {% else %}
+                        It's been {{ days_since_backup }} days since your last backup. Back up now to protect your data.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="backup-banner-actions">
+            <a href="{% url 'backup_database' %}" class="backup-btn-primary">
+                <i class="bi bi-download"></i>
+                Download Backup
+            </a>
+            <form method="post" action="{% url 'mark_backup_done' %}" class="backup-form-inline">
+                {% csrf_token %}
+                <button type="submit" class="backup-btn-secondary" title="Mark as backed up manually">
+                    <i class="bi bi-check-circle"></i>
+                    Mark Done
+                </button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="backup-banner backup-banner-ok">
+        <div class="backup-banner-left">
+            <div class="backup-banner-icon" style="background: #ecfdf3; color: #16a34a;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div>
+                <h6 class="backup-banner-title" style="color: #065f46;">
+                    Database Backup is Up to Date
+                </h6>
+                <p class="backup-banner-text" style="color: #047857;">
+                    Last backup:
+                    {% if last_backup_date %}
+                        {{ last_backup_date|date:"d M Y, H:i" }}
+                        {% if days_since_backup == 0 %}(today){% elif days_since_backup == 1 %}(yesterday){% else %}({{ days_since_backup }} days ago){% endif %}
+                    {% else %}
+                        Never
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="backup-banner-actions">
+            <a href="{% url 'backup_database' %}" class="backup-btn-outline">
+                <i class="bi bi-download"></i>
+                Backup Again
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    <!-- =====================================================
+         MANAGEMENT SECTION
+         ===================================================== -->
+
+    <div class="admin-section-block">
+
+        <div class="admin-section-header">
+            <div>
+                <h2>Management</h2>
+                <p>Administrative functions and business controls.</p>
+            </div>
         </div>
 
+        <div class="admin-cards-grid">
+
+            <!-- Today's Sales -->
+            <a href="{% url 'sales:sale_list' %}" class="admin-tile admin-tile-green">
+                <div class="admin-tile-icon"><i class="bi bi-cash-coin"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Today's Sales</div>
+                    <div class="admin-tile-value">KSh {{ today_total|floatformat:0 }}</div>
+                    <div class="admin-tile-sub">{{ today_sale_count }} transaction{{ today_sale_count|pluralize }}</div>
+                </div>
+            </a>
+
+            <!-- Users & Staff -->
+            <a href="{% url 'user_list' %}" class="admin-tile admin-tile-blue">
+                <div class="admin-tile-icon"><i class="bi bi-people-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Users &amp; Staff</div>
+                    <div class="admin-tile-value">{{ user_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">Manage accounts</div>
+                </div>
+            </a>
+
+            <!-- Products -->
+            <a href="{% url 'products' %}" class="admin-tile admin-tile-purple">
+                <div class="admin-tile-icon"><i class="bi bi-box-seam"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Products</div>
+                    <div class="admin-tile-value">{{ product_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">In catalog</div>
+                </div>
+            </a>
+
+            <!-- Inventory -->
+            <a href="{% url 'inventory_list' %}" class="admin-tile admin-tile-green">
+                <div class="admin-tile-icon"><i class="bi bi-boxes"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Inventory</div>
+                    <div class="admin-tile-value">{{ stock_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">Units in stock</div>
+                </div>
+            </a>
+
+            <!-- Purchases -->
+            <a href="{% url 'purchase_list' %}" class="admin-tile admin-tile-orange">
+                <div class="admin-tile-icon"><i class="bi bi-cart-plus"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Purchases</div>
+                    <div class="admin-tile-value">{{ purchase_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">Total purchases</div>
+                </div>
+            </a>
+
+            <!-- Sales -->
+            <a href="{% url 'sales:sale_list' %}" class="admin-tile admin-tile-green">
+                <div class="admin-tile-icon"><i class="bi bi-cart-check"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Sales</div>
+                    <div class="admin-tile-value">{{ sale_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">Total transactions</div>
+                </div>
+            </a>
+
+            <!-- Expenses -->
+            <a href="{% url 'expense_list' %}" class="admin-tile admin-tile-red">
+                <div class="admin-tile-icon"><i class="bi bi-cash-stack"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Expenses</div>
+                    <div class="admin-tile-value">{{ expense_count|default:"—" }}</div>
+                    <div class="admin-tile-sub">Recorded</div>
+                </div>
+            </a>
+
+            <!-- M-Pesa Report -->
+            <a href="{% url 'mpesa_report' %}" class="admin-tile admin-tile-blue">
+                <div class="admin-tile-icon"><i class="bi bi-phone"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">M-Pesa</div>
+                    <div class="admin-tile-value">9112275</div>
+                    <div class="admin-tile-sub">Till Number</div>
+                </div>
+            </a>
+
+            <!-- Sales by Cashier -->
+            <a href="{% url 'sales_by_cashier' %}" class="admin-tile admin-tile-orange">
+                <div class="admin-tile-icon"><i class="bi bi-people-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Cashier Report</div>
+                    <div class="admin-tile-value">View</div>
+                    <div class="admin-tile-sub">Staff performance</div>
+                </div>
+            </a>
+
+            <!-- Period Reports -->
+            <a href="{% url 'period_report' %}" class="admin-tile admin-tile-blue">
+                <div class="admin-tile-icon"><i class="bi bi-calendar3"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Period Reports</div>
+                    <div class="admin-tile-value">Reports</div>
+                    <div class="admin-tile-sub">Daily · Weekly · Monthly</div>
+                </div>
+            </a>
+
+            <!-- Product Performance -->
+            <a href="{% url 'product_performance' %}" class="admin-tile admin-tile-green">
+                <div class="admin-tile-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Product Performance</div>
+                    <div class="admin-tile-value">View</div>
+                    <div class="admin-tile-sub">Best &amp; worst sellers</div>
+                </div>
+            </a>
+
+            <!-- Reports -->
+            <a href="{% url 'reports_dashboard' %}" class="admin-tile admin-tile-purple">
+                <div class="admin-tile-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Reports</div>
+                    <div class="admin-tile-value">View</div>
+                    <div class="admin-tile-sub">Business insights</div>
+                </div>
+            </a>
+
+        </div>
     </div>
 
 
     <!-- =====================================================
-         ADMIN WELCOME
+         STOCK ALERTS
          ===================================================== -->
 
-    <div class="admin-welcome-card">
+    {% if out_of_stock_count or low_stock_count %}
+    <div class="admin-section-block">
 
-        <div class="admin-welcome-icon">
-            <i class="bi bi-speedometer2"></i>
+        <div class="admin-section-header">
+            <div>
+                <h2>Stock Alerts</h2>
+                <p>Items requiring your attention</p>
+            </div>
         </div>
 
-        <div>
+        <div class="admin-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
 
-            <h2>Welcome to Administration</h2>
+            {% if out_of_stock_count %}
+            <div class="admin-alert-card admin-alert-red">
+                <div class="admin-alert-header">
+                    <div>
+                        <h6><i class="bi bi-exclamation-octagon-fill"></i> Out of Stock</h6>
+                        <small>{{ out_of_stock_count }} item{{ out_of_stock_count|pluralize }}</small>
+                    </div>
+                    <a href="{% url 'inventory_list' %}" class="admin-alert-view">View All</a>
+                </div>
+                <div class="admin-alert-body">
+                    {% for item in out_of_stock_items %}
+                    <a href="{% url 'purchase_list' %}?product={{ item.product.id }}"
+                       class="admin-alert-row admin-alert-row-link"
+                       title="Click to restock {{ item.product.name }}">
+                        <span><i class="bi bi-box-seam"></i> {{ item.product.name }}</span>
+                        <span class="admin-alert-badge admin-badge-red">
+                            0 units
+                            <i class="bi bi-arrow-right-circle ms-1"></i>
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
 
-            <p>
-                From here you can manage users, products, inventory,
-                sales, purchases, expenses, reports and system settings.
-            </p>
+            {% if low_stock_count %}
+            <div class="admin-alert-card admin-alert-orange">
+                <div class="admin-alert-header">
+                    <div>
+                        <h6><i class="bi bi-exclamation-triangle-fill"></i> Low Stock</h6>
+                        <small>{{ low_stock_count }} item{{ low_stock_count|pluralize }}</small>
+                    </div>
+                    <a href="{% url 'inventory_list' %}" class="admin-alert-view">View All</a>
+                </div>
+                <div class="admin-alert-body">
+                    {% for item in low_stock_items %}
+                    <a href="{% url 'purchase_list' %}?product={{ item.product.id }}"
+                       class="admin-alert-row admin-alert-row-link"
+                       title="Click to restock {{ item.product.name }}">
+                        <span><i class="bi bi-box-seam"></i> {{ item.product.name }}</span>
+                        <span class="admin-alert-badge admin-badge-orange">
+                            {{ item.quantity }} left
+                            <i class="bi bi-arrow-right-circle ms-1"></i>
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
 
         </div>
-
     </div>
-
-
-    <!-- =====================================================
-         ADMIN MANAGEMENT
-         ===================================================== -->
-
-    <div class="admin-section-header">
-
-        <div>
-            <h2>Management</h2>
-
-            <p>
-                Administrative functions and business controls.
-            </p>
-        </div>
-
-    </div>
-
-
-    <div class="admin-management-grid">
-
-
-        <!-- USERS -->
-
-        <a href="{% url 'user_list' %}" class="admin-management-card">
-
-            <div class="admin-card-icon admin-blue">
-                <i class="bi bi-people"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Users & Staff</h3>
-
-                <p>
-                    Manage administrators, managers, cashiers and storekeepers.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- PRODUCTS -->
-
-        <a href="{% url 'products' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-purple">
-                <i class="bi bi-box-seam"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Products</h3>
-
-                <p>
-                    Manage products, prices and product information.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- INVENTORY -->
-
-        <a href="{% url 'inventory_list' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-green">
-                <i class="bi bi-boxes"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Inventory</h3>
-
-                <p>
-                    Monitor stock levels and inventory operations.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- PURCHASES -->
-
-        <a href="{% url 'purchase_list' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-orange">
-                <i class="bi bi-cart-check"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Purchases</h3>
-
-                <p>
-                    Manage purchases and stock received from suppliers.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- SUPPLIERS -->
-
-        <a href="{% url 'supplier_list' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-teal">
-                <i class="bi bi-truck"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Suppliers</h3>
-
-                <p>
-                    Manage supplier information and relationships.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- SERVICES -->
-
-        <a href="{% url 'service_list' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-indigo">
-                <i class="bi bi-tools"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Services</h3>
-
-                <p>
-                    Manage services offered and service pricing.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- EXPENSES -->
-
-        <a href="{% url 'expense_list' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-red">
-                <i class="bi bi-wallet2"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Expenses</h3>
-
-                <p>
-                    Record and manage business expenses.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-
-        <!-- REPORTS -->
-
-        <a href="{% url 'reports_dashboard' %}"
-           class="admin-management-card">
-
-            <div class="admin-card-icon admin-dark">
-                <i class="bi bi-bar-chart"></i>
-            </div>
-
-            <div class="admin-card-content">
-
-                <h3>Reports</h3>
-
-                <p>
-                    View business reports and performance information.
-                </p>
-
-            </div>
-
-            <i class="bi bi-chevron-right admin-card-arrow"></i>
-
-        </a>
-
-    </div>
+    {% endif %}
 
 
     <!-- =====================================================
          SYSTEM ADMINISTRATION
          ===================================================== -->
 
-    <div class="admin-section-header admin-system-header">
+    <div class="admin-section-block">
 
-        <div>
-            <h2>System Administration</h2>
-
-            <p>
-                System-level configuration and controls.
-            </p>
+        <div class="admin-section-header">
+            <div>
+                <h2>System Administration</h2>
+                <p>System-level configuration and controls.</p>
+            </div>
         </div>
 
-    </div>
+        <div class="admin-cards-grid">
 
+            <a href="{% url 'user_list' %}" class="admin-system-tile">
+                <div class="admin-system-icon">
+                    <i class="bi bi-person-gear"></i>
+                </div>
+                <div>
+                    <strong>User Management</strong>
+                    <span>Create users and assign roles.</span>
+                </div>
+            </a>
 
-    <div class="admin-system-grid">
+            <a href="{% url 'settings' %}" class="admin-system-tile">
+                <div class="admin-system-icon">
+                    <i class="bi bi-gear"></i>
+                </div>
+                <div>
+                    <strong>System Settings</strong>
+                    <span>Configure POS preferences.</span>
+                </div>
+            </a>
 
-        <a href="#" class="admin-system-card">
+            <a href="{% url 'activity_log' %}" class="admin-system-tile">
+                <div class="admin-system-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <strong>Activity Log</strong>
+                    <span>Recent system activity.</span>
+                </div>
+            </a>
 
-            <i class="bi bi-person-gear"></i>
-
-            <div>
-                <strong>User Management</strong>
-                <span>Create users and assign roles.</span>
-            </div>
-
-        </a>
-
-
-        <a href="#" class="admin-system-card">
-
-            <i class="bi bi-gear"></i>
-
-            <div>
-                <strong>System Settings</strong>
-                <span>Configure POS system preferences.</span>
-            </div>
-
-        </a>
-
-
-        <a href="#" class="admin-system-card">
-
-            <i class="bi bi-clock-history"></i>
-
-            <div>
-                <strong>Activity Log</strong>
-                <span>Monitor important system activities.</span>
-            </div>
-
-        </a>
-
+        </div>
     </div>
 
 </div>

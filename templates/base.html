@@ -12,22 +12,27 @@
 <title>
     {% block title %}Hardware POS{% endblock %}
 </title>
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<!-- Prevent dark mode flash - MUST be before stylesheets -->
+<script>
+    (function() {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+            document.addEventListener('DOMContentLoaded', function() {
+                document.body.classList.add('dark-mode');
+            });
+        }
+    })();
+</script>
 
 <!-- Bootstrap CSS -->
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap Icons -->
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
-    rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Custom CSS -->
-<link
-    rel="stylesheet"
-    href="{% static 'css/style.css' %}">
+<!-- Custom CSS (loads after Bootstrap so it wins specificity) -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <!-- Page-specific CSS -->
 {% block extra_css %}
@@ -43,18 +48,14 @@
 
 <div class="pos-layout">
 
-    <!-- Sidebar -->
-    {% include 'sidebar.html' %}
+    {% if user.is_authenticated %}
+        {% include 'sidebar.html' %}
+    {% endif %}
 
-
-    <!-- Main Content -->
     <main class="pos-main-content">
 
-        <!-- Django Messages -->
         {% include 'messages.html' %}
 
-
-        <!-- Page Content -->
         {% block content %}
         {% endblock %}
 
@@ -214,11 +215,220 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
+<script>
+    /* =========================================================
+       DARK MODE TOGGLE
+       ========================================================= */
 
+    // Apply saved theme BEFORE page renders (in case browser caches)
+    (function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode-preload');
+            document.body && document.body.classList.add('dark-mode');
+        }
+    })();
+
+    // Apply immediately when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        const icon = document.getElementById('themeIcon');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            if (icon) {
+                icon.classList.remove('bi-moon-stars-fill');
+                icon.classList.add('bi-sun-fill');
+            }
+        }
+    });
+
+    // Toggle function
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('themeIcon');
+
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            if (icon) {
+                icon.classList.remove('bi-moon-stars-fill');
+                icon.classList.add('bi-sun-fill');
+            }
+        } else {
+            localStorage.setItem('theme', 'light');
+            if (icon) {
+                icon.classList.remove('bi-sun-fill');
+                icon.classList.add('bi-moon-stars-fill');
+            }
+        }
+    }
+</script>
 <!-- Page-specific JavaScript -->
 {% block extra_js %}
 {% endblock %}
 
+<!-- ========================================================= -->
+<!-- AUTO-LOGOUT WARNING MODAL -->
+<!-- ========================================================= -->
+<div id="idleWarningModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #ffffff; border-radius: 16px; max-width: 420px; width: 100%; padding: 32px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.3);">
+        <div style="width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 32px;">
+            <i class="bi bi-clock-history"></i>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 800; color: #101828;">Still There?</h3>
+        <p style="margin: 0 0 24px; color: #667085; font-size: 14px; line-height: 1.6;">
+            You'll be logged out in <strong id="idleCountdown" style="color: #dc2626;">60</strong> seconds due to inactivity.
+        </p>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="stayLoggedIn()" style="flex: 1; padding: 12px 20px; border: none; border-radius: 10px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); color: #ffffff; font-weight: 700; font-size: 14px; cursor: pointer;">
+                <i class="bi bi-check-circle"></i> Stay Logged In
+            </button>
+            <a href="{% url 'logout' %}" style="flex: 1; padding: 12px 20px; border-radius: 10px; background: #ffffff; color: #344054; font-weight: 700; font-size: 14px; text-decoration: none; border: 1.5px solid #d0d5dd; display: flex; align-items: center; justify-content: center;">
+                Log Out Now
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   AUTO-LOGOUT ON INACTIVITY
+   ========================================================= */
+
+(function() {
+    // Only run if user is authenticated (check by presence of a logout link or user menu)
+    const userMenu = document.getElementById('userDropdown');
+    if (!userMenu) return;
+
+    // Timeout settings
+    const IDLE_TIMEOUT_MS = 15 * 60 * 1000;   // 15 minutes
+    const WARNING_MS = 60 * 1000;              // Show warning 60 seconds before
+    const WARNING_START = IDLE_TIMEOUT_MS - WARNING_MS;
+
+    let idleTimer = null;
+    let warningTimer = null;
+    let countdownTimer = null;
+    let warningShown = false;
+
+    function resetTimers() {
+        // Don't reset if warning is showing
+        if (warningShown) return;
+
+        clearTimeout(idleTimer);
+        clearTimeout(warningTimer);
+
+        // Show warning 60 seconds before logout
+        warningTimer = setTimeout(showWarning, WARNING_START);
+
+        // Log out after 15 minutes
+        idleTimer = setTimeout(logoutNow, IDLE_TIMEOUT_MS);
+    }
+
+    function showWarning() {
+        warningShown = true;
+        const modal = document.getElementById('idleWarningModal');
+        const countdown = document.getElementById('idleCountdown');
+        modal.style.display = 'flex';
+
+        let secondsLeft = Math.floor(WARNING_MS / 1000);
+        countdown.textContent = secondsLeft;
+
+        countdownTimer = setInterval(function() {
+            secondsLeft--;
+            countdown.textContent = secondsLeft;
+            if (secondsLeft <= 0) {
+                clearInterval(countdownTimer);
+                logoutNow();
+            }
+        }, 1000);
+    }
+
+    function stayLoggedIn() {
+        warningShown = false;
+        document.getElementById('idleWarningModal').style.display = 'none';
+        clearInterval(countdownTimer);
+
+        // Ping the server to refresh session
+        fetch(window.location.href, { method: 'HEAD' }).catch(function() {});
+
+        resetTimers();
+    }
+
+    function logoutNow() {
+    window.location.href = "{% url 'logout' %}?expired=1";
+}
+
+    // Expose for the modal button
+    window.stayLoggedIn = stayLoggedIn;
+
+    // Reset timer on user activity
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(function(event) {
+        document.addEventListener(event, resetTimers, true);
+    });
+
+    // Start the timer
+    resetTimers();
+})();
+</script>
+
+<script>
+/* =========================================================
+   GLOBAL FORM SUBMIT — PREVENT DOUBLE CLICKS
+   ========================================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach to all forms
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            // Skip forms that already submitted
+            if (form.dataset.submitted === 'true') {
+                e.preventDefault();
+                return false;
+            }
+
+            // Mark as submitted
+            form.dataset.submitted = 'true';
+
+            // Find all submit buttons in the form
+            const submitButtons = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+
+            submitButtons.forEach(function(btn) {
+                // Save original content
+                if (btn.tagName === 'BUTTON') {
+                    btn.dataset.originalHtml = btn.innerHTML;
+                    btn.innerHTML = '<span class="btn-spinner"></span> Processing...';
+                } else {
+                    btn.dataset.originalValue = btn.value;
+                    btn.value = 'Processing...';
+                }
+
+                // Disable to prevent another click
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.style.cursor = 'not-allowed';
+            });
+
+            // Safety: If server doesn't redirect in 30 seconds, re-enable (in case of error)
+            setTimeout(function() {
+                form.dataset.submitted = 'false';
+                submitButtons.forEach(function(btn) {
+                    if (btn.dataset.originalHtml) {
+                        btn.innerHTML = btn.dataset.originalHtml;
+                    }
+                    if (btn.dataset.originalValue) {
+                        btn.value = btn.dataset.originalValue;
+                    }
+                    btn.disabled = false;
+                    btn.style.opacity = '';
+                    btn.style.cursor = '';
+                });
+            }, 30000);
+        });
+    });
+});
+</script>
 </body>
 
 </html>

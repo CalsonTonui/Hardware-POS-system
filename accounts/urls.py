@@ -9,6 +9,8 @@ urlpatterns = [
     # ADMINISTRATOR AUTHENTICATION
     # =====================================================
 
+    path('users/verify-otp/', views.user_verify_otp, name='user_verify_otp'),
+
     path(
         'admin-login/',
         views.AdminLoginView.as_view(),
@@ -58,4 +60,9 @@ urlpatterns = [
         views.user_delete,
         name='user_delete'
     ),
+
+    path('profile/', views.profile_view, name='profile'),
+    path('cashier-dashboard/', views.cashier_dashboard, name='cashier_dashboard'),
+    path('force-password-change/', views.force_password_change, name='force_password_change'),
+    path('activity-log/', views.activity_log, name='activity_log'),
 ]

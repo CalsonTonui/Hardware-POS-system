@@ -22,6 +22,7 @@ class SettingsForm(forms.ModelForm):
             'show_business_address',
             'low_stock_notifications',
             'out_of_stock_notifications',
+            'backup_reminder_days',
         ]
 
         widgets = {

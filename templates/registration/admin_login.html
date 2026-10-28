@@ -60,7 +60,14 @@
         <form method="post">
 
             {% csrf_token %}
-
+            {% if request.GET.expired %}
+            <div class="alert alert-warning d-flex align-items-center gap-2 mb-3" role="alert" style="background: #fef3c7; border-color: #fcd34d; color: #92400e;">
+                <i class="bi bi-clock-history" style="font-size: 18px;"></i>
+                <div>
+                    <strong>Session expired.</strong> You were logged out due to inactivity. Please log in again.
+                </div>
+            </div>
+            {% endif %}
 
             <div class="admin-login-field">
 
@@ -94,18 +101,11 @@
                 </label>
 
                 <div class="admin-input-wrapper">
-
                     <i class="bi bi-lock"></i>
-
-                    <input
-                        type="password"
-                        name="password"
-                        id="id_password"
-                        placeholder="Enter administrator password"
-                        autocomplete="current-password"
-                        required
-                    >
-
+                    <input type="password" name="password" id="id_password" placeholder="Enter administrator password" required>
+                    <button type="button" class="admin-password-toggle" onclick="toggleAdminPassword(this)" tabindex="-1">
+                        <i class="bi bi-eye"></i>
+                    </button>
                 </div>
 
             </div>
@@ -126,7 +126,7 @@
 
         <div class="admin-login-links">
 
-            <a href="{% url 'password_reset' %}">
+            <a href="{% url 'password_reset' %}?from=admin">
                 <i class="bi bi-key"></i>
                 Forgot password?
             </a>
@@ -143,5 +143,21 @@
     </div>
 
 </div>
+<script>
+function toggleAdminPassword(button) {
+    const wrapper = button.closest('.admin-input-wrapper');
+    const input = wrapper.querySelector('input');
+    const icon = button.querySelector('i');
 
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+</script>
 {% endblock %}

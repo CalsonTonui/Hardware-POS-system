@@ -1,10 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}{% if user_account %}Edit User{% else %}Add User{% endif %} | Hardware POS{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon">
+                <i class="bi bi-person-plus"></i>
+            </div>
+            <div>
+                <h1>{% if user_account %}Edit User{% else %}Add New User/Staff{% endif %}</h1>
+                <p>{% if user_account %}Update user details{% else %}Create a new system user or staff account{% endif %}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <!-- ============================================ -->
+                <!-- ROW 1: First Name + Last Name -->
+                <!-- ============================================ -->
+                <h6 class="text-uppercase text-muted mb-3"
+                    style="font-size: 11px; letter-spacing: 1px; font-weight: 700;">
+                    Personal Information
+                </h6>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">First Name</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">Last Name</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- ROW 2: Email + Phone -->
+                <!-- ============================================ -->
+                <h6 class="text-uppercase text-muted mb-3 mt-4"
+                    style="font-size: 11px; letter-spacing: 1px; font-weight: 700;">
+                    Contact Information
+                </h6>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                        <small class="text-muted">Used for password reset and OTP verification.</small>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">Phone Number</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- ROW 3: Username + Role -->
+                <!-- ============================================ -->
+                <h6 class="text-uppercase text-muted mb-3 mt-4"
+                    style="font-size: 11px; letter-spacing: 1px; font-weight: 700;">
+                    Account Details
+                </h6>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="font-weight: 600;">Role</label>
+                        {{ form.role }}
+                        {% if form.role.errors %}
+                            <div class="text-danger small mt-1">{{ form.role.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- ROW 4: Active Checkbox -->
+                <!-- ============================================ -->
+                <div class="form-check mb-4 mt-3">
+                    {{ form.is_active }}
+                    <label class="form-check-label" style="font-weight: 600;">
+                        Active — user can log in
+                    </label>
+                </div>
+
+               <!-- ============================================ -->
+                <!-- CREATION NOTICE -->
+                <!-- ============================================ -->
+                <div class="alert alert-info d-flex align-items-start gap-2 mb-4" style="font-size: 13px;">
+                    <i class="bi bi-info-circle-fill mt-1" style="font-size: 16px;"></i>
+                    <div>
+                        <strong>How user creation works:</strong>
+                        <ul style="margin: 8px 0 0 18px; padding: 0;">
+                            <li>User account is created with a temporary password: <code style="background: #ffffff; padding: 2px 8px; border-radius: 4px; color: #dc2626; font-weight: 700;">ChangeMe@123</code></li>
+                            <li>The user will be <strong>prompted to change it</strong> on first login</li>
+                            <li>Share the temporary password with the user personally (by phone or in person)</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="d-flex gap-2 pt-3" style="border-top: 1px solid #eaecf0;">
+                    <button type="submit" class="btn btn-primary" style="font-weight: 700; padding: 12px 24px;">
+                        <i class="bi bi-person-plus-fill"></i>
+                        {% if user_account %}Update User{% else %}Create User{% endif %}
+                    </button>
+                    <a href="{% url 'user_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-page .form-control,
+    .admin-page .form-select {
+        min-height: 44px;
+        padding: 10px 13px;
+        font-size: 14px;
+        border-radius: 8px;
+        border: 1px solid #cfd5dc;
+    }
+    .admin-page .form-control:focus,
+    .admin-page .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.10);
+    }
+</style>
+{% endblock %}

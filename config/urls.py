@@ -8,8 +8,9 @@ from accounts import views as accounts_views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('', accounts_views.root_redirect, name='home'),
     # Main modules
-    path('', include('dashboard.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('products/', include('products.urls')),
     path('inventory/', include('inventory.urls')),
     path('purchases/', include('purchases.urls')),
@@ -22,11 +23,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
 
     # Authentication
-    path(
-        'login/',
-        accounts_views.POSLoginView.as_view(),
-        name='login'
-    ),
+    path('login/',accounts_views.POSLoginView.as_view(),name='login'),
 
     path(
         'password-reset/',
@@ -60,17 +57,9 @@ urlpatterns = [
         name='password_reset_complete'
     ),
 
-    path(
-        'logout/',
-        auth_views.LogoutView.as_view(
-            next_page='login'
-        ),
-        name='logout'
-    ),
+   path('logout/', accounts_views.logout_view, name='logout'),
+    
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

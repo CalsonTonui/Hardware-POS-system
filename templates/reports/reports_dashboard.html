@@ -1,326 +1,224 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-Reports | Hardware POS
-{% endblock %}
+{% block title %}Today's Summary | Hardware POS{% endblock %}
 
 {% block content %}
 
-<div class="page-fluid">
+<div class="admin-page">
 
-    <!-- Standard Page Header -->
-<div class="page-top">
-
-    <div>
-        <h2>
-            <i class="bi bi-file-earmark-bar-graph"></i>
-            Reports
-        </h2>
-
-        <p>
-            Business performance and system reports
-        </p>
-    </div>
-
-    <div class="page-header-right">
-
-        <div class="page-date">
-
-            <div class="page-date-title">
+    <!-- ========================================================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================================================= -->
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon" style="background: #eff6ff; color: #2563eb;">
+                <i class="bi bi-speedometer2"></i>
+            </div>
+            <div>
+                <h1>Today's Summary</h1>
+                <p>Business performance at a glance</p>
+            </div>
+        </div>
+        <div class="admin-user-badge">
+            <div class="admin-user-icon" style="background: #ecfdf3; color: #027a48;">
                 <i class="bi bi-calendar-day"></i>
             </div>
-
-            <div class="page-date-value">
-                {% now "d M Y" %}
+            <div>
+                <strong>{% now "d M Y" %}</strong>
+                <span>Today</span>
             </div>
-
         </div>
-
-    </div>
-
-</div>
-
-
-    <!-- Sales & Purchases -->
-    <div class="row g-3 mb-4">
-
-        <!-- Sales -->
-        <div class="col-md-6">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-header bg-primary text-white">
-                    <i class="bi bi-cart-check me-2"></i>
-                    Today's Sales
-                </div>
-
-                <div class="card-body">
-
-                    <h3 class="fw-bold mb-1">
-                        KSh {{ today_sales_total|floatformat:2 }}
-                    </h3>
-
-                    <p class="text-muted mb-0">
-                        {{ today_sales_count }} transaction{{ today_sales_count|pluralize }}
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Purchases -->
-        <div class="col-md-6">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-header bg-dark text-white">
-                    <i class="bi bi-cart-plus me-2"></i>
-                    Today's Purchases
-                </div>
-
-                <div class="card-body">
-
-                    <h3 class="fw-bold mb-1">
-                        KSh {{ today_purchase_total|floatformat:2 }}
-                    </h3>
-
-                    <p class="text-muted mb-0">
-                        {{ today_purchase_count }} purchase{{ today_purchase_count|pluralize }}
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
 
-    <!-- Payment Summary -->
-    <div class="card border-0 shadow-sm mb-4">
+    <!-- ========================================================= -->
+    <!-- TODAY'S SALES & PURCHASES -->
+    <!-- ========================================================= -->
+    <div class="admin-section-block">
 
-        <div class="card-header">
-
-            <h5 class="mb-0">
-                <i class="bi bi-credit-card me-2"></i>
-                Payment Summary
-            </h5>
-
-        </div>
-
-        <div class="card-body">
-
-            <div class="row g-3">
-
-                <div class="col-md-6">
-
-                    <div class="p-3 rounded bg-light">
-
-                        <div class="text-muted small">
-                            Cash Sales
-                        </div>
-
-                        <div class="fs-4 fw-bold">
-                            KSh {{ cash_total|floatformat:2 }}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-6">
-
-                    <div class="p-3 rounded bg-light">
-
-                        <div class="text-muted small">
-                            M-Pesa Sales
-                        </div>
-
-                        <div class="fs-4 fw-bold">
-                            KSh {{ mpesa_total|floatformat:2 }}
-                        </div>
-
-                    </div>
-
-                </div>
-
+        <div class="admin-section-header">
+            <div>
+                <h2>Today at a Glance</h2>
+                <p>Sales and purchase activity for today</p>
             </div>
-
         </div>
 
+        <div class="admin-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+
+            <a href="{% url 'sales:sale_list' %}" class="admin-tile admin-tile-green">
+                <div class="admin-tile-icon"><i class="bi bi-cart-check-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Today's Sales</div>
+                    <div class="admin-tile-value">KSh {{ today_sales_total|floatformat:2 }}</div>
+                    <div class="admin-tile-sub">{{ today_sales_count }} transaction{{ today_sales_count|pluralize }}</div>
+                </div>
+            </a>
+
+            <a href="{% url 'purchase_list' %}" class="admin-tile admin-tile-orange">
+                <div class="admin-tile-icon"><i class="bi bi-cart-plus-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Today's Purchases</div>
+                    <div class="admin-tile-value">KSh {{ today_purchase_total|floatformat:2 }}</div>
+                    <div class="admin-tile-sub">{{ today_purchase_count }} purchase{{ today_purchase_count|pluralize }}</div>
+                </div>
+            </a>
+
+        </div>
     </div>
 
 
-    <!-- Inventory Summary -->
-    <div class="card border-0 shadow-sm mb-4">
+    <!-- ========================================================= -->
+    <!-- PAYMENT BREAKDOWN -->
+    <!-- ========================================================= -->
+    <div class="admin-section-block">
 
-        <div class="card-header">
-
-            <h5 class="mb-0">
-                <i class="bi bi-boxes me-2"></i>
-                Inventory Summary
-            </h5>
-
+        <div class="admin-section-header">
+            <div>
+                <h2>Payment Breakdown</h2>
+                <p>How customers paid today</p>
+            </div>
         </div>
 
-        <div class="card-body">
+        <div class="admin-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
 
-            <div class="row g-3">
-
-                <div class="col-md-4">
-
-                    <div class="border rounded p-3">
-
-                        <div class="text-muted small">
-                            Total Stock
-                        </div>
-
-                        <div class="fs-4 fw-bold">
-                            {{ total_stock }}
-                        </div>
-
-                    </div>
-
+            <div class="admin-tile admin-tile-blue">
+                <div class="admin-tile-icon"><i class="bi bi-cash-stack"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Cash Sales</div>
+                    <div class="admin-tile-value">KSh {{ cash_total|floatformat:2 }}</div>
+                    <div class="admin-tile-sub">Paid in cash</div>
                 </div>
+            </div>
 
-
-                <div class="col-md-4">
-
-                    <div class="border rounded p-3">
-
-                        <div class="text-muted small">
-                            Low Stock
-                        </div>
-
-                        <div class="fs-4 fw-bold text-warning">
-                            {{ low_stock_count }}
-                        </div>
-
-                    </div>
-
+            <div class="admin-tile admin-tile-purple">
+                <div class="admin-tile-icon"><i class="bi bi-phone-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">M-Pesa Sales</div>
+                    <div class="admin-tile-value">KSh {{ mpesa_total|floatformat:2 }}</div>
+                    <div class="admin-tile-sub">Paid via M-Pesa</div>
                 </div>
-
-
-                <div class="col-md-4">
-
-                    <div class="border rounded p-3">
-
-                        <div class="text-muted small">
-                            Out of Stock
-                        </div>
-
-                        <div class="fs-4 fw-bold text-danger">
-                            {{ out_of_stock_count }}
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </div>
-
     </div>
 
 
-    <!-- Recent Sales -->
-    <div class="card border-0 shadow-sm">
+    <!-- ========================================================= -->
+    <!-- INVENTORY SNAPSHOT -->
+    <!-- ========================================================= -->
+    <div class="admin-section-block">
 
-        <div class="card-header">
-
-            <h5 class="mb-0">
-                <i class="bi bi-clock-history me-2"></i>
-                Recent Sales
-            </h5>
-
+        <div class="admin-section-header">
+            <div>
+                <h2>Inventory Snapshot</h2>
+                <p>Current stock levels</p>
+            </div>
         </div>
 
-        <div class="card-body p-0">
+        <div class="admin-cards-grid">
 
-            <div class="table-responsive">
+            <a href="{% url 'inventory_list' %}" class="admin-tile admin-tile-blue">
+                <div class="admin-tile-icon"><i class="bi bi-boxes"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Total Stock</div>
+                    <div class="admin-tile-value">{{ total_stock }}</div>
+                    <div class="admin-tile-sub">Units available</div>
+                </div>
+            </a>
 
-                <table class="table table-hover mb-0">
+            <a href="{% url 'inventory_list' %}" class="admin-tile admin-tile-orange">
+                <div class="admin-tile-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Low Stock</div>
+                    <div class="admin-tile-value">{{ low_stock_count }}</div>
+                    <div class="admin-tile-sub">Need restocking</div>
+                </div>
+            </a>
 
-                    <thead class="table-light">
+            <a href="{% url 'inventory_list' %}" class="admin-tile admin-tile-red">
+                <div class="admin-tile-icon"><i class="bi bi-x-circle-fill"></i></div>
+                <div class="admin-tile-body">
+                    <div class="admin-tile-label">Out of Stock</div>
+                    <div class="admin-tile-value">{{ out_of_stock_count }}</div>
+                    <div class="admin-tile-sub">Currently unavailable</div>
+                </div>
+            </a>
 
-                        <tr>
-                            <th>#</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Payment</th>
-                            <th>Date</th>
-                        </tr>
+        </div>
+    </div>
 
-                    </thead>
 
-                    <tbody>
+    <!-- ========================================================= -->
+    <!-- RECENT SALES TABLE -->
+    <!-- ========================================================= -->
+    <div class="admin-section-block">
 
-                        {% for sale in recent_sales %}
+        <div class="admin-section-header">
+            <div>
+                <h2>Recent Sales</h2>
+                <p>Latest 10 transactions</p>
+            </div>
+            <a href="{% url 'sales:sale_list' %}" class="panel-link" style="font-size: 12px;">
+                View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
 
-                        <tr>
-
-                            <td>{{ forloop.counter }}</td>
-
-                            <td class="fw-semibold">
-                                {{ sale.product.name }}
-                            </td>
-
-                            <td>
-                                {{ sale.quantity }}
-                            </td>
-
-                            <td>
-                                KSh {{ sale.total_amount|floatformat:2 }}
-                            </td>
-
-                            <td>
-                                <span class="badge bg-success">
-                                    {{ sale.payment_method }}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead style="background: #f8fafc; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #667085;">
+                    <tr>
+                        <th style="padding: 12px 16px;">#</th>
+                        <th>Product</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-center">Payment</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in recent_sales %}
+                    <tr>
+                        <td style="padding: 12px 16px; color: #98a2b3; font-weight: 600;">
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            <i class="bi bi-box-seam text-primary me-1"></i>
+                            <strong>{{ sale.product.name }}</strong>
+                        </td>
+                        <td class="text-center">{{ sale.quantity }}</td>
+                        <td class="text-end" style="font-weight: 700; color: #101828;">
+                            KSh {{ sale.total_amount|floatformat:2 }}
+                        </td>
+                        <td class="text-center">
+                            {% if sale.payment_method == 'M-Pesa' %}
+                                <span style="background: #ecfdf3; color: #027a48; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;">
+                                    <i class="bi bi-phone"></i> M-Pesa
                                 </span>
-                            </td>
-
-                            <td>
-                                {{ sale.sale_date|date:"d M Y, H:i" }}
-                            </td>
-
-                        </tr>
-
-                        {% empty %}
-
-                        <tr>
-
-                            <td colspan="6"
-                                class="text-center text-muted py-4">
-
-                                <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-
-                                No sales recorded yet.
-
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
+                            {% else %}
+                                <span style="background: #fff7ed; color: #ea580c; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;">
+                                    <i class="bi bi-cash"></i> Cash
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td style="font-size: 12px; color: #667085;">
+                            {{ sale.sale_date|date:"d M Y, H:i" }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-inbox" style="font-size: 42px; display: block; margin-bottom: 10px; color: #cbd5e1;"></i>
+                            <strong style="display: block; color: #344054;">No sales recorded yet</strong>
+                            <span style="font-size: 13px;">Today's sales will appear here</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-
     </div>
 
 </div>
 
 {% endblock %}
-

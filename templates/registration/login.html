@@ -32,7 +32,6 @@
 
 </head>
 
-
 <body class="login-page">
 
 
@@ -92,7 +91,12 @@
                 <form method="post">
 
                     {% csrf_token %}
-
+                    {% if request.GET.expired %}
+                    <div class="alert alert-warning mb-3">
+                        <i class="bi bi-clock-history"></i>
+                        Your session expired due to inactivity. Please log in again.
+                    </div>
+                    {% endif %}
 
                     <!-- USERNAME -->
 
@@ -197,12 +201,9 @@
 
 
                         <a
-                href="{% url 'password_reset' %}"
-                class="forgot-password">
-
-                Forgot Password?
-
-            </a>
+                href="{% url 'password_reset' %}?from=cashier" class="forgot-password">
+                    Forgot Password?
+                        </a>
 
                     </div>
 
@@ -236,15 +237,6 @@
                  SIGN UP
                  ================================================= -->
 
-            <div class="signup-text">
-
-                Don't have an account?
-
-                <a href="#">
-                    Sign Up
-                </a>
-
-            </div>
 
 
             <!-- =================================================

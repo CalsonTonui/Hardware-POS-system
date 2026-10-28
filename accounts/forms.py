@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 User = get_user_model()
 
 
-class UserCreateForm(UserCreationForm):
+class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User

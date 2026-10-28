@@ -2907,7 +2907,7 @@ body {
 
 .pos-sidebar {
     position: fixed;
-    top: 72px;
+    top: 78px;
     left: 0;
     bottom: 0;
     z-index: 1040;
@@ -3513,8 +3513,8 @@ body.sidebar-collapsed .sidebar-link:hover::after {
     left: 0;
     right: 0;
 
-    height: 72px;
-    min-height: 72px;
+    height: 78px;
+    min-height: 78px;
 
     z-index: 1050;
 
@@ -3764,11 +3764,11 @@ body {
 
     .pos-main-content {
 
-        height: calc(100vh - 65px);
+        height: calc(100vh - 78px);
 
         margin-left: 0;
 
-        margin-top: 65px;
+        margin-top: 78px;
 
         padding: 20px 16px 30px;
     }
@@ -10200,4 +10200,5143 @@ body {
 
 .admin-login-links span {
     color: #98a2b3;
+}
+/* =========================================================
+   POS TERMINAL LAYOUT FIX
+   ========================================================= */
+
+.pos-container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr) !important;
+    gap: 22px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.pos-products-panel {
+    min-width: 0 !important;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.05);
+}
+
+.pos-products-header {
+    padding: 18px 22px;
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+.pos-products-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.pos-products-header i {
+    margin-right: 8px;
+}
+
+.pos-products-panel > div {
+    padding: 22px !important;
+}
+
+.pos-search-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.pos-search-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.10);
+}
+
+.pos-product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+    gap: 14px !important;
+}
+
+.pos-product-card {
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos-product-card:hover {
+    border-color: #0d6efd;
+    box-shadow: 0 6px 16px rgba(13, 110, 253, 0.15);
+    transform: translateY(-3px);
+}
+
+.pos-product-card h6 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #101828;
+}
+
+.pos-category {
+    color: #98a2b3;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.pos-price {
+    color: #0d6efd;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.pos-stock-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #ecfdf3;
+    color: #027a48;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* CART PANEL */
+.pos-cart-panel {
+    min-width: 0 !important;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    max-height: calc(100vh - 120px);
+    position: sticky;
+    top: 100px;
+}
+
+.pos-cart-header {
+    padding: 18px 22px;
+    background: #172033;
+    color: #ffffff;
+}
+
+.pos-cart-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.pos-cart-header i {
+    margin-right: 8px;
+}
+
+.pos-cart-body {
+    padding: 18px 22px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.pos-cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.pos-cart-table th {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid #e4e7ec;
+    color: #667085;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.pos-cart-table td {
+    padding: 10px 6px;
+    border-bottom: 1px solid #f2f4f7;
+    font-size: 13px;
+    color: #344054;
+}
+
+.pos-cart-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: #98a2b3;
+    font-size: 13px;
+}
+
+.pos-cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-top: 2px solid #e4e7ec;
+    margin-top: 12px;
+}
+
+.pos-cart-total h5 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #101828;
+}
+
+.pos-total-amount {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0d6efd;
+}
+
+.pos-checkout-btn {
+    width: 100%;
+    height: 52px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #16a05d;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pos-checkout-btn:hover {
+    background: #128650;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(22, 160, 93, 0.25);
+}
+
+.pos-checkout-btn i {
+    margin-right: 8px;
+}
+
+/* POS Terminal Responsive */
+@media (max-width: 1100px) {
+    .pos-container {
+        grid-template-columns: 1fr !important;
+    }
+    .pos-cart-panel {
+        position: static !important;
+        max-height: none !important;
+    }
+}
+
+/* =========================================================
+   SIDEBAR LINK VISIBILITY FIX
+   ========================================================= */
+
+.pos-sidebar .sidebar-link {
+    color: #cbd5e1 !important;
+    background: transparent !important;
+}
+
+.pos-sidebar .sidebar-link:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+.pos-sidebar .sidebar-link.active {
+    color: #ffffff !important;
+    background: #0d6efd !important;
+}
+
+.pos-sidebar .sidebar-link-icon {
+    color: #94a3b8 !important;
+}
+
+.pos-sidebar .sidebar-link.active .sidebar-link-icon {
+    color: #ffffff !important;
+}
+
+.pos-sidebar .sidebar-link-text {
+    color: inherit !important;
+}
+
+/* =========================================================
+   PAYMENT MODAL
+   ========================================================= */
+
+.payment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.payment-modal {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.30);
+}
+
+.payment-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+.payment-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.payment-modal-header i {
+    margin-right: 8px;
+}
+
+.payment-modal-close {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+
+.payment-modal-body {
+    padding: 22px;
+}
+
+.payment-total-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    background: #f0f7ff;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+
+.payment-total-display span {
+    color: #667085;
+    font-size: 14px;
+}
+
+.payment-total-display strong {
+    color: #0d6efd;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.payment-label {
+    display: block;
+    margin-bottom: 10px;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.payment-method-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px;
+    background: #ffffff;
+    border: 2px solid #e4e7ec;
+    border-radius: 10px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-method-btn i {
+    font-size: 26px;
+}
+
+.payment-method-btn:hover {
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.payment-method-btn.active {
+    background: #0d6efd;
+    border-color: #0d6efd;
+    color: #ffffff;
+}
+
+.payment-form-group {
+    margin-bottom: 18px;
+}
+
+.payment-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+}
+
+.payment-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.10);
+}
+
+.payment-change-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: #ecfdf3;
+    border-radius: 10px;
+}
+
+.payment-change-box span {
+    color: #027a48;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.payment-change-box strong {
+    color: #027a48;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.payment-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 18px 22px;
+    border-top: 1px solid #eaecf0;
+    background: #f9fafb;
+}
+
+.payment-cancel-btn,
+.payment-confirm-btn {
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.payment-cancel-btn {
+    background: #ffffff;
+    color: #344054;
+    border-color: #d0d5dd;
+}
+
+.payment-confirm-btn {
+    background: #16a05d;
+    color: #ffffff;
+}
+
+.payment-confirm-btn:hover {
+    background: #128650;
+}
+
+/* Navbar logo polish */
+.pos-navbar .navbar-brand img {
+    height: 52px !important;
+    width: 52px !important;
+    object-fit: contain;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .pos-navbar .navbar-brand img {
+        height: 42px !important;
+        width: 42px !important;
+    }
+}
+
+.otp-choice {
+    display: block;
+    cursor: pointer;
+    margin: 0;
+}
+.otp-choice input {
+    display: none;
+}
+.otp-choice-body {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: #ffffff;
+    border: 2px solid #e4e7ec;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+.otp-choice-body i {
+    font-size: 24px;
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+.otp-choice-body strong {
+    display: block;
+    color: #101828;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+.otp-choice-body small {
+    display: block;
+    color: #667085;
+    font-size: 12px;
+}
+.otp-choice:hover .otp-choice-body {
+    border-color: #cbd5e1;
+}
+.otp-choice input:checked + .otp-choice-body {
+    border-color: #0d6efd;
+    background: #f0f7ff;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.10);
+}
+.otp-choice input:checked + .otp-choice-body i {
+    color: #0d6efd;
+}
+
+/* =========================================================
+   PROFESSIONAL STAT CARDS
+   ========================================================= */
+
+.pro-stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.pro-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.pro-stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0;
+    width: 6px;
+    height: 100%;
+}
+
+.pro-stat-card.blue::after   { background: #0d6efd; }
+.pro-stat-card.green::after  { background: #16a05d; }
+.pro-stat-card.orange::after { background: #ea580c; }
+.pro-stat-card.purple::after { background: #7c3aed; }
+.pro-stat-card.red::after    { background: #dc2626; }
+
+.pro-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+}
+
+.pro-stat-icon {
+    width: 54px; height: 54px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.pro-stat-card.blue   .pro-stat-icon { background:#eff6ff; color:#2563eb; }
+.pro-stat-card.green  .pro-stat-icon { background:#ecfdf3; color:#16a34a; }
+.pro-stat-card.orange .pro-stat-icon { background:#fff7ed; color:#ea580c; }
+.pro-stat-card.purple .pro-stat-icon { background:#f5f3ff; color:#7c3aed; }
+.pro-stat-card.red    .pro-stat-icon { background:#fef2f2; color:#dc2626; }
+
+.pro-stat-body { min-width: 0; }
+
+.pro-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #667085;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.pro-stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: #101828;
+    line-height: 1.1;
+}
+
+.pro-stat-sub {
+    font-size: 12px;
+    color: #98a2b3;
+    margin-top: 3px;
+}
+
+/* =========================================================
+   ADMIN DASHBOARD - CLEAN SECTION BLOCKS
+   ========================================================= */
+
+.admin-section-block {
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+}
+
+.admin-section-block .admin-section-header {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f2f4f7;
+}
+
+.admin-section-block .admin-section-header h2 {
+    margin: 0 0 3px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #101828;
+}
+
+.admin-section-block .admin-section-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #667085;
+}
+
+
+/* =========================================================
+   ADMIN TILE (Management cards)
+   ========================================================= */
+
+.admin-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.admin-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    overflow: hidden;
+    min-height: 92px;
+}
+
+.admin-tile:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+}
+
+.admin-tile::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.admin-tile-green::after  { background: #16a05d; }
+.admin-tile-blue::after   { background: #0d6efd; }
+.admin-tile-orange::after { background: #ea580c; }
+.admin-tile-purple::after { background: #7c3aed; }
+.admin-tile-red::after    { background: #dc2626; }
+
+.admin-tile-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.admin-tile-green  .admin-tile-icon { background: #ecfdf3; color: #16a34a; }
+.admin-tile-blue   .admin-tile-icon { background: #eff6ff; color: #2563eb; }
+.admin-tile-orange .admin-tile-icon { background: #fff7ed; color: #ea580c; }
+.admin-tile-purple .admin-tile-icon { background: #f5f3ff; color: #7c3aed; }
+.admin-tile-red    .admin-tile-icon { background: #fef2f2; color: #dc2626; }
+
+.admin-tile-body {
+    min-width: 0;
+    flex: 1;
+}
+
+.admin-tile-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #667085;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.admin-tile-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #101828;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-tile-sub {
+    font-size: 11px;
+    color: #98a2b3;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ADMIN ALERT CARDS (Stock Alerts)
+   ========================================================= */
+
+.admin-alert-card {
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.admin-alert-red {
+    border-left: 4px solid #dc2626;
+}
+
+.admin-alert-orange {
+    border-left: 4px solid #ea580c;
+}
+
+.admin-alert-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f2f4f7;
+}
+
+.admin-alert-header h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-alert-red .admin-alert-header h6 { color: #dc2626; }
+.admin-alert-orange .admin-alert-header h6 { color: #ea580c; }
+
+.admin-alert-header small {
+    font-size: 11px;
+    color: #98a2b3;
+}
+
+.admin-alert-view {
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.admin-alert-red .admin-alert-view {
+    color: #dc2626;
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.admin-alert-orange .admin-alert-view {
+    color: #ea580c;
+    border-color: #fed7aa;
+    background: #fff7ed;
+}
+
+.admin-alert-body {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.admin-alert-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f9fafb;
+    font-size: 13px;
+    color: #344054;
+}
+
+.admin-alert-row:last-child {
+    border-bottom: none;
+}
+
+.admin-alert-row i {
+    color: #98a2b3;
+    margin-right: 6px;
+}
+
+.admin-alert-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.admin-badge-red {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.admin-badge-orange {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+
+/* =========================================================
+   ADMIN SYSTEM TILES
+   ========================================================= */
+
+.admin-system-tile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-system-tile:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+}
+
+.admin-system-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 19px;
+}
+
+.admin-system-tile strong {
+    display: block;
+    font-size: 14px;
+    color: #101828;
+    margin-bottom: 3px;
+}
+
+.admin-system-tile span {
+    font-size: 12px;
+    color: #667085;
+}
+
+/* =========================================================
+   DARK MODE THEME
+   ========================================================= */
+
+:root {
+    --dm-bg: #0f172a;
+    --dm-bg-alt: #1e293b;
+    --dm-bg-card: #1e293b;
+    --dm-bg-elevated: #334155;
+    --dm-border: #334155;
+    --dm-border-soft: #475569;
+    --dm-text: #e2e8f0;
+    --dm-text-muted: #94a3b8;
+    --dm-text-dim: #64748b;
+    --dm-primary: #3b82f6;
+    --dm-primary-hover: #60a5fa;
+    --dm-success: #10b981;
+    --dm-warning: #f59e0b;
+    --dm-danger: #ef4444;
+    --dm-purple: #8b5cf6;
+    --dm-shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================
+   BODY & GLOBAL
+   ========================================================= */
+
+body.dark-mode {
+    background: var(--dm-bg) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pos-main-content {
+    background: var(--dm-bg) !important;
+    color: var(--dm-text) !important;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+body.dark-mode .pos-navbar {
+    background: #0b1220 !important;
+    border-bottom: 1px solid var(--dm-border) !important;
+}
+
+body.dark-mode .pos-navbar-brand,
+body.dark-mode .admin-name {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .admin-role {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .admin-icon i {
+    color: var(--dm-text) !important;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+body.dark-mode .pos-sidebar {
+    background: #0a0f1e !important;
+    border-right-color: #0b1220 !important;
+}
+
+body.dark-mode .sidebar-header {
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .sidebar-brand-text span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .sidebar-brand-text strong {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .sidebar-link {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .sidebar-link:hover {
+    background: rgba(59, 130, 246, 0.12) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .sidebar-link.active {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .sidebar-link.active::before {
+    background: #60a5fa !important;
+}
+
+body.dark-mode .sidebar-section-title {
+    color: #475569 !important;
+}
+
+body.dark-mode .sidebar-footer {
+    border-top-color: var(--dm-border) !important;
+}
+
+/* =========================================================
+   CARDS & PANELS
+   ========================================================= */
+
+body.dark-mode .card,
+body.dark-mode .pro-stat-card,
+body.dark-mode .admin-tile,
+body.dark-mode .admin-system-tile,
+body.dark-mode .admin-alert-card,
+body.dark-mode .admin-section-block,
+body.dark-mode .dashboard-panel,
+body.dark-mode .summary-card,
+body.dark-mode .product-stat-card,
+body.dark-mode .inventory-card,
+body.dark-mode .supplier-stat-card,
+body.dark-mode .supplier-list-card,
+body.dark-mode .expense-summary-card,
+body.dark-mode .expense-list-card,
+body.dark-mode .services-stat-card,
+body.dark-mode .services-catalogue-card,
+body.dark-mode .admin-table-card {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pro-stat-card:hover,
+body.dark-mode .admin-tile:hover,
+body.dark-mode .admin-system-tile:hover {
+    border-color: var(--dm-border-soft) !important;
+    box-shadow: 0 8px 20px var(--dm-shadow) !important;
+}
+
+/* =========================================================
+   PAGE HEADERS
+   ========================================================= */
+
+body.dark-mode .admin-page-header,
+body.dark-mode .dashboard-top,
+body.dark-mode .page-top,
+body.dark-mode .products-header {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .admin-page-header h1,
+body.dark-mode .dashboard-top h2,
+body.dark-mode .page-top h2,
+body.dark-mode .admin-header-left h1,
+body.dark-mode .admin-section-block .admin-section-header h2 {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .admin-page-header p,
+body.dark-mode .dashboard-top p,
+body.dark-mode .page-top p,
+body.dark-mode .admin-header-left p,
+body.dark-mode .admin-section-block .admin-section-header p {
+    color: var(--dm-text-muted) !important;
+}
+
+/* =========================================================
+   WELCOME CARD
+   ========================================================= */
+
+body.dark-mode .admin-welcome-card {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af) !important;
+    border-color: #1e40af !important;
+    color: #e0e7ff !important;
+}
+
+body.dark-mode .admin-welcome-card h2 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .admin-welcome-card p {
+    color: #c7d2fe !important;
+}
+
+/* =========================================================
+   STAT VALUES & LABELS
+   ========================================================= */
+
+body.dark-mode .pro-stat-label,
+body.dark-mode .admin-tile-label,
+body.dark-mode .stat-label,
+body.dark-mode .summary-content span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .pro-stat-value,
+body.dark-mode .admin-tile-value,
+body.dark-mode .summary-content strong,
+body.dark-mode .product-stat-content strong {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pro-stat-sub,
+body.dark-mode .admin-tile-sub,
+body.dark-mode .summary-content small {
+    color: var(--dm-text-dim) !important;
+}
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+body.dark-mode .table {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.08) !important;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background: #0f172a !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .form-control::placeholder,
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: var(--dm-text-dim) !important;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode input:focus,
+body.dark-mode select:focus,
+body.dark-mode textarea:focus {
+    border-color: var(--dm-primary) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+    background: #0f172a !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode label,
+body.dark-mode .form-label,
+body.dark-mode .professional-label,
+body.dark-mode .payment-label {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .text-muted {
+    color: var(--dm-text-muted) !important;
+}
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+body.dark-mode .alert {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .alert-info {
+    background: #1e3a8a !important;
+    color: #dbeafe !important;
+}
+
+body.dark-mode .alert-success {
+    background: #064e3b !important;
+    color: #d1fae5 !important;
+}
+
+body.dark-mode .alert-warning {
+    background: #78350f !important;
+    color: #fef3c7 !important;
+}
+
+body.dark-mode .alert-danger {
+    background: #7f1d1d !important;
+    color: #fee2e2 !important;
+}
+
+/* =========================================================
+   POS TERMINAL
+   ========================================================= */
+
+body.dark-mode .pos-products-panel,
+body.dark-mode .pos-cart-panel {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .pos-product-card {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pos-product-card:hover {
+    border-color: var(--dm-primary) !important;
+    background: #1e40af !important;
+}
+
+body.dark-mode .pos-product-card h6,
+body.dark-mode .pos-product-card .pos-price {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pos-product-card .pos-price {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .pos-cart-table td {
+    color: var(--dm-text) !important;
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .pos-search-input {
+    background: #0f172a !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pos-search-input::placeholder {
+    color: var(--dm-text-dim) !important;
+}
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+body.dark-mode .payment-modal {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .payment-modal-header {
+    background: #1e40af !important;
+}
+
+body.dark-mode .payment-modal-body {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .payment-modal-footer {
+    background: #0f172a !important;
+    border-top-color: var(--dm-border) !important;
+}
+
+body.dark-mode .payment-products-list {
+    background: #111827 !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .payment-products-table th {
+    color: var(--dm-text-muted) !important;
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .payment-products-table td {
+    color: var(--dm-text) !important;
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .payment-total-display {
+    background: #1e3a8a !important;
+}
+
+body.dark-mode .payment-total-display span {
+    color: #c7d2fe !important;
+}
+
+body.dark-mode .payment-method-btn {
+    background: #0f172a !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .payment-method-btn:hover {
+    border-color: var(--dm-primary) !important;
+}
+
+body.dark-mode .payment-method-btn.active {
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+}
+
+body.dark-mode .payment-change-box {
+    background: #064e3b !important;
+}
+
+body.dark-mode .payment-change-box span,
+body.dark-mode .payment-change-box strong {
+    color: #86efac !important;
+}
+
+body.dark-mode .mpesa-till-box {
+    background: #1e3a8a !important;
+    border-color: #3b82f6 !important;
+}
+
+/* =========================================================
+   DASHBOARD TILES
+   ========================================================= */
+
+body.dark-mode .admin-tile-green  .admin-tile-icon { background: rgba(16, 185, 129, 0.15) !important; }
+body.dark-mode .admin-tile-blue   .admin-tile-icon { background: rgba(59, 130, 246, 0.15) !important; }
+body.dark-mode .admin-tile-orange .admin-tile-icon { background: rgba(234, 88, 12, 0.15) !important; }
+body.dark-mode .admin-tile-purple .admin-tile-icon { background: rgba(124, 58, 237, 0.15) !important; }
+body.dark-mode .admin-tile-red    .admin-tile-icon { background: rgba(220, 38, 38, 0.15) !important; }
+
+body.dark-mode .admin-system-icon {
+    background: rgba(148, 163, 184, 0.15) !important;
+    color: var(--dm-text) !important;
+}
+
+/* =========================================================
+   STOCK ALERT CARDS
+   ========================================================= */
+
+body.dark-mode .admin-alert-header {
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .admin-alert-row {
+    border-bottom-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .admin-badge-red {
+    background: #7f1d1d !important;
+    color: #fecaca !important;
+}
+
+body.dark-mode .admin-badge-orange {
+    background: #78350f !important;
+    color: #fde68a !important;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+body.dark-mode .btn-outline-secondary {
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border-soft) !important;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .btn-light {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+/* =========================================================
+   CARDS - WHITE BG CLASS OVERRIDES
+   ========================================================= */
+
+body.dark-mode .card-header.bg-white,
+body.dark-mode .bg-white {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .bg-light {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+body.dark-mode .badge.bg-success {
+    background: #065f46 !important;
+}
+
+body.dark-mode .badge.bg-warning {
+    background: #92400e !important;
+}
+
+body.dark-mode .badge.bg-danger {
+    background: #991b1b !important;
+}
+
+body.dark-mode .badge.bg-info {
+    background: #1e40af !important;
+}
+
+/* =========================================================
+   THEME TOGGLE BUTTON
+   ========================================================= */
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-right: 10px;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+body.dark-mode .theme-toggle {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+}
+
+body.dark-mode .theme-toggle:hover {
+    background: rgba(59, 130, 246, 0.35);
+}
+
+/* =========================================================
+   DARK MODE FIX-UPS (Blurred/White BG Elements)
+   ========================================================= */
+
+/* ---------- Table Rows with inline bg colors ---------- */
+body.dark-mode tr,
+body.dark-mode tbody,
+body.dark-mode thead,
+body.dark-mode .table-responsive {
+    background: transparent !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .table > :not(caption) > * > * {
+    background-color: transparent !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .table-hover > tbody > tr:hover > * {
+    background-color: rgba(59, 130, 246, 0.08) !important;
+    color: #ffffff !important;
+}
+
+/* ---------- Anything with explicit bg-white ---------- */
+body.dark-mode [style*="background: #fff"],
+body.dark-mode [style*="background:#fff"],
+body.dark-mode [style*="background: white"],
+body.dark-mode [style*="background:white"],
+body.dark-mode [style*="background-color: #fff"],
+body.dark-mode [style*="background-color:#fff"],
+body.dark-mode [style*="background-color: white"] {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Anything with explicit bg-light or #f8fafc etc ---------- */
+body.dark-mode [style*="background: #f9fafb"],
+body.dark-mode [style*="background:#f9fafb"],
+body.dark-mode [style*="background: #f8f9fa"],
+body.dark-mode [style*="background:#f8f9fa"],
+body.dark-mode [style*="background: #f0f7ff"],
+body.dark-mode [style*="background:#f0f7ff"],
+body.dark-mode [style*="background: #eff6ff"],
+body.dark-mode [style*="background:#eff6ff"],
+body.dark-mode [style*="background: #f1f5f9"],
+body.dark-mode [style*="background:#f1f5f9"],
+body.dark-mode [style*="background: #f2f4f7"],
+body.dark-mode [style*="background:#f2f4f7"] {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Any leftover .card or .card-body ---------- */
+body.dark-mode .card-body,
+body.dark-mode .card-footer,
+body.dark-mode .card-header {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* ---------- .text-dark / .text-black ---------- */
+body.dark-mode .text-dark,
+body.dark-mode .text-black {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Bootstrap strong/text inside dark mode ---------- */
+body.dark-mode strong,
+body.dark-mode b,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Bootstrap small and muted text ---------- */
+body.dark-mode small,
+body.dark-mode .small {
+    color: var(--dm-text-muted) !important;
+}
+
+/* ---------- Inline style paragraph text ---------- */
+body.dark-mode p {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- The inline Quick Access best sellers ---------- */
+body.dark-mode .pos-product-card,
+body.dark-mode button[onclick*="addToCart"] {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Yellow best-seller buttons in POS ---------- */
+body.dark-mode button[style*="background: #fef3c7"] {
+    background: #92400e !important;
+    color: #fef3c7 !important;
+    border-color: #b45309 !important;
+}
+
+/* ---------- Search results header in POS ---------- */
+body.dark-mode input.pos-search-input {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- POS product grid text ---------- */
+body.dark-mode .pos-product-card h6,
+body.dark-mode .pos-product-card .pos-category,
+body.dark-mode .pos-product-card .pos-price,
+body.dark-mode .pos-product-card .pos-stock-badge {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .pos-product-card .pos-category {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .pos-product-card .pos-price {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .pos-product-card .pos-stock-badge {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #6ee7b7 !important;
+}
+
+/* ---------- POS cart section ---------- */
+body.dark-mode .pos-cart-body,
+body.dark-mode .pos-cart-total,
+body.dark-mode .pos-cart-table th,
+body.dark-mode .pos-cart-table td {
+    background: transparent !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Any element with white bg and dark text that we missed ---------- */
+body.dark-mode *[style*="background: white"],
+body.dark-mode *[style*="background:#fff"],
+body.dark-mode *[style*="background-color: white"],
+body.dark-mode *[style*="background-color:#fff"] {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Card header with `bg-white` class ---------- */
+body.dark-mode .card-header.bg-white h5,
+body.dark-mode .card-header.bg-white h6,
+body.dark-mode .card-header.bg-white .mb-0 {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Home icon and welcome ---------- */
+body.dark-mode .admin-welcome-icon,
+body.dark-mode .admin-header-icon {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+}
+
+/* ---------- Dropdown menu ---------- */
+body.dark-mode .dropdown-menu {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: var(--dm-bg-elevated) !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .dropdown-divider {
+    border-color: var(--dm-border) !important;
+}
+
+/* ---------- Buttons with `btn-primary` in dark mode ---------- */
+body.dark-mode .btn-primary {
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+}
+
+/* ---------- Success buttons ---------- */
+body.dark-mode .btn-success {
+    background: #065f46 !important;
+    border-color: #065f46 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-success:hover {
+    background: #047857 !important;
+    border-color: #047857 !important;
+}
+
+/* ---------- Stat card values white in dark ---------- */
+body.dark-mode .stat-value,
+body.dark-mode .summary-card strong,
+body.dark-mode .sales-summary-value {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Suppress Bootstrap text-dark inside cards ---------- */
+body.dark-mode .card .text-dark,
+body.dark-mode .card-body .text-dark {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Any hardcoded white paragraphs in tables (mpesa report) ---------- */
+body.dark-mode td div[style*="color: #344054"] {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode td div[style*="color: #101828"] {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode td strong[style*="color: #344054"] {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode td strong[style*="color: #101828"] {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- Force any hardcoded #101828 or #344054 to lighter ---------- */
+body.dark-mode [style*="color: #101828"],
+body.dark-mode [style*="color:#101828"],
+body.dark-mode [style*="color: #344054"],
+body.dark-mode [style*="color:#344054"],
+body.dark-mode [style*="color: #667085"],
+body.dark-mode [style*="color:#667085"],
+body.dark-mode [style*="color: #98a2b3"],
+body.dark-mode [style*="color:#98a2b3"] {
+    color: var(--dm-text-muted) !important;
+}
+
+/* ---------- Print preview override (make sure receipts stay light) ---------- */
+@media print {
+    body.dark-mode,
+    body.dark-mode * {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+}
+
+/* =========================================================
+   DARK MODE FIX-UPS — PART 2 (Specific Component Overrides)
+   ========================================================= */
+
+/* ---------- INVENTORY TABLE ---------- */
+body.dark-mode .inventory-product,
+body.dark-mode .inventory-product strong,
+body.dark-mode .inventory-product span {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .inventory-product-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .inventory-category {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .inventory-unit,
+body.dark-mode .inventory-barcode,
+body.dark-mode .inventory-number {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .no-barcode {
+    color: var(--dm-text-dim) !important;
+}
+
+body.dark-mode .reorder-value {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+/* Keep colored badges for status */
+body.dark-mode .inventory-quantity.quantity-good {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .inventory-quantity.quantity-low {
+    background: rgba(245, 158, 11, 0.25) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode .inventory-quantity.quantity-out {
+    background: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .inventory-status.status-good {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .inventory-status.status-low {
+    background: rgba(245, 158, 11, 0.25) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode .inventory-status.status-out {
+    background: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+}
+
+/* ---------- SALES / INVENTORY TABLES ---------- */
+body.dark-mode .sales-product,
+body.dark-mode .sales-product span,
+body.dark-mode .sales-quantity,
+body.dark-mode .sales-date,
+body.dark-mode .sales-price,
+body.dark-mode .sales-total,
+body.dark-mode .sale-number {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .sales-unit,
+body.dark-mode .sales-time {
+    color: var(--dm-text-dim) !important;
+}
+
+body.dark-mode .sales-product-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* Sales summary cards */
+body.dark-mode .sales-summary-label {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .sales-summary-value {
+    color: var(--dm-text) !important;
+}
+
+/* Sales payment badges */
+body.dark-mode .sales-payment-cash {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .sales-payment-mpesa {
+    background: rgba(59, 130, 246, 0.25) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-mode .pos-payment,
+body.dark-mode .sales-payment {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- PRODUCTS TABLE ---------- */
+body.dark-mode .product-table-name,
+body.dark-mode .product-table-name strong,
+body.dark-mode .product-table-name span {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .product-mini-icon,
+body.dark-mode .product-action {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .product-category-badge {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .product-unit,
+body.dark-mode .product-barcode,
+body.dark-mode .buying-price,
+body.dark-mode .selling-price,
+body.dark-mode .barcode-none {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .selling-price {
+    color: var(--dm-text) !important;
+    font-weight: 700;
+}
+
+/* Product stock badges */
+body.dark-mode .stock-good {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .stock-low {
+    background: rgba(245, 158, 11, 0.2) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode .stock-out {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+}
+
+/* Product action buttons */
+body.dark-mode .edit-action {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .delete-action {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+/* ---------- USER LIST TABLE ---------- */
+body.dark-mode .user-number,
+body.dark-mode .user-table-profile strong,
+body.dark-mode .user-table-profile span,
+body.dark-mode .user-contact span,
+body.dark-mode .user-contact i {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .user-number {
+    color: var(--dm-text-dim) !important;
+}
+
+body.dark-mode .user-table-profile span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .user-avatar {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .user-action-btn {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .user-action-btn:hover {
+    background: var(--dm-bg-card) !important;
+}
+
+/* Roles */
+body.dark-mode .role-admin {
+    background: rgba(59, 130, 246, 0.25) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-mode .role-manager {
+    background: rgba(139, 92, 246, 0.25) !important;
+    color: #c4b5fd !important;
+}
+
+body.dark-mode .role-cashier {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .role-storekeeper {
+    background: rgba(245, 158, 11, 0.25) !important;
+    color: #fcd34d !important;
+}
+
+/* ---------- EXPENSES TABLE ---------- */
+body.dark-mode .expense-name-cell strong,
+body.dark-mode .expense-name-cell small,
+body.dark-mode .expense-amount,
+body.dark-mode .expense-description,
+body.dark-mode .expense-date,
+body.dark-mode .expense-date i,
+body.dark-mode .expense-not-provided {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .expense-name-cell small,
+body.dark-mode .expense-date,
+body.dark-mode .expense-date i {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .expense-amount {
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .expense-category {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .expense-avatar,
+body.dark-mode .expense-section-icon {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+}
+
+/* ---------- SUPPLIERS TABLE ---------- */
+body.dark-mode .supplier-name-cell strong,
+body.dark-mode .supplier-name-cell small,
+body.dark-mode .supplier-contact,
+body.dark-mode .supplier-contact span,
+body.dark-mode .supplier-not-provided {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .supplier-name-cell small,
+body.dark-mode .supplier-not-provided {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .supplier-avatar {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* ---------- SERVICES TABLE ---------- */
+body.dark-mode .services-name-cell strong,
+body.dark-mode .services-description,
+body.dark-mode .services-price,
+body.dark-mode .services-number {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .services-number,
+body.dark-mode .services-description {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .services-row-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .services-status.active {
+    background: rgba(16, 185, 129, 0.25) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode .services-status.inactive {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text-muted) !important;
+}
+
+/* ---------- M-PESA REPORT ---------- */
+body.dark-mode .mpesa-till-box strong,
+body.dark-mode .mpesa-till-box p,
+body.dark-mode .mpesa-till-box i {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode code {
+    background: var(--dm-bg-elevated) !important;
+    color: #93c5fd !important;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* ---------- DASHBOARD STAT CARDS ---------- */
+body.dark-mode .summary-content strong,
+body.dark-mode .summary-content span,
+body.dark-mode .summary-content small {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .summary-content span,
+body.dark-mode .summary-content small {
+    color: var(--dm-text-muted) !important;
+}
+
+/* ---------- BAR CHART TABS ---------- */
+body.dark-mode .btn-outline-primary {
+    color: #60a5fa !important;
+    border-color: #3b82f6 !important;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+/* ---------- EMPTY STATES ---------- */
+body.dark-mode .products-empty,
+body.dark-mode .products-empty strong,
+body.dark-mode .supplier-empty h5,
+body.dark-mode .expense-empty h5,
+body.dark-mode .sales-empty h5,
+body.dark-mode .services-empty h3,
+body.dark-mode .inventory-empty h5,
+body.dark-mode .empty-users h3 {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-empty span,
+body.dark-mode .supplier-empty p,
+body.dark-mode .expense-empty p,
+body.dark-mode .sales-empty p,
+body.dark-mode .services-empty p,
+body.dark-mode .inventory-empty p,
+body.dark-mode .empty-users p {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .products-empty-icon,
+body.dark-mode .supplier-empty-icon,
+body.dark-mode .expense-empty-icon,
+body.dark-mode .sales-empty-icon,
+body.dark-mode .services-empty-icon {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text-muted) !important;
+}
+
+/* ---------- INVENTORY SEARCH CARD ---------- */
+body.dark-mode .inventory-search-card {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .inventory-search-input {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- POS TERMINAL — QUICK ACCESS BUTTONS ---------- */
+body.dark-mode button[onclick*="addToCart"] {
+    background: rgba(245, 158, 11, 0.15) !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode button[onclick*="addToCart"]:hover {
+    background: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* ---------- KEYBOARD SHORTCUTS BANNER ---------- */
+body.dark-mode div[style*="background: #f0f7ff"][style*="border: 1px solid #cfe0fa"] {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+    color: #93c5fd !important;
+}
+
+/* ---------- BADGES in general ---------- */
+body.dark-mode .badge {
+    color: #ffffff !important;
+}
+
+/* ---------- INPUT DARK MODE for search inside header ---------- */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="search"],
+body.dark-mode input[type="number"],
+body.dark-mode input[type="email"],
+body.dark-mode input[type="password"],
+body.dark-mode input[type="date"],
+body.dark-mode input[type="tel"] {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode input::placeholder {
+    color: var(--dm-text-dim) !important;
+}
+
+/* =========================================================
+   DARK MODE — FINAL SWEEP (Fix all remaining hardcoded text)
+   ========================================================= */
+
+/* ---------- SALES HISTORY PAGE ---------- */
+body.dark-mode .sales-date,
+body.dark-mode .sales-time,
+body.dark-mode .sales-product span,
+body.dark-mode .sales-quantity,
+body.dark-mode .sales-price,
+body.dark-mode .sales-total {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .sales-time,
+body.dark-mode .sales-unit {
+    color: var(--dm-text-dim) !important;
+}
+
+/* Sales History header (date tile) */
+body.dark-mode .admin-user-badge {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .admin-user-badge strong {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .admin-user-badge span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .admin-user-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* Filters */
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator,
+body.dark-mode input[type="text"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+body.dark-mode input[type="date"] {
+    color-scheme: dark;
+}
+
+/* ---------- PRODUCTS PAGE ---------- */
+body.dark-mode .products-title-content h2,
+body.dark-mode .products-title-content p {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-title-content p {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .products-title-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* Product cards in table */
+body.dark-mode .product-table-name strong,
+body.dark-mode .product-table-name span,
+body.dark-mode .product-unit,
+body.dark-mode .product-barcode,
+body.dark-mode .product-category-badge,
+body.dark-mode .product-number {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .product-number,
+body.dark-mode .product-unit,
+body.dark-mode .barcode-none,
+body.dark-mode .buying-price {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .product-barcode {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .product-mini-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* Products stats at top */
+body.dark-mode .product-stat-content span,
+body.dark-mode .product-stat-content small {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .product-stat-content strong {
+    color: var(--dm-text) !important;
+}
+
+/* Products search bar */
+body.dark-mode .products-search-input input {
+    background: var(--dm-bg-elevated) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-search-heading h5,
+body.dark-mode .products-search-heading span {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-search-heading span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .search-heading-icon {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+}
+
+/* Products table header (dark themed by default) */
+body.dark-mode .products-table-header {
+    background: #0b1220 !important;
+}
+
+body.dark-mode .products-count-badge {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* ---------- PURCHASES PAGE ---------- */
+body.dark-mode .purchase-date,
+body.dark-mode .purchase-supplier,
+body.dark-mode .purchase-product,
+body.dark-mode .purchase-quantity,
+body.dark-mode .purchase-price,
+body.dark-mode .purchase-total {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .table td,
+body.dark-mode .table th {
+    color: var(--dm-text) !important;
+}
+
+/* ---------- M-PESA REPORT ---------- */
+body.dark-mode .mpesa-till-box,
+body.dark-mode .mpesa-till-box * {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .mpesa-till-box strong {
+    color: #93c5fd !important;
+}
+
+/* The Till badge in the header */
+body.dark-mode .admin-page-header div[style*="background: #eff6ff"],
+body.dark-mode .admin-page-header div[style*="background:#eff6ff"] {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: var(--dm-text) !important;
+}
+
+/* Big number values */
+body.dark-mode .pro-stat-value,
+body.dark-mode div[style*="font-size: 22px"],
+body.dark-mode div[style*="font-size: 26px"],
+body.dark-mode div[style*="font-size: 21px"] {
+    color: var(--dm-text) !important;
+}
+
+
+/* ---------- GLOBAL CATCH-ALL FOR HARDCODED COLORS ---------- */
+
+/* Any element with inline style="#344054" */
+body.dark-mode [style*="color: #344054"],
+body.dark-mode [style*="color:#344054"],
+body.dark-mode [style*="color: #101828"],
+body.dark-mode [style*="color:#101828"],
+body.dark-mode [style*="color: #212529"],
+body.dark-mode [style*="color:#212529"],
+body.dark-mode [style*="color: #333"],
+body.dark-mode [style*="color:#333"],
+body.dark-mode [style*="color: #111"],
+body.dark-mode [style*="color:#111"],
+body.dark-mode [style*="color: black"],
+body.dark-mode [style*="color:black"] {
+    color: var(--dm-text) !important;
+}
+
+/* Any element with inline style="background: #f9fafb" or similar */
+body.dark-mode [style*="background: #f9fafb"],
+body.dark-mode [style*="background:#f9fafb"],
+body.dark-mode [style*="background: #fafbfc"],
+body.dark-mode [style*="background:#fafbfc"],
+body.dark-mode [style*="background: #fcfcfd"],
+body.dark-mode [style*="background:#fcfcfd"],
+body.dark-mode [style*="background: #ffffff"],
+body.dark-mode [style*="background:#ffffff"],
+body.dark-mode [style*="background: #fff "],
+body.dark-mode [style*="background:#fff;"],
+body.dark-mode [style*="background-color: #fff"],
+body.dark-mode [style*="background-color:#fff"] {
+    background: var(--dm-bg-card) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- BADGE BACKGROUNDS ---------- */
+
+body.dark-mode span[style*="background: #ecfdf3"],
+body.dark-mode span[style*="background:#ecfdf3"] {
+    background: rgba(16, 185, 129, 0.2) !important;
+    color: #6ee7b7 !important;
+}
+
+body.dark-mode span[style*="background: #fff7ed"],
+body.dark-mode span[style*="background:#fff7ed"] {
+    background: rgba(234, 88, 12, 0.2) !important;
+    color: #fdba74 !important;
+}
+
+body.dark-mode span[style*="background: #f0f7ff"],
+body.dark-mode span[style*="background:#f0f7ff"] {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-mode span[style*="background: #fef3c7"],
+body.dark-mode span[style*="background:#fef3c7"] {
+    background: rgba(245, 158, 11, 0.2) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode span[style*="background: #f1f5f9"],
+body.dark-mode span[style*="background:#f1f5f9"],
+body.dark-mode span[style*="background: #eef2f6"],
+body.dark-mode span[style*="background:#eef2f6"] {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ---------- TABLE CELLS WITH DARK TEXT ---------- */
+
+body.dark-mode td,
+body.dark-mode th {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode td strong,
+body.dark-mode td span,
+body.dark-mode td div,
+body.dark-mode td small {
+    color: inherit;
+}
+
+/* ---------- HEADER TITLE COLOR (make it stay bright) ---------- */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: var(--dm-text) !important;
+}
+
+
+/* =========================================================
+   DARK MODE — TABLE HEADERS FINAL FIX
+   ========================================================= */
+
+/* Every single thead th in dark mode - aggressive */
+body.dark-mode thead,
+body.dark-mode thead tr,
+body.dark-mode thead th,
+body.dark-mode thead td,
+body.dark-mode .table thead,
+body.dark-mode .table thead tr,
+body.dark-mode .table thead th,
+body.dark-mode .table thead td,
+body.dark-mode table thead,
+body.dark-mode table thead tr,
+body.dark-mode table thead th,
+body.dark-mode table thead td {
+    background: #111827 !important;
+    background-color: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Expense table specifically */
+body.dark-mode .expense-table thead,
+body.dark-mode .expense-table thead tr,
+body.dark-mode .expense-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .expense-table tbody tr {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .expense-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .expense-list-header,
+body.dark-mode .expense-list-title h5,
+body.dark-mode .expense-list-title span {
+    background: transparent !important;
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .expense-list-title span {
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .expense-list-card,
+body.dark-mode .expense-list-card .card-body {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .expense-count-badge {
+    background: var(--dm-bg-elevated) !important;
+    color: var(--dm-text) !important;
+}
+
+/* Supplier table specifically */
+body.dark-mode .supplier-table thead,
+body.dark-mode .supplier-table thead tr,
+body.dark-mode .supplier-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .supplier-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .supplier-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Services table */
+body.dark-mode .services-table thead,
+body.dark-mode .services-table thead tr,
+body.dark-mode .services-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .services-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .services-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Sales table */
+body.dark-mode .sales-table thead,
+body.dark-mode .sales-table thead tr,
+body.dark-mode .sales-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .sales-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .sales-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Inventory table */
+body.dark-mode .inventory-table thead,
+body.dark-mode .inventory-table thead tr,
+body.dark-mode .inventory-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .inventory-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .inventory-table tbody tr:nth-child(even) {
+    background: #172033 !important;
+}
+
+body.dark-mode .inventory-table tbody tr:nth-child(odd) {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .inventory-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Dashboard tables */
+body.dark-mode .dashboard-table thead,
+body.dark-mode .dashboard-table thead tr,
+body.dark-mode .dashboard-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .dashboard-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .dashboard-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Admin users table */
+body.dark-mode .admin-users-table thead,
+body.dark-mode .admin-users-table thead tr,
+body.dark-mode .admin-users-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .admin-users-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .admin-users-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* Products table */
+body.dark-mode .products-table thead,
+body.dark-mode .products-table thead tr,
+body.dark-mode .products-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .products-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .products-table tbody tr:nth-child(even) {
+    background: #172033 !important;
+}
+
+body.dark-mode .products-table tbody td {
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* ---------- UNIVERSAL TABLE BACKGROUND OVERRIDE ---------- */
+
+body.dark-mode table,
+body.dark-mode table * {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-hover-bg: rgba(59, 130, 246, 0.08);
+    --bs-table-color: var(--dm-text);
+    --bs-table-border-color: var(--dm-border);
+}
+
+body.dark-mode table thead *,
+body.dark-mode .table > thead > tr > th,
+body.dark-mode .table > thead > tr > td {
+    background: #111827 !important;
+    background-color: #111827 !important;
+    color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode table tbody *,
+body.dark-mode .table > tbody > tr > td,
+body.dark-mode .table > tbody > tr > th {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .table > tbody > tr {
+    background: var(--dm-bg-card) !important;
+    background-color: var(--dm-bg-card) !important;
+}
+/* Products Page — header block */
+body.dark-mode .products-list-page .products-table-card {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .products-list-page .products-table-header {
+    background: #0b1220 !important;
+}
+
+body.dark-mode .products-list-page .products-table-title h5,
+body.dark-mode .products-list-page .products-table-title span {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-list-page .products-table-title span {
+    color: var(--dm-text-muted) !important;
+}
+
+/* Products page — top stats */
+body.dark-mode .products-list-page .products-header,
+body.dark-mode .products-list-page .product-stat-card,
+body.dark-mode .products-list-page .products-search-panel {
+    background: var(--dm-bg-card) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .products-list-page .products-title-content h2,
+body.dark-mode .products-list-page .product-stat-content strong {
+    color: var(--dm-text) !important;
+}
+
+body.dark-mode .products-list-page .products-title-content p,
+body.dark-mode .products-list-page .product-stat-content span,
+body.dark-mode .products-list-page .product-stat-content small {
+    color: var(--dm-text-muted) !important;
+}
+
+/* Products table body */
+body.dark-mode .products-list-page .products-table tbody tr {
+    background: var(--dm-bg-card) !important;
+}
+
+body.dark-mode .products-list-page .products-table tbody tr:nth-child(even) {
+    background: #172033 !important;
+}
+
+body.dark-mode .products-list-page .products-table tbody td {
+    background: transparent !important;
+    color: var(--dm-text) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .products-list-page .products-table thead th {
+    background: #111827 !important;
+    color: var(--dm-text-muted) !important;
+    border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .products-list-page .product-table-name strong {
+    color: var(--dm-text) !important;
+}
+/* =========================================================
+   DARK MODE — UNIVERSAL TABLE STYLING
+   (Same treatment as Inventory across all pages)
+   ========================================================= */
+
+/* ------ TABLE CONTAINER ------ */
+body.dark-mode .table-responsive,
+body.dark-mode .card,
+body.dark-mode .dashboard-panel {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+/* ------ TABLE ELEMENT ------ */
+body.dark-mode table {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+/* ------ TABLE HEADER ------ */
+body.dark-mode table thead {
+    background: #111827 !important;
+}
+
+body.dark-mode table thead tr th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+    font-weight: 700 !important;
+}
+
+/* ------ TABLE BODY ROWS (default state) ------ */
+body.dark-mode table tbody tr {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode table tbody tr:nth-child(even) {
+    background: #172033 !important;
+}
+
+body.dark-mode table tbody tr td,
+body.dark-mode table tbody tr th {
+    background: inherit !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+/* ------ TEXT INSIDE CELLS ------ */
+body.dark-mode table tbody tr td *,
+body.dark-mode table tbody tr td strong,
+body.dark-mode table tbody tr td span,
+body.dark-mode table tbody tr td div,
+body.dark-mode table tbody tr td small,
+body.dark-mode table tbody tr td a {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode table tbody tr td small,
+body.dark-mode table tbody tr td .text-muted {
+    color: #94a3b8 !important;
+}
+
+/* ------ HOVER STATE — dark, subtle, readable ------ */
+body.dark-mode table tbody tr:hover {
+    background: #243449 !important;
+}
+
+body.dark-mode table tbody tr:hover td,
+body.dark-mode table tbody tr:hover th {
+    background: #243449 !important;
+    color: #ffffff !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode table tbody tr:hover td *,
+body.dark-mode table tbody tr:hover td strong,
+body.dark-mode table tbody tr:hover td span,
+body.dark-mode table tbody tr:hover td div,
+body.dark-mode table tbody tr:hover td small,
+body.dark-mode table tbody tr:hover td a {
+    color: #ffffff !important;
+}
+
+/* ------ PRESERVE BADGE COLORS ON HOVER ------ */
+body.dark-mode table tbody tr:hover td .badge,
+body.dark-mode table tbody tr:hover td [class*="badge-"],
+body.dark-mode table tbody tr:hover td [class*="payment-"],
+body.dark-mode table tbody tr:hover td [class*="role-"],
+body.dark-mode table tbody tr:hover td [class*="stock-"],
+body.dark-mode table tbody tr:hover td [class*="status-"],
+body.dark-mode table tbody tr:hover td [class*="category"],
+body.dark-mode table tbody tr:hover td [class*="quantity-"] {
+    color: inherit !important;
+}
+
+/* ------ INVENTORY SPECIFIC (keep consistent) ------ */
+body.dark-mode .inventory-table tbody tr:hover {
+    background: #243449 !important;
+}
+
+body.dark-mode .inventory-table tbody tr:hover td {
+    background: #243449 !important;
+}
+
+body.dark-mode .inventory-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ PURCHASES SPECIFIC ------ */
+body.dark-mode .purchase-table,
+body.dark-mode .purchase-table tbody,
+body.dark-mode .purchase-table tbody tr,
+body.dark-mode .purchase-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .purchase-table tbody tr:hover,
+body.dark-mode .purchase-table tbody tr:hover td {
+    background-color: #243449 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .purchase-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ EXPENSES SPECIFIC ------ */
+body.dark-mode .expense-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .expense-table tbody tr,
+body.dark-mode .expense-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .expense-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .expense-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ ADMIN USERS TABLE ------ */
+body.dark-mode .admin-users-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .admin-users-table tbody tr,
+body.dark-mode .admin-users-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .admin-users-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .admin-users-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ DASHBOARD TABLE ------ */
+body.dark-mode .dashboard-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .dashboard-table tbody tr,
+body.dark-mode .dashboard-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .dashboard-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .dashboard-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ SALES TABLE ------ */
+body.dark-mode .sales-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .sales-table tbody tr,
+body.dark-mode .sales-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .sales-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .sales-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ SUPPLIERS TABLE ------ */
+body.dark-mode .supplier-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .supplier-table tbody tr,
+body.dark-mode .supplier-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .supplier-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .supplier-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ SERVICES TABLE ------ */
+body.dark-mode .services-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .services-table tbody tr,
+body.dark-mode .services-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .services-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .services-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+
+/* ------ PRODUCTS TABLE ------ */
+body.dark-mode .products-table thead th {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .products-table tbody tr,
+body.dark-mode .products-table tbody td {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .products-table tbody tr:nth-child(even),
+body.dark-mode .products-table tbody tr:nth-child(even) td {
+    background-color: #172033 !important;
+}
+
+body.dark-mode .products-table tbody tr:hover td {
+    background-color: #243449 !important;
+}
+
+body.dark-mode .products-table tbody tr:hover td * {
+    color: #ffffff !important;
+}
+/* =========================================================
+   DARK MODE — EXPENSES TABLE FIX
+   ========================================================= */
+
+/* Serial number column (#) */
+body.dark-mode .expense-number {
+    background: #334155 !important;
+    color: #cbd5e1 !important;
+    font-weight: 700 !important;
+}
+
+/* Also target the number cell directly in case it's not using .expense-number */
+body.dark-mode .expense-table tbody td:first-child {
+    background: #1e293b !important;
+    color: #cbd5e1 !important;
+}
+
+/* Table header # */
+body.dark-mode .expense-table thead th:first-child {
+    background: #111827 !important;
+    color: #94a3b8 !important;
+}
+
+/* Hide the white row above the actual row */
+body.dark-mode .expense-table tbody tr td[style*="background: #fff"] {
+    background: #1e293b !important;
+}
+
+/* The empty white cell at start of data rows */
+body.dark-mode .expense-table tbody tr:first-child td {
+    background: #1e293b !important;
+}
+
+/* ---------- EXPENSE ACTION BUTTONS ---------- */
+body.dark-mode .expense-action-edit {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .expense-action-edit:hover {
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .expense-action-delete {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .expense-action-delete:hover {
+    background: #991b1b !important;
+    border-color: #991b1b !important;
+    color: #ffffff !important;
+}
+
+/* Row hover — keep buttons readable */
+body.dark-mode .expense-table tbody tr:hover .expense-action-edit {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .expense-table tbody tr:hover .expense-action-delete {
+    background: #991b1b !important;
+    color: #ffffff !important;
+}
+
+/* ---------- SIMILAR FIX FOR OTHER TABLES WITH ACTION BUTTONS ---------- */
+
+/* Supplier actions */
+body.dark-mode .supplier-action-edit {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .supplier-action-edit:hover {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .supplier-action-delete {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .supplier-action-delete:hover {
+    background: #991b1b !important;
+    color: #ffffff !important;
+}
+
+/* Product actions */
+body.dark-mode .products-list-page .product-action.edit-action {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .products-list-page .product-action.edit-action:hover {
+    background: #1e40af !important;
+    border-color: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .products-list-page .product-action.delete-action {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .products-list-page .product-action.delete-action:hover {
+    background: #991b1b !important;
+    border-color: #991b1b !important;
+    color: #ffffff !important;
+}
+
+/* Service actions */
+body.dark-mode .services-action.edit {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .services-action.edit:hover {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .services-action.delete {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .services-action.delete:hover {
+    background: #991b1b !important;
+    color: #ffffff !important;
+}
+
+/* User action buttons */
+body.dark-mode .user-action-btn.edit {
+    color: #60a5fa !important;
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    background: rgba(59, 130, 246, 0.15) !important;
+}
+
+body.dark-mode .user-action-btn.delete {
+    color: #fca5a5 !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+}
+
+body.dark-mode .user-action-btn.status {
+    color: #cbd5e1 !important;
+    border-color: #475569 !important;
+    background: #1e293b !important;
+}
+
+body.dark-mode .user-action-btn:hover {
+    background: #243449 !important;
+    color: #ffffff !important;
+}
+
+/* ---------- EXPENSE / SUPPLIER / SERVICES ROW NUMBERS ---------- */
+
+body.dark-mode .expense-number,
+body.dark-mode .supplier-number,
+body.dark-mode .services-number,
+body.dark-mode .user-number,
+body.dark-mode .product-number {
+    background: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+/* ---------- EMPTY CELLS AND PADDING CELLS ---------- */
+
+body.dark-mode table tbody td:empty {
+    background: inherit !important;
+}
+
+body.dark-mode .expense-table tbody td[style*="width"] {
+    background: #1e293b !important;
+}
+
+/* ---------- THE CELL THAT HOLDS EDIT/DELETE ---------- */
+body.dark-mode .expense-table tbody td:last-child {
+    background: #1e293b !important;
+}
+
+body.dark-mode .expense-table tbody tr:hover td:last-child {
+    background: #243449 !important;
+}
+
+/* Clickable stock alert rows */
+.admin-alert-row-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f9fafb;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease;
+    cursor: pointer;
+}
+
+.admin-alert-row-link:hover {
+    background: #f0f7ff;
+}
+
+.admin-alert-row-link:hover .admin-alert-badge {
+    transform: translateX(3px);
+}
+
+.admin-alert-row-link .admin-alert-badge {
+    transition: transform 0.15s ease;
+}
+
+/* Dark mode */
+body.dark-mode .admin-alert-row-link {
+    color: var(--dm-text) !important;
+    border-bottom-color: var(--dm-border) !important;
+}
+
+body.dark-mode .admin-alert-row-link:hover {
+    background: rgba(59, 130, 246, 0.12) !important;
+}
+/* =========================================================
+   USER AVATAR IN NAVBAR
+   ========================================================= */
+
+.user-menu-btn {
+    padding: 4px 12px 4px 4px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+
+.user-menu-btn:hover,
+.user-menu-btn:focus,
+.user-menu-btn.show {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.user-avatar-sm {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+}
+
+.user-menu-caret {
+    font-size: 11px;
+    opacity: 0.75;
+    transition: transform 0.2s ease;
+}
+
+.user-menu-btn.show .user-menu-caret {
+    transform: rotate(180deg);
+}
+
+/* Dark mode */
+body.dark-mode .user-menu-btn {
+    background: rgba(59, 130, 246, 0.15) !important;
+    border-color: rgba(96, 165, 250, 0.4) !important;
+}
+
+body.dark-mode .user-menu-btn:hover,
+body.dark-mode .user-menu-btn.show {
+    background: rgba(59, 130, 246, 0.3) !important;
+    border-color: rgba(96, 165, 250, 0.6) !important;
+}
+
+body.dark-mode .user-avatar-sm {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+/* Responsive — hide the caret on mobile */
+@media (max-width: 576px) {
+    .user-menu-btn {
+        padding: 4px;
+    }
+    .user-menu-caret {
+        display: none;
+    }
+    .user-avatar-sm {
+        width: 34px;
+        height: 34px;
+        font-size: 12px;
+    }
+}
+/* =========================================================
+   PRODUCT IMAGES IN POS
+   ========================================================= */
+
+/* Main product card image */
+.pos-product-image {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pos-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.pos-product-card:hover .pos-product-image img {
+    transform: scale(1.05);
+}
+
+.pos-product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-size: 36px;
+    background: linear-gradient(135deg, #f8fafc, #eef2f6);
+}
+
+.pos-product-card {
+    transition: all 0.2s ease;
+    padding: 12px;
+}
+
+/* Quick access buttons with thumbnails */
+.quick-access-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    color: #92400e;
+    padding: 6px 12px 6px 6px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-access-btn:hover {
+    background: #fde68a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2);
+}
+
+.quick-access-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.quick-access-icon {
+    font-size: 16px;
+    color: #d97706;
+    width: 28px;
+    text-align: center;
+}
+
+/* =========================================================
+   DARK MODE — PRODUCT IMAGES
+   ========================================================= */
+
+body.dark-mode .pos-product-image {
+    background: #334155;
+}
+
+body.dark-mode .pos-product-image-placeholder {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #64748b;
+}
+
+body.dark-mode .quick-access-btn {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fcd34d;
+}
+
+body.dark-mode .quick-access-btn:hover {
+    background: rgba(245, 158, 11, 0.3);
+}
+
+body.dark-mode .quick-access-icon {
+    color: #fcd34d;
+}
+/* Product list thumbnail */
+.product-mini-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid #e4e7ec;
+    background: #f8fafc;
+}
+
+body.dark-mode .product-mini-thumb {
+    border-color: #334755;
+    background: #334155;
+}
+/* =========================================================
+   PRODUCT IMAGE UPLOAD
+   ========================================================= */
+
+.product-image-upload {
+    margin: 0;
+}
+
+.image-upload-area {
+    display: block;
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #fafbfc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-upload-area:hover {
+    border-color: #0d6efd;
+    background: #f0f7ff;
+}
+
+.image-upload-area.dragover {
+    border-color: #0d6efd;
+    background: #e0f2fe;
+}
+
+.image-upload-input {
+    display: none;
+}
+
+/* Placeholder state */
+.image-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    text-align: center;
+    min-height: 200px;
+}
+
+.image-upload-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease;
+}
+
+.image-upload-area:hover .image-upload-icon {
+    transform: scale(1.08);
+}
+
+.image-upload-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #101828;
+    margin-bottom: 4px;
+}
+
+.image-upload-hint {
+    font-size: 12px;
+    color: #667085;
+}
+
+/* Preview state */
+.image-preview-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.image-preview-img {
+    max-width: 100%;
+    max-height: 260px;
+    border-radius: 10px;
+    object-fit: contain;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+    transition: all 0.2s ease;
+    z-index: 5;
+}
+
+.image-remove-btn:hover {
+    background: #b91c1c;
+    transform: scale(1.1);
+}
+
+/* Note */
+.image-upload-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #f0f7ff;
+    border: 1px solid #cfe2ff;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #1e40af;
+}
+
+/* Dark mode */
+body.dark-mode .image-upload-area {
+    border-color: #475569;
+    background: #0f172a;
+}
+
+body.dark-mode .image-upload-area:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.08);
+}
+
+body.dark-mode .image-upload-icon {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+body.dark-mode .image-upload-title {
+    color: #e2e8f0;
+}
+
+body.dark-mode .image-upload-hint {
+    color: #94a3b8;
+}
+
+body.dark-mode .image-upload-note {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+/* =========================================================
+   POS PRODUCT CARD — PROFESSIONAL REDESIGN
+   ========================================================= */
+
+.pos-product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.pos-product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1.5px solid #e4e7ec;
+    border-radius: 14px;
+    padding: 0 !important;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 260px;
+}
+
+.pos-product-card:hover {
+    border-color: #0d6efd;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18);
+}
+
+.pos-product-card:hover .pos-product-image img {
+    transform: scale(1.08);
+}
+
+.pos-product-card:hover .pos-product-image-placeholder {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #3b82f6;
+}
+
+/* ---------- IMAGE SECTION ---------- */
+.pos-product-image {
+    width: 100% !important;
+    height: 140px !important;
+    margin-bottom: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.pos-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.pos-product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #cbd5e1;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f6 100%);
+    transition: all 0.25s ease;
+}
+
+.pos-product-image-placeholder i {
+    font-size: 42px;
+    opacity: 0.7;
+}
+
+/* ---------- CARD BODY ---------- */
+.pos-product-card h6 {
+    margin: 12px 14px 4px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #101828 !important;
+    line-height: 1.3;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 36px;
+}
+
+.pos-product-card .pos-category {
+    margin: 0 14px 8px !important;
+    font-size: 11px !important;
+    color: #98a2b3 !important;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.pos-product-card .pos-price {
+    margin: 0 14px !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #0d6efd !important;
+    text-align: center;
+    margin-bottom: 10px !important;
+}
+
+/* ---------- STOCK BADGE (bottom strip) ---------- */
+.pos-product-card .pos-stock-badge {
+    display: block !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    background: #ecfdf3 !important;
+    color: #027a48 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    border-radius: 0 !important;
+    border-top: 1px solid #d1fae5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ---------- STOCK STATUS COLOR OVERRIDES ---------- */
+.pos-product-card .pos-stock-badge:contains("Stock: 0") {
+    background: #fef2f2 !important;
+    color: #dc2626 !important;
+    border-top-color: #fecaca !important;
+}
+
+/* =========================================================
+   DARK MODE — PRODUCT CARDS
+   ========================================================= */
+
+body.dark-mode .pos-product-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .pos-product-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.2);
+}
+
+body.dark-mode .pos-product-image,
+body.dark-mode .pos-product-image-placeholder {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+body.dark-mode .pos-product-image-placeholder {
+    color: #475569;
+}
+
+body.dark-mode .pos-product-card:hover .pos-product-image-placeholder {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    color: #60a5fa;
+}
+
+body.dark-mode .pos-product-card h6 {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .pos-product-card .pos-category {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .pos-product-card .pos-price {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .pos-product-card .pos-stock-badge {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+    border-top-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* =========================================================
+   PRODUCT IMAGE POLISH — GENERAL
+   ========================================================= */
+
+/* Better image quality when stretched */
+.pos-product-image img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Add subtle inner shadow overlay for depth */
+.pos-product-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.06), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.pos-product-card:hover .pos-product-image::after {
+    opacity: 1;
+}
+/* =========================================================
+   QUICK ACCESS — BEST SELLERS IMPROVED
+   ========================================================= */
+
+.quick-access-btn,
+button[onclick*="addToCart"] {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+    border: 1.5px solid #fcd34d !important;
+    color: #92400e !important;
+    padding: 6px 14px 6px 6px !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.15);
+}
+
+.quick-access-btn:hover,
+button[onclick*="addToCart"]:hover {
+    background: linear-gradient(135deg, #fde68a, #fcd34d) !important;
+    border-color: #f59e0b !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(245, 158, 11, 0.3);
+}
+
+/* Dark mode for quick access */
+body.dark-mode button[onclick*="addToCart"] {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.15)) !important;
+    border-color: rgba(245, 158, 11, 0.5) !important;
+    color: #fcd34d !important;
+}
+
+body.dark-mode button[onclick*="addToCart"]:hover {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(245, 158, 11, 0.25)) !important;
+    border-color: #f59e0b !important;
+}
+/* =========================================================
+   PRODUCT IMAGE — SHOW IN FULL (not cropped)
+   ========================================================= */
+
+.pos-product-image {
+    height: 160px !important;
+    padding: 12px !important;
+    background: #f8fafc !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+}
+
+.pos-product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    transition: transform 0.35s ease !important;
+    image-rendering: auto !important;
+    /* Soft drop shadow to make the product stand out */
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+}
+
+.pos-product-card:hover .pos-product-image img {
+    transform: scale(1.06) !important;
+}
+
+/* Placeholder — keep it centered */
+.pos-product-image-placeholder {
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    color: #cbd5e1 !important;
+}
+
+.pos-product-image-placeholder i {
+    font-size: 48px !important;
+    opacity: 0.5;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .pos-product-image {
+    background: #0f172a !important;
+}
+
+body.dark-mode .pos-product-image img {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+body.dark-mode .pos-product-image-placeholder {
+    color: #475569 !important;
+}
+/* =========================================================
+   POS PRODUCT CARD — LARGE IMAGE / COMPACT DETAILS
+   ========================================================= */
+
+.pos-product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.pos-product-card {
+    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff;
+    border: 1.5px solid #e4e7ec;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    min-height: 340px;
+}
+
+.pos-product-card:hover {
+    border-color: #0d6efd;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18);
+}
+
+/* =========================================================
+   LARGE IMAGE AREA — TAKES UP ~65% OF CARD
+   ========================================================= */
+
+.pos-product-image {
+    width: 100% !important;
+    height: 200px !important;
+    padding: 14px !important;
+    background: #f8fafc !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    overflow: hidden;
+}
+
+.pos-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 10px;
+    transition: transform 0.35s ease;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+}
+
+.pos-product-card:hover .pos-product-image img {
+    transform: scale(1.05);
+}
+
+.pos-product-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+}
+
+.pos-product-image-placeholder i {
+    font-size: 56px;
+    opacity: 0.4;
+}
+
+/* =========================================================
+   COMPACT DETAILS AREA — TIGHT, NO GAPS
+   ========================================================= */
+
+.pos-product-details {
+    padding: 10px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    min-height: 82px;
+}
+
+.pos-product-name {
+    margin: 0 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #101828 !important;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 34px;
+}
+
+/* Meta row: category + price side by side? or stacked? */
+/* Stacked for clarity on narrow cards */
+.pos-product-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+.pos-product-category {
+    margin: 0 !important;
+    font-size: 9.5px !important;
+    color: #98a2b3 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.pos-product-price {
+    margin: 0 !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    color: #0d6efd !important;
+    line-height: 1.15;
+}
+
+/* =========================================================
+   THIN STOCK PILL — BOTTOM
+   ========================================================= */
+
+.pos-product-stock {
+    padding: 6px 12px !important;
+    background: #ecfdf3;
+    color: #027a48;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    text-align: center;
+    border-top: 1px solid #d1fae5;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark-mode .pos-product-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .pos-product-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.2);
+}
+
+body.dark-mode .pos-product-image {
+    background: #0f172a !important;
+}
+
+body.dark-mode .pos-product-image img {
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
+}
+
+body.dark-mode .pos-product-image-placeholder {
+    color: #475569;
+}
+
+body.dark-mode .pos-product-name {
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .pos-product-category {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .pos-product-price {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .pos-product-stock {
+    background: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+    border-top-color: rgba(16, 185, 129, 0.3);
+}
+/* =========================================================
+   IMAGE DELETE CONFIRM SECTION
+   ========================================================= */
+
+.image-delete-confirm {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-left: 4px solid #dc2626;
+    border-radius: 10px;
+}
+
+.image-delete-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.image-delete-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #dc2626;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+    background: #ffffff;
+}
+
+.image-delete-label input[type="checkbox"]:checked {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.image-delete-label input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid #ffffff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+
+.image-delete-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.image-delete-text i {
+    color: #dc2626;
+}
+
+.image-delete-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 8px;
+    padding-left: 30px;
+    font-size: 11px;
+    color: #7f1d1d;
+    line-height: 1.4;
+}
+
+/* Dark mode */
+body.dark-mode .image-delete-confirm {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.3);
+    border-left-color: #dc2626;
+}
+
+body.dark-mode .image-delete-text {
+    color: #fca5a5;
+}
+
+body.dark-mode .image-delete-hint {
+    color: #fca5a5;
+}
+
+body.dark-mode .image-delete-label input[type="checkbox"] {
+    background: #0f172a;
+    border-color: #dc2626;
+}
+
+/* =========================================================
+   SETTINGS PAGE — CONSOLIDATED FINAL STYLES
+   ========================================================= */
+
+/* ---------- SECTION CARD ---------- */
+.settings-section {
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+}
+
+.settings-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    background: #fafbfc;
+    border-bottom: 1px solid #eaecf0;
+}
+
+.settings-section-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.settings-section-header h2 {
+    margin: 0 0 3px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #101828;
+    line-height: 1.2;
+}
+
+.settings-section-header p {
+    margin: 0;
+    font-size: 12px;
+    color: #667085;
+    line-height: 1.4;
+}
+
+.settings-section-body {
+    padding: 24px;
+}
+
+/* ---------- FORM LABELS ---------- */
+.settings-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.settings-help {
+    display: block;
+    margin-top: 5px;
+    color: #98a2b3;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* ---------- FORM INPUTS ---------- */
+.settings-section-body .form-control,
+.settings-section-body .form-select,
+.settings-select {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 10px 14px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #d0d5dd !important;
+    border-radius: 9px !important;
+    color: #101828 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    outline: none !important;
+    transition: all 0.15s ease !important;
+}
+
+.settings-section-body textarea.form-control {
+    height: auto !important;
+    min-height: 80px !important;
+    resize: vertical;
+}
+
+.settings-section-body .form-control:focus,
+.settings-section-body .form-select:focus,
+.settings-select:focus {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12) !important;
+    background: #fafbff !important;
+}
+
+.settings-section-body .form-control::placeholder {
+    color: #98a2b3 !important;
+    font-weight: 400 !important;
+}
+
+/* ---------- DROPDOWN ARROW ---------- */
+.settings-select,
+.settings-section-body select.form-select {
+    padding-right: 36px !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    background-size: 14px !important;
+    cursor: pointer !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23667085' d='M8 11L3 6h10z'/%3E%3C/svg%3E") !important;
+}
+
+.settings-select option {
+    color: #101828;
+    background: #ffffff;
+}
+
+/* ---------- TOGGLES ---------- */
+.settings-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1.5px solid #e4e7ec;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin: 0;
+}
+
+.settings-toggle-row:hover {
+    background: #f0f7ff;
+    border-color: #cfe2ff;
+}
+
+.settings-toggle-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    background: #ffffff;
+    transition: all 0.15s ease;
+    margin: 0;
+}
+
+.settings-toggle-row input[type="checkbox"]:checked {
+    background: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.settings-toggle-row input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid #ffffff;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+
+.settings-toggle-row strong {
+    display: block;
+    color: #101828;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.settings-toggle-row span {
+    display: block;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ---------- BACKUP STATUS CARD ---------- */
+.backup-status-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.backup-status-ok {
+    background: linear-gradient(135deg, #f0fdf4, #f7fdf9);
+    border: 1.5px solid #86efac;
+}
+
+.backup-status-warn {
+    background: linear-gradient(135deg, #fef3c7, #fef9e7);
+    border: 1.5px solid #fcd34d;
+}
+
+.backup-status-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.backup-status-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.backup-status-ok .backup-status-icon {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.backup-status-warn .backup-status-icon {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.backup-status-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #667085;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.backup-status-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #101828;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.backup-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* ---------- BACKUP ROW ---------- */
+.backup-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 0 0 20px;
+}
+
+.backup-control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.backup-select-wrap,
+.backup-manual-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.backup-select-wrap .settings-select,
+.backup-manual-wrap .settings-btn {
+    height: 46px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .backup-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- INFO BOX ---------- */
+.settings-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f0f7ff;
+    border: 1px solid #cfe2ff;
+    border-left: 4px solid #0d6efd;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #1e40af;
+    line-height: 1.5;
+}
+
+.settings-info-box i {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ---------- BUTTONS ---------- */
+.settings-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.settings-btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+}
+
+.settings-btn-primary:hover {
+    background: linear-gradient(135deg, #0b5ed7, #084298);
+    color: #ffffff;
+}
+
+.settings-btn-success {
+    background: #16a34a;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.25);
+}
+
+.settings-btn-success:hover {
+    background: #15803d;
+    color: #ffffff;
+}
+
+.settings-btn-secondary {
+    background: #ffffff;
+    border-color: #d0d5dd;
+    color: #344054;
+}
+
+.settings-btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #98a2b3;
+    color: #101828;
+}
+
+.settings-btn-outline {
+    background: #ffffff;
+    border-color: #16a34a;
+    color: #16a34a;
+}
+
+.settings-btn-outline:hover {
+    background: #f0fdf4;
+    color: #065f46;
+}
+
+/* ---------- ACTION BAR ---------- */
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px 24px;
+    background: #ffffff;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+    /* NO sticky position - always in normal flow */
+}
+
+@media (max-width: 768px) {
+    .settings-section-body { padding: 18px; }
+    .settings-section-header { padding: 14px 18px; }
+    .settings-actions { flex-direction: column-reverse; }
+    .settings-actions .settings-btn { width: 100%; }
+    .backup-status-card { flex-direction: column; align-items: stretch; }
+    .backup-status-actions .settings-btn { width: 100%; }
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark-mode .settings-section {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-mode .settings-section-header {
+    background: #111827;
+    border-bottom-color: #334155;
+}
+
+body.dark-mode .settings-section-header h2 { color: #e2e8f0; }
+body.dark-mode .settings-section-header p { color: #94a3b8; }
+body.dark-mode .settings-label { color: #e2e8f0; }
+body.dark-mode .settings-help { color: #64748b; }
+
+body.dark-mode .settings-section-body .form-control,
+body.dark-mode .settings-section-body .form-select,
+body.dark-mode .settings-select {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .settings-select,
+body.dark-mode .settings-section-body select.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23cbd5e1' d='M8 11L3 6h10z'/%3E%3C/svg%3E") !important;
+}
+
+body.dark-mode .settings-section-body .form-control:focus,
+body.dark-mode .settings-section-body .form-select:focus,
+body.dark-mode .settings-select:focus {
+    background: #0f172a !important;
+    border-color: #3b82f6 !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-mode .settings-select option {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+body.dark-mode .settings-toggle-row {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+body.dark-mode .settings-toggle-row input[type="checkbox"] {
+    background: #0f172a;
+    border-color: #475569;
+}
+
+body.dark-mode .settings-toggle-row input[type="checkbox"]:checked {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+body.dark-mode .settings-toggle-row strong { color: #e2e8f0; }
+body.dark-mode .settings-toggle-row span { color: #94a3b8; }
+
+body.dark-mode .backup-status-ok {
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.15), rgba(22, 163, 74, 0.05));
+    border-color: rgba(22, 163, 74, 0.4);
+}
+
+body.dark-mode .backup-status-warn {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+body.dark-mode .backup-status-ok .backup-status-icon {
+    background: rgba(22, 163, 74, 0.25);
+    color: #6ee7b7;
+}
+
+body.dark-mode .backup-status-warn .backup-status-icon {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fcd34d;
+}
+
+body.dark-mode .backup-status-label { color: #94a3b8; }
+body.dark-mode .backup-status-value { color: #e2e8f0; }
+body.dark-mode .backup-status-badge { background: rgba(255, 255, 255, 0.1); color: #cbd5e1; }
+
+body.dark-mode .settings-info-box {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.3);
+    border-left-color: #3b82f6;
+    color: #93c5fd;
+}
+
+body.dark-mode .settings-btn-secondary {
+    background: #1e293b;
+    border-color: #475569;
+    color: #cbd5e1;
+}
+
+body.dark-mode .settings-btn-secondary:hover {
+    background: #334155;
+    color: #f1f5f9;
+}
+
+body.dark-mode .settings-btn-outline {
+    background: transparent;
+    border-color: #16a34a;
+    color: #6ee7b7;
+}
+
+body.dark-mode .settings-actions {
+    background: #1e293b;
+    border-color: #334155;
+}
+/* =========================================================
+   DASHBOARD BACKUP BANNER (Restored)
+   ========================================================= */
+
+.backup-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #fef3c7, #fef9e7);
+    border: 1.5px solid #fcd34d;
+    border-left: 5px solid #f59e0b;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12);
+    flex-wrap: wrap;
+}
+
+.backup-banner-ok {
+    background: linear-gradient(135deg, #f0fdf4, #f7fdf9);
+    border-color: #86efac;
+    border-left-color: #16a34a;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.1);
+}
+
+.backup-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 260px;
+}
+
+.backup-banner-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #fef3c7;
+    color: #d97706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.backup-banner-ok .backup-banner-icon {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.backup-banner-title {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #92400e;
+    line-height: 1.3;
+}
+
+.backup-banner-ok .backup-banner-title {
+    color: #065f46;
+}
+
+.backup-banner-text {
+    margin: 0;
+    font-size: 13px;
+    color: #78350f;
+    line-height: 1.5;
+}
+
+.backup-banner-ok .backup-banner-text {
+    color: #047857;
+}
+
+.backup-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.backup-btn-primary,
+.backup-btn-secondary,
+.backup-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+}
+
+.backup-btn-primary {
+    background: #16a34a;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.25);
+}
+
+.backup-btn-primary:hover {
+    background: #15803d;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.backup-btn-outline {
+    background: #ffffff;
+    color: #16a34a;
+    border-color: #86efac;
+}
+
+.backup-btn-outline:hover {
+    background: #f0fdf4;
+    color: #065f46;
+}
+
+.backup-form-inline {
+    margin: 0;
+    display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .backup-banner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .backup-banner-actions {
+        justify-content: stretch;
+    }
+    .backup-btn-primary,
+    .backup-btn-outline,
+    .backup-form-inline {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* Dark mode */
+body.dark-mode .backup-banner {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.08));
+    border-color: rgba(245, 158, 11, 0.4);
+    border-left-color: #f59e0b;
+}
+
+body.dark-mode .backup-banner-ok {
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.15), rgba(22, 163, 74, 0.08));
+    border-color: rgba(22, 163, 74, 0.4);
+    border-left-color: #16a34a;
+}
+
+body.dark-mode .backup-banner-title {
+    color: #fcd34d;
+}
+
+body.dark-mode .backup-banner-text {
+    color: #fde68a;
+}
+
+body.dark-mode .backup-banner-ok .backup-banner-title {
+    color: #86efac;
+}
+
+body.dark-mode .backup-banner-ok .backup-banner-text {
+    color: #6ee7b7;
+}
+
+body.dark-mode .backup-banner-icon {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fbbf24;
+}
+
+body.dark-mode .backup-banner-ok .backup-banner-icon {
+    background: rgba(22, 163, 74, 0.25);
+    color: #6ee7b7;
+}
+
+body.dark-mode .backup-btn-outline {
+    background: transparent;
+    color: #6ee7b7;
+    border-color: rgba(22, 163, 74, 0.5);
+}
+
+body.dark-mode .backup-btn-outline:hover {
+    background: rgba(22, 163, 74, 0.15);
+    border-color: #16a34a;
+}
+/* =========================================================
+   FORM LOADING SPINNER
+   ========================================================= */
+
+.btn-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Darker spinner for light buttons */
+.btn-outline-secondary .btn-spinner,
+.btn-secondary .btn-spinner,
+.btn-light .btn-spinner,
+.settings-btn-secondary .btn-spinner,
+.settings-btn-outline .btn-spinner {
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-top-color: #344054;
+}
+/* =========================================================
+   SIDEBAR — REPORTS DROPDOWN
+   ========================================================= */
+
+.sidebar-dropdown {
+    position: relative;
+}
+
+.sidebar-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    background: transparent;
+    color: var(--sidebar-text, #cbd5e1);
+    border: 0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sidebar-dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #ffffff;
+}
+
+.sidebar-dropdown-toggle.active {
+    background: #0d6efd;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.20);
+}
+
+.sidebar-dropdown-toggle.active .sidebar-link-icon {
+    background: rgba(255, 255, 255, 0.13);
+    color: #ffffff;
+}
+
+.sidebar-dropdown-arrow {
+    margin-left: auto;
+    font-size: 11px;
+    opacity: 0.7;
+    transition: transform 0.25s ease;
+}
+
+.sidebar-dropdown.open .sidebar-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown menu (hidden by default) */
+.sidebar-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0 6px 12px;
+    margin-bottom: 6px;
+    border-left: 2px solid rgba(255, 255, 255, 0.12);
+    margin-left: 22px;
+    animation: sidebarDropdownFade 0.2s ease;
+}
+
+.sidebar-dropdown.open .sidebar-dropdown-menu {
+    display: flex;
+}
+
+@keyframes sidebarDropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sidebar-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    color: #94a3b8;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.sidebar-dropdown-item i {
+    font-size: 13px;
+    width: 16px;
+    flex-shrink: 0;
+}
+
+.sidebar-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+}
+
+.sidebar-dropdown-item.active {
+    background: rgba(13, 110, 253, 0.2);
+    color: #60a5fa;
+    font-weight: 700;
+}
+
+.sidebar-dropdown-item.active i {
+    color: #60a5fa;
+}
+
+/* When sidebar is collapsed, hide the submenu */
+body.sidebar-collapsed .sidebar-dropdown-menu {
+    display: none !important;
+}
+
+body.sidebar-collapsed .sidebar-dropdown-arrow {
+    display: none;
+}
+
+body.sidebar-collapsed .sidebar-dropdown-toggle {
+    justify-content: center;
+    width: 56px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    gap: 0;
+}
+
+body.sidebar-collapsed .sidebar-dropdown-toggle .sidebar-link-text {
+    display: none;
+}
+
+/* Dark mode friendly (already dark sidebar) */
+body.dark-mode .sidebar-dropdown-menu {
+    border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sidebar-dropdown-item {
+    color: #94a3b8;
+}
+
+body.dark-mode .sidebar-dropdown-item:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: #ffffff;
+}
+
+body.dark-mode .sidebar-dropdown-item.active {
+    background: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+/* =========================================================
+   ADMIN LOGIN — PASSWORD SHOW/HIDE TOGGLE
+   ========================================================= */
+
+.admin-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.admin-input-wrapper input {
+    padding-right: 52px !important;
+    padding-left: 40px !important;
+}
+
+.admin-password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    transition: all 0.15s ease;
+    z-index: 5;
+    line-height: 1;
+}
+
+.admin-password-toggle:hover {
+    color: #175cd3;
+    background: #eff6ff;
+}
+
+.admin-password-toggle:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.admin-password-toggle i {
+    font-size: 18px;
+    pointer-events: none;
+}
+
+/* Dark mode */
+body.dark-mode .admin-password-toggle:hover {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
 }

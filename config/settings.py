@@ -82,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accounts.middleware.ForcePasswordChangeMiddleware',  # NEW
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -148,7 +149,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = [
@@ -169,13 +170,28 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/login/'
 AUTH_USER_MODEL = 'accounts.User'
+
 # =========================================================
-# PASSWORD RESET EMAIL - DEVELOPMENT
+# EMAIL CONFIGURATION (GMAIL SMTP)
 # =========================================================
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Use SMTP for sending real emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-DEFAULT_FROM_EMAIL = 'CAROLIVAN-PKEMOI HARDWARE <noreply@carolivan-pkemoi.com>'
+# Gmail SMTP settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Your hardware shop email
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'carolivanpkemoi.hardware@gmail.com')
+
+# IMPORTANT: This must be the App Password, NOT your normal Gmail password.
+# We use os.environ.get so you can set it locally, but on Render you will set it in the dashboard.
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+
+# The "From" address customers/users will see
+DEFAULT_FROM_EMAIL = f'Carolivan Hardware <{EMAIL_HOST_USER}>'
 
 SECURE_SSL_REDIRECT = os.environ.get(
     'SECURE_SSL_REDIRECT',
@@ -205,3 +221,19 @@ SECURE_HSTS_PRELOAD = os.environ.get(
     'SECURE_HSTS_PRELOAD',
     'False'
 ) == 'True'
+
+# =========================================================
+# SESSION & AUTO-LOGOUT
+# =========================================================
+
+# Session expires after 15 minutes of inactivity
+SESSION_COOKIE_AGE = 15 * 60  # 15 minutes in seconds
+
+# Reset the timer on every request (true inactivity timeout)
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Close session when browser closes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Warn user 60 seconds before logout
+SESSION_EXPIRE_WARNING = 60

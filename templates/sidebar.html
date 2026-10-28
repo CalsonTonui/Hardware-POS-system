@@ -1,7 +1,11 @@
+{% load static %}
+
 <!-- Sidebar -->
 <aside class="pos-sidebar" id="posSidebar">
 
-    <!-- Sidebar Header -->
+    <!-- ========================================================= -->
+    <!-- SIDEBAR HEADER (Brand + Hamburger Toggle) -->
+    <!-- ========================================================= -->
     <div class="sidebar-header">
 
         <div class="sidebar-brand">
@@ -15,210 +19,206 @@
             </div>
         </div>
 
-        <!-- Collapse Button -->
+        <!-- Hamburger Menu Toggle -->
         <button type="button"
                 class="sidebar-toggle"
                 id="sidebarToggle"
                 aria-label="Toggle sidebar"
-                title="Collapse sidebar">
+                title="Toggle sidebar">
             <i class="bi bi-list"></i>
         </button>
 
     </div>
 
 
-    <!-- Navigation -->
+    <!-- ========================================================= -->
+    <!-- SIDEBAR NAVIGATION -->
+    <!-- ========================================================= -->
     <nav class="sidebar-navigation">
 
-        <div class="sidebar-section-title">
-            MAIN MENU
-        </div>
+           <div class="sidebar-section-title">
+            {% if request.user.role == 'admin' or request.user.role == 'manager' %}
+                ADMIN MENU
+            {% else %}
+                CASHIER MENU
+            {% endif %}
+          </div>
 
+        {% if request.user.role == 'admin' or request.user.role == 'manager' %}
+            <!-- ========================================== -->
+            <!-- ADMIN / MANAGER MENU -->
+            <!-- ========================================== -->
 
-        <!-- Dashboard -->
-        <a href="{% url 'dashboard' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
-           title="Dashboard">
+            <a href="{% url 'admin_dashboard' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}"
+               title="Admin Dashboard">
+                <span class="sidebar-link-icon"><i class="bi bi-speedometer2"></i></span>
+                <span class="sidebar-link-text">Admin Dashboard</span>
+            </a>
 
-            <span class="sidebar-link-icon">
-                <i class="bi bi-speedometer2"></i>
-            </span>
+            <a href="{% url 'user_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'user_list' %}active{% endif %}"
+               title="Users & Staff">
+                <span class="sidebar-link-icon"><i class="bi bi-people"></i></span>
+                <span class="sidebar-link-text">Users &amp; Staff</span>
+            </a>
 
-            <span class="sidebar-link-text">
-                Dashboard
-            </span>
+            <a href="{% url 'products' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}"
+               title="Manage Products">
+                <span class="sidebar-link-icon"><i class="bi bi-box-seam"></i></span>
+                <span class="sidebar-link-text">Manage Products</span>
+            </a>
 
-        </a>
+            <a href="{% url 'inventory_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'inventory_list' %}active{% endif %}"
+               title="Manage Inventory">
+                <span class="sidebar-link-icon"><i class="bi bi-boxes"></i></span>
+                <span class="sidebar-link-text">Manage Inventory</span>
+            </a>
 
+            <a href="{% url 'purchase_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'purchase_list' %}active{% endif %}"
+               title="Manage Purchases">
+                <span class="sidebar-link-icon"><i class="bi bi-cart-plus"></i></span>
+                <span class="sidebar-link-text">Manage Purchases</span>
+            </a>
 
-        <!-- Products -->
-        <a href="{% url 'products' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}"
-           title="Products">
+            <a href="{% url 'sales:sale_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'sale_list' %}active{% endif %}"
+               title="All Sales History">
+                <span class="sidebar-link-icon"><i class="bi bi-cart-check"></i></span>
+                <span class="sidebar-link-text">All Sales History</span>
+            </a>
 
-            <span class="sidebar-link-icon">
-                <i class="bi bi-box-seam"></i>
-            </span>
+            <a href="{% url 'expense_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'expense_list' %}active{% endif %}"
+               title="Expenses">
+                <span class="sidebar-link-icon"><i class="bi bi-cash-stack"></i></span>
+                <span class="sidebar-link-text">Expenses</span>
+            </a>
 
-            <span class="sidebar-link-text">
-                Products
-            </span>
+            <!-- ============================================ -->
+<!-- REPORTS DROPDOWN -->
+<!-- ============================================ -->
+<div class="sidebar-dropdown {% if request.resolver_match.url_name in 'reports_dashboard,mpesa_report,sales_by_cashier,period_report,product_performance' %}open{% endif %}" id="reportsDropdown">
 
-        </a>
-
-
-        <!-- Inventory -->
-        <a href="{% url 'inventory_list' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'inventory_list' %}active{% endif %}"
-           title="Inventory">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-boxes"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Inventory
-            </span>
-
-        </a>
-
-
-        <!-- Purchases -->
-        <a href="{% url 'purchase_list' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'purchase_list' %}active{% endif %}"
-           title="Purchases">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-cart-plus"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Purchases
-            </span>
-
-        </a>
-
-
-        <!-- Sales -->
-        <a href="{% url 'sale_list' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'sale_list' %}active{% endif %}"
-           title="Sales">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-cart-check"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Sales
-            </span>
-
-        </a>
-
-
-           <!-- Services -->
-    <a href="{% url 'service_list' %}"
-       class="sidebar-link {% if request.resolver_match.url_name == 'service_list' %}active{% endif %}"
-       title="Services">
-
-        <span class="sidebar-link-icon">
-            <i class="bi bi-tools"></i>
-        </span>
-
-        <span class="sidebar-link-text">
-            Services
-        </span>
-
+    <a href="javascript:void(0);"
+       class="sidebar-link sidebar-dropdown-toggle {% if request.resolver_match.url_name in 'reports_dashboard,mpesa_report,sales_by_cashier,period_report,product_performance' %}active{% endif %}"
+       onclick="toggleReportsDropdown(event)"
+       title="Reports">
+        <span class="sidebar-link-icon"><i class="bi bi-file-earmark-bar-graph"></i></span>
+        <span class="sidebar-link-text">Reports</span>
+        <i class="bi bi-chevron-down sidebar-dropdown-arrow"></i>
     </a>
 
+    <div class="sidebar-dropdown-menu">
 
-        <!-- Suppliers -->
-        <a href="{% url 'supplier_list' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}"
-           title="Suppliers">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-truck"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Suppliers
-            </span>
-
-        </a>
-
-
-        <!-- Reports -->
         <a href="{% url 'reports_dashboard' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'reports_dashboard' %}active{% endif %}"
-           title="Reports">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-file-earmark-bar-graph"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Reports
-            </span>
-
+           class="sidebar-dropdown-item {% if request.resolver_match.url_name == 'reports_dashboard' %}active{% endif %}">
+            <i class="bi bi-speedometer2"></i>
+            <span>Today's Summary</span>
         </a>
 
-
-        <!-- Expenses -->
-        <a href="{% url 'expense_list' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'expense_list' %}active{% endif %}"
-           title="Expenses">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-cash-stack"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Expenses
-            </span>
-
+        <a href="{% url 'sales_by_cashier' %}"
+           class="sidebar-dropdown-item {% if request.resolver_match.url_name == 'sales_by_cashier' %}active{% endif %}">
+            <i class="bi bi-people-fill"></i>
+            <span>Sales by Cashier</span>
         </a>
 
-
-        <!-- Settings -->
-        <a href="{% url 'settings' %}"
-           class="sidebar-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}"
-           title="Settings">
-
-            <span class="sidebar-link-icon">
-                <i class="bi bi-gear"></i>
-            </span>
-
-            <span class="sidebar-link-text">
-                Settings
-            </span>
-
+        <a href="{% url 'period_report' %}"
+           class="sidebar-dropdown-item {% if request.resolver_match.url_name == 'period_report' %}active{% endif %}">
+            <i class="bi bi-calendar3"></i>
+            <span>Period Reports</span>
         </a>
 
-    </nav>
+        <a href="{% url 'product_performance' %}"
+           class="sidebar-dropdown-item {% if request.resolver_match.url_name == 'product_performance' %}active{% endif %}">
+            <i class="bi bi-graph-up-arrow"></i>
+            <span>Product Performance</span>
+        </a>
+
+        <a href="{% url 'mpesa_report' %}"
+           class="sidebar-dropdown-item {% if request.resolver_match.url_name == 'mpesa_report' %}active{% endif %}">
+            <i class="bi bi-phone"></i>
+            <span>M-Pesa Report</span>
+        </a>
+
+    </div>
+</div>
+
+               {% elif request.user.role == 'cashier' %}
+            <!-- ========================================== -->
+            <!-- CASHIER MENU -->
+            <!-- ========================================== -->
+
+            <a href="{% url 'cashier_dashboard' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'cashier_dashboard' %}active{% endif %}"
+               title="Dashboard">
+                <span class="sidebar-link-icon"><i class="bi bi-speedometer2"></i></span>
+                <span class="sidebar-link-text">Dashboard</span>
+            </a>
+
+            <a href="{% url 'sales:pos' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'pos' %}active{% endif %}"
+               title="POS Terminal">
+                <span class="sidebar-link-icon"><i class="bi bi-terminal"></i></span>
+                <span class="sidebar-link-text">POS Terminal</span>
+            </a>
+
+            <a href="{% url 'sales:my_sales' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'my_sales' %}active{% endif %}"
+               title="My Sales">
+                <span class="sidebar-link-icon"><i class="bi bi-receipt"></i></span>
+                <span class="sidebar-link-text">My Sales</span>
+            </a>
+
+            <a href="{% url 'inventory_list' %}"
+               class="sidebar-link {% if request.resolver_match.url_name == 'inventory_list' %}active{% endif %}"
+               title="Check Stock">
+                <span class="sidebar-link-icon"><i class="bi bi-boxes"></i></span>
+                <span class="sidebar-link-text">Check Stock</span>
+            </a>
+
+        {% endif %}
 
 
-    <!-- Sidebar Footer -->
+    <!-- ========================================================= -->
+    <!-- SIDEBAR FOOTER (Logout) -->
+    <!-- ========================================================= -->
     <div class="sidebar-footer">
-
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-
             <button type="submit"
                     class="sidebar-link sidebar-logout"
                     title="Logout">
-
                 <span class="sidebar-link-icon">
                     <i class="bi bi-box-arrow-right"></i>
                 </span>
-
                 <span class="sidebar-link-text">
                     Logout
                 </span>
-
             </button>
-
         </form>
-
     </div>
 
 </aside>
+<script>
+function toggleReportsDropdown(event) {
+    event.preventDefault();
+    const dropdown = document.getElementById('reportsDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('open');
+    }
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('reportsDropdown');
+    if (!dropdown) return;
+
+    if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+    }
+});
+</script>

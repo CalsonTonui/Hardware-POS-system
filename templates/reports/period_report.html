@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ period|title }} Report | Hardware POS{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon" style="background: #eef4ff; color: #0d6efd;">
+                <i class="bi bi-calendar3"></i>
+            </div>
+            <div>
+                <h1>{{ period|title }} Report</h1>
+                <p>{{ start|date:"d M Y" }}{% if start != end %} → {{ end|date:"d M Y" }}{% endif %}</p>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a href="?period=daily" class="btn btn-sm {% if period == 'daily' %}btn-primary{% else %}btn-outline-primary{% endif %}">Daily</a>
+            <a href="?period=weekly" class="btn btn-sm {% if period == 'weekly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Weekly</a>
+            <a href="?period=monthly" class="btn btn-sm {% if period == 'monthly' %}btn-primary{% else %}btn-outline-primary{% endif %}">Monthly</a>
+        </div>
+    </div>
+
+    <div class="pro-stat-row">
+        <div class="pro-stat-card blue">
+            <div class="pro-stat-icon"><i class="bi bi-cash-stack"></i></div>
+            <div class="pro-stat-body">
+                <div class="pro-stat-label">Total Sales</div>
+                <div class="pro-stat-value">KSh {{ total_sales|floatformat:2 }}</div>
+                <div class="pro-stat-sub">{{ total_count }} transaction{{ total_count|pluralize }}</div>
+            </div>
+        </div>
+
+        <div class="pro-stat-card green">
+            <div class="pro-stat-icon"><i class="bi bi-cash-coin"></i></div>
+            <div class="pro-stat-body">
+                <div class="pro-stat-label">Cash</div>
+                <div class="pro-stat-value">KSh {{ cash_total|floatformat:2 }}</div>
+                <div class="pro-stat-sub">Paid in cash</div>
+            </div>
+        </div>
+
+        <div class="pro-stat-card purple">
+            <div class="pro-stat-icon"><i class="bi bi-phone"></i></div>
+            <div class="pro-stat-body">
+                <div class="pro-stat-label">M-Pesa</div>
+                <div class="pro-stat-value">KSh {{ mpesa_total|floatformat:2 }}</div>
+                <div class="pro-stat-sub">Paid via M-Pesa</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Products -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-header bg-white" style="border-bottom: 1px solid #eaecf0;">
+            <h5 class="mb-0" style="font-weight: 700;">
+                <i class="bi bi-trophy"></i> Top 10 Selling Products
+            </h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead style="background: #f8fafc; font-size: 11px; text-transform: uppercase; color: #667085;">
+                    <tr>
+                        <th style="padding: 12px 16px;">Rank</th>
+                        <th>Product</th>
+                        <th class="text-center">Units Sold</th>
+                        <th class="text-end">Total Sales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in top_products %}
+                    <tr>
+                        <td style="padding: 12px 16px;"><strong>#{{ forloop.counter }}</strong></td>
+                        <td><strong>{{ p.product__name }}</strong></td>
+                        <td class="text-center">{{ p.qty }}</td>
+                        <td class="text-end fw-bold">KSh {{ p.total|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" class="text-center text-muted py-4">No sales in this period</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

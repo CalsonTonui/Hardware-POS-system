@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Sale #{{ sale.id }} | Hardware POS{% endblock %}
+
+{% block content %}
+<div class="admin-page" style="max-width: 700px;">
+
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon" style="background: #eef4ff; color: #0d6efd;">
+                <i class="bi bi-receipt"></i>
+            </div>
+            <div>
+                <h1>Sale #{{ sale.id }}</h1>
+                <p>{{ sale.sale_date|date:"d M Y, H:i" }}</p>
+            </div>
+        </div>
+        <a href="javascript:window.print()" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Print
+        </a>
+    </div>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+        <h3 style="margin: 0;">CAROLIVAN-PKEMOI HARDWARE</h3>
+        <p style="margin: 5px 0; color: #667085;">&amp; General Supplies</p>
+        <p style="margin: 5px 0; font-size: 13px;">Till: 9112275</p>
+        </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <small class="text-muted">Product</small>
+                    <div style="font-weight: 700; font-size: 16px;">{{ sale.product.name }}</div>
+                </div>
+                <div class="col-6 text-end">
+                    <small class="text-muted">Cashier</small>
+                    <div style="font-weight: 700; font-size: 16px;">
+                        {% if sale.cashier %}
+                            {{ sale.cashier.get_full_name|default:sale.cashier.username }}
+                        {% else %}—{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th class="text-end">Qty</th>
+                        <th class="text-end">Unit Price</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ sale.product.name }}</td>
+                        <td class="text-end">{{ sale.quantity }}</td>
+                        <td class="text-end">KSh {{ sale.selling_price|floatformat:2 }}</td>
+                        <td class="text-end fw-bold">KSh {{ sale.total_amount|floatformat:2 }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="border-top: 2px solid #000;">
+                        <td colspan="3" class="text-end fw-bold">TOTAL:</td>
+                        <td class="text-end fw-bold" style="font-size: 18px;">KSh {{ sale.total_amount|floatformat:2 }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="row mt-4">
+                <div class="col-6">
+                    <small class="text-muted">Payment Method</small>
+                    <div>
+                        {% if sale.payment_method == 'M-Pesa' %}
+                            <span class="badge bg-success">M-Pesa</span>
+                        {% else %}
+                            <span class="badge bg-warning">Cash</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if sale.mpesa_code %}
+                <div class="col-6 text-end">
+                    <small class="text-muted">M-Pesa Code</small>
+                    <div><code>{{ sale.mpesa_code }}</code></div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="text-center mt-4 pt-3" style="border-top: 1px solid #eaecf0;">
+                <a href="{% url 'sales:sale_list' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Sales
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

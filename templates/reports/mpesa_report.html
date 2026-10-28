@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}M-Pesa Report | Hardware POS{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+
+    <div class="admin-page-header">
+        <div class="admin-header-left">
+            <div class="admin-header-icon" style="background:#ecfdf3; color:#027a48;">
+                <i class="bi bi-phone"></i>
+            </div>
+            <div>
+                <h1>M-Pesa Report</h1>
+                <p>Track M-Pesa transactions and reconciliation</p>
+            </div>
+        </div>
+        <div class="admin-user-badge">
+            <div class="admin-user-icon" style="background:#ecfdf3; color:#027a48;">
+                <i class="bi bi-shop"></i>
+            </div>
+            <div>
+                <strong>Till: 9112275</strong>
+                <span>Kipkemoi Brian</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-left: 4px solid #16a05d;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width: 48px; height: 48px; background: #ecfdf3; color: #027a48; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                            <i class="bi bi-calendar-day"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted" style="font-size: 12px; font-weight: 700; text-transform: uppercase;">Today</div>
+                            <div style="font-size: 22px; font-weight: 800; color: #101828;">KSh {{ today_total|floatformat:2 }}</div>
+                            <div class="text-muted" style="font-size: 12px;">{{ today_count }} transaction{{ today_count|pluralize }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-left: 4px solid #0d6efd;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width: 48px; height: 48px; background: #eef4ff; color: #0d6efd; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                            <i class="bi bi-calendar-month"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted" style="font-size: 12px; font-weight: 700; text-transform: uppercase;">This Month</div>
+                            <div style="font-size: 22px; font-weight: 800; color: #101828;">KSh {{ month_total|floatformat:2 }}</div>
+                            <div class="text-muted" style="font-size: 12px;">{{ month_count }} transaction{{ month_count|pluralize }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100" style="border-left: 4px solid #7c3aed;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width: 48px; height: 48px; background: #f5f3ff; color: #7c3aed; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted" style="font-size: 12px; font-weight: 700; text-transform: uppercase;">Last 30 Days</div>
+                            <div style="font-size: 22px; font-weight: 800; color: #101828;">KSh {{ last30_total|floatformat:2 }}</div>
+                            <div class="text-muted" style="font-size: 12px;">{{ last30_count }} transaction{{ last30_count|pluralize }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info banner -->
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-info-circle"></i>
+        <strong>Reconciliation:</strong> Cross-check these codes against your M-Pesa app
+        or statement to confirm the money was received. Real-time till balance requires
+        Safaricom Daraja API access (currently not integrated).
+    </div>
+
+    <!-- Recent M-Pesa Sales -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white" style="border-bottom: 1px solid #eaecf0;">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="mb-0" style="font-weight: 700;">
+                        <i class="bi bi-clock-history"></i> Recent M-Pesa Sales
+                    </h5>
+                    <p class="text-muted mb-0 mt-1" style="font-size: 12px;">
+                        Latest {{ recent_mpesa_sales|length }} transaction{{ recent_mpesa_sales|length|pluralize }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead style="background: #f8fafc; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <tr>
+                        <th style="padding: 12px 16px;">Date</th>
+                        <th>Product</th>
+                        <th>Cashier</th>
+                        <th class="text-center">Qty</th>
+                        <th class="text-end">Total</th>
+                        <th>Code</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for sale in recent_mpesa_sales %}
+                    <tr>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-weight: 600; color: #344054;">
+                                {{ sale.sale_date|date:"d M Y" }}
+                            </div>
+                            <small class="text-muted">{{ sale.sale_date|date:"H:i" }}</small>
+                        </td>
+
+                        <td>
+                            <i class="bi bi-box-seam text-primary me-1"></i>
+                            <strong>{{ sale.product.name }}</strong>
+                        </td>
+
+                        <td>
+                            {% if sale.cashier %}
+                                {{ sale.cashier.get_full_name|default:sale.cashier.username }}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">{{ sale.quantity }}</td>
+
+                        <td class="text-end" style="font-weight: 700; color: #0d6efd;">
+                            KSh {{ sale.total_amount|floatformat:2 }}
+                        </td>
+
+                        <td>
+                            {% if sale.mpesa_code %}
+                                <code style="font-size: 11px; background: #f0f7ff; padding: 2px 8px; border-radius: 4px; color: #0d6efd;">{{ sale.mpesa_code }}</code>
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-inbox" style="font-size: 40px; display: block; margin-bottom: 10px;"></i>
+                            No M-Pesa sales recorded yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
